@@ -2,8 +2,9 @@
   --background: #fafafa;
   --foreground: #fff;
 
-  --text-primary: #000;
-  --text-secondary: #666;
+  --text-primary: #636363;
+  --text-black: #222222;
+  --text-purple: #82027D;
 
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
@@ -13,129 +14,224 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-geist-sans);
   background-color: var(--background);
 }
 
 .main {
-  display: flex;
+/*   border: solid 1px black; */
+/*   display: flex; */
   min-height: 100vh;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
+  width: 100vw;
+  max-width: 95%;
+/*   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+  justify-content: space-between; */
+  background-color: var(--background);
+/*   padding: 120px 60px; */
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
-}
-
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
+/* Header */
+.header{
   width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
+  height: 567px;
+  background-image: url('/images/banner.png');
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  padding-left: 72px;
+  margin-bottom: 56px;
+}
+.headerTxt{
+  width: 526px;
+  height: 300px;
+/*   border: 1px solid black; */
+}
+.headerTxt p:first-child{
+  font-weight: 800;
+  font-style: Italic;
+  font-size: 48px;
+  letter-spacing: -2%;
+  color: #fbfbfb;
+}
+.headerSubHeading{
+  margin-top: 14px;
+  color: #fbfbfb;
+  line-height: 32px;
+}
+.headerTxt p:first-child span{
+  color: #F586F1;
+}
+.headerTxtBtns{
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  margin-top: 48px;
+}
+.headerTxtBtns div{
+  padding: 12px 26px;
+}
+.headerBtn1{
+  border: solid 1px white;
+  background: #f1f1f1;
+  color: #82027D;
+}
+.headerBtn2{
+  border: solid 1px white;
+  background: transparent;
+  color: white;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
+/* popular Category */
+.popularCatPack{
+  position: relative;
+}
+.moreCat{
+  width: 180px;
+  position: absolute;
+  margin-top: -20px;
+  top:65;
+  right: 0%;
+  background: white;
+}
+.moreCat ul{
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+.moreCat ul li{
+  padding: 12px 18px;
+  font-size: 16px;
+  color: #636363;
+  font-weight: 600;
+}
+
+/* Featured */
+.featured{
+  margin-top: 80px;
+  padding-top: 32px;
+}
+
+
+/* How It Works */
+.hiWorks{
+  margin-top: 120px;
+  padding: 0 52px;
+}
+.worksCardPack{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 64px;
+}
+.worksCard{
+  width: 268px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.pinkLine {
+  margin-top: 3%;
+  width: 266px;
+  height: 2px; /* thickness of the line */
+  background: repeating-linear-gradient(
+    to right,
+    #82027D 0,
+    #82027D 2px,      /* dot size */
+    transparent 2px,
+    transparent 8px   /* spacing between dots */
+  );
+}
+.pinkLine::before,
+.pinkLine::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px; /* larger dot size */
+  height: 6px;
+  background-color: #82027D;
+  border-radius: 50%; /* makes them round */
+}
+.number{
+  width: 89px;
+  /* height: 91px; */
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+  padding: 10px;
+  color: white;
+  background: #82027D;
+  border-radius: 16px;
+  margin: auto auto;
+}
+.worksCard div{
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+/* Why Chosoe */
+.whyChoose{
+  margin-top: 160px;
+}
+.chooseContainer{
+  width: 82%;
+  height: auto;
+  margin: 24px auto auto auto; 
+
+}
+.cardChoose{
+  display: flex;
+  align-items: end;
+  gap: 5%;
+  justify-content: center;
+}
+.cardChooseImg{
+  width: 527px;
+  height: 667px;
+}
+.chooseCardTxt{
+  width: 457px;
+  height: 516px;
+}
+.cCardHeader{
+  width: 300px;
+  padding: 16px 24px;
+  background: #FFEAC4;
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+}
+.cCardHeader li{
+  font-weight: 700;
+  font-size: 23px;
+  letter-spacing: -4%;
+}
+.cCardHeader li::marker{
+  color: #82027D;
+}
+.chooseList{
+  margin-top: 50px;
+}
+.chooseListTxt{
+  margin-top: 20px;
+  display: flex;
+  gap: 16px;
+
+}
+.chooseListTxt div{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #CFCFCF ;
+}
+.cardChooseCheck{
+  width: 27px;
+  height: 19px;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-}
-
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
-
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+.footer{
+  margin-top: 107px;
 }

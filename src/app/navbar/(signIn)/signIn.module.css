@@ -1,0 +1,69 @@
+.signContainer{
+    width: 490px;
+    max-height: 95vh;
+    opacity: 1;
+    border-radius: 12px;   
+}
+.signHeader{
+    width: fit-content;
+    margin: auto auto;
+    height: 84px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.signHeader div{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 12px;
+/*     margin-top: 4px; */
+}
+.signInForm{
+    width: auto;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    /* height: 288px; */
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.signInForm input{
+    width: 100%;
+    height: 56px;
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+.forgotPassword{
+    text-align: right;
+    color:#636363;
+    cursor: pointer;
+}
+.signInForm button{
+    width: 100%;
+    padding: 1.5rem;
+    background: #82027D;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold ;
+}
+.CTAdiv{
+    width: 100%;
+    padding: 0.9rem;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+.termsCond{
+    text-align: center;
+    width: 100%;
+    color: #999999;
+    border-top: 1px solid #CFCFCF;
+    padding: 20px 10px;
+    font-size: .875rem;
+}

@@ -1,0 +1,21 @@
+.header{
+    width: 100%;
+    height: 236px;
+    position: relative;
+}
+.serviceHeaderImg{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+.headerTxt{
+    border: 1px solid white;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    height: 94px;
+    width: 65%;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    color: #FBFBFB;
+}

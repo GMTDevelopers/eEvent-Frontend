@@ -1,0 +1,80 @@
+.prodCard{
+    width: 416px;
+    height: 483px;
+    opacity: 1;
+    border-radius: 24px;
+    background: #FFFFFF;
+    box-shadow: 0px 13px 28px 0px #FFDBF51A;
+    padding: 12px 12px;
+}
+.prodCard:hover{
+    transition: ease-in 90ms;
+    box-shadow: 0px 51px 51px 0px #FFDBF517;
+    box-shadow: 0px 115px 69px 0px #FFDBF50D;
+    box-shadow: 0px 205px 82px 0px #FFDBF503;
+    box-shadow: 0px 320px 90px 0px #FFDBF500;
+}
+.cardHeader{
+    width: auto;
+    height: auto;
+    position: relative;
+}
+.catPill{
+    width: fit-content;
+   position: absolute;
+   top: 12;
+   left: 24;
+   padding: 8px 30px;
+   background: #FFEAC4CC;
+   border-radius: 24px;
+
+}
+.catPill li{
+   font-size: 12px;
+   font-weight: 600;
+}
+.catPill li::marker{
+   color: #82027D;
+}
+.prodImg{
+    width: 392px;
+    height: 205px;
+    margin: auto auto;
+}
+.prodTitle{
+    margin-top: 16px;
+}
+.star{
+    width: 17px;
+    height: 17px;
+}
+.rating{
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 14px;
+}
+.vendor{
+    display: flex;
+    gap:8px;
+    align-items: center;
+    margin-top: -20px;
+}
+.vendorImg{
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.prodDisc{
+    margin: 12px 0 9px 0px;
+    color: #636363;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* number of lines you want */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+.prodPrice div{
+    margin-top: 2px;
+}

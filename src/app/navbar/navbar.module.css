@@ -1,0 +1,76 @@
+.navbar{
+    display: flex;
+    width: 95%;
+    height: 106px;
+    margin: auto auto;
+/*     border: 1px solid black; */
+    justify-content: space-between;
+    align-items: center;
+
+}
+.navbarLogo{
+    width: 114px;
+    height: 29px;
+}
+.navLinks{
+    width: 45%;
+}
+.navLinks ul{
+    display: flex;
+    list-style-type: none;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+    color: #222222;
+}
+.navCta{
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+}
+.navCta div:last-child{
+    padding: 8px 26px;
+}
+
+/* Logged in nav*/
+.userNav{
+    border: 1px solid black;
+    display: flex;
+    width: 95%;
+    height: 76px;
+    margin: auto auto;
+    align-items: center;
+    padding: 0 42px 0 42px;
+    display: flex;
+    gap: 10%;
+    background: #FFEAC4CC;
+}
+.welcome{
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 1.5rem;
+
+}
+.userNavMenu{
+    width: max-content;
+
+}
+.userNavMenu ul{
+    width: max-content;
+    display: flex;
+    gap: 48px;
+    list-style-type: none;
+    align-items: center;
+}
+.userNavMenu ul li{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.userNavMenu ul .icons{
+    width: 21px;
+    height: 18px;
+}
+.active{
+    color: #82027D;
+}

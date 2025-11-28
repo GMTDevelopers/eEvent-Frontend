@@ -1,0 +1,938 @@
+[
+    {
+        "id":"1",
+        "thumb":"/images/products/prod1.png",
+        "category":"Decorations",
+        "title":"Lavish Designs by Tee",
+        "rating":"4.0",
+        "vendor":{
+            "name":"Tee Home of Interior Decor.",
+            "dp":"/images/products/prod1.png"
+        },
+        "description":"Create a magical atmosphere with our fabric draping and lighting services. We use high-quality chiffon and fairy lights to style ceilings, walls, and backdrops. Price based on a standard hall size.",
+        "pricing":"150,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+
+    },
+    {
+        "id":"2",
+        "thumb":"/images/products/prod2.png",
+        "category":"Catering",
+        "title":"Small Chops & Grills Package",
+        "rating":"4.3",
+        "vendor":{
+            "name":"PlatterGrillz Nation.",
+            "dp":"/images/products/prod2.png"
+        },
+        "description":"Perfect for cocktail hours or as appetizers. Package includes samosas, spring rolls, puff puff, mosa, BBQ chicken, and peppered gizzards for up to 150 guests. Live grilling station available as an add-on.",
+        "pricing":"100,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+        "id":"3",
+        "thumb":"/images/products/prod3.png",
+        "category":"Rentals",
+        "title":"Gold Chiavari Chairs with Cushions",
+        "rating":"4.2",
+        "vendor":{
+            "name":"Havilah Rentals",
+            "dp":"/images/products/prod3.png"
+        },
+        "description":"Add a touch of elegance to your event with our premium gold Chiavari chairs. Price includes delivery, setup, and your choice of white or black seat cushions.",
+        "pricing":"50,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+        "id":"4",
+        "thumb":"/images/products/prod4.png",
+        "category":"Halls & Venues",
+        "title":"Classique Events Place (200-Guest)",
+        "rating":"4.0",
+        "vendor":{
+            "name":"Classique Limited",
+            "dp":"/images/products/prod4.png"
+        },
+        "description":"High-quality, waterproof pagoda tent perfect for outdoor weddings and corporate events. Includes full setup, flooring, and basic lighting. Can withstand rain and sun.",
+        "pricing":"250,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+        "id":"5",
+        "thumb":"/images/products/prod5.png",
+        "category":"Entertainment",
+        "title":"The Dynamics - 6-Piece Live Band",
+        "rating":"4.0",
+        "vendor":{
+            "name":"Wale Dynamic and Crew",
+            "dp":"/images/products/prod5.png"
+        },
+        "description":"Experience the energy of live music! Our 6-piece band (vocals, drums, bass, guitar, keyboard, talking drum) plays a mix of Highlife, Juju, Afrobeats, and Gospel. Perfect for keeping the dance floor alive.",
+        "pricing":"150,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+        "id":"6",
+        "thumb":"/images/products/prod6.png",
+        "category":"Photography",
+        "title":" The Diamond Wedding Package",
+        "rating":"4.4",
+        "vendor":{
+            "name":"DeExcellent Photos",
+            "dp":"/images/products/prod5.png"
+        },
+        "description":"Full-day coverage of your wedding, from bridal prep to the end of the reception. Includes 2 photographers, 2 videographers, a pre-wedding shoot,highlights video, and a premium photobook.",
+        "pricing":"300,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+        "id":"7",
+        "thumb":"/images/products/prod7.png",
+        "category":"Decorations",
+        "title":"Glamz Beauty & Makeup",
+        "rating":"4.4",
+        "vendor":{
+            "name":"Jenny’s Glam",
+            "dp":"/images/products/prod7.png"
+        },
+        "description":"Transform your venue with our vibrant floral designs. Package includes bridal bouquet, centerpieces.",
+        "pricing":"80,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+        "id":"8",
+        "thumb":"/images/products/prod8.png",
+        "category":"Catering",
+        "title":"Premium Event Cakes on a Budget",
+        "rating":"4.8",
+        "vendor":{
+            "name":"SweetCrave Cakes & Bakery",
+            "dp":"/images/products/prod8.png"
+        },
+        "description":"Custom cakes and desserts designed to wow your guests without breaking the bank.",
+        "pricing":"100,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+        "id":"9",
+        "thumb":"/images/products/prod9.png",
+        "category":"Catering",
+        "title":"Professional Sound Equipment",
+        "rating":"4.7",
+        "vendor":{
+            "name":"DeMega Multimedia",
+            "dp":"/images/products/prod8.png"
+        },
+        "description":"Let us handle thesound for your event! Our comprehensive planning service ensures a seamless event from start to finish.",
+        "pricing":"100,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+        "id":"10",
+        "thumb":"/images/products/prod10.png",
+        "category":"Rentals",
+        "title":"Cooling Drum for Drinks",
+        "rating":"4.7",
+        "vendor":{
+            "name":"Abidemi Enterprises",
+            "dp":"/images/products/prod8.png"
+        },
+        "description":"Cool your drinks in style for your next event. Perfect for outdoor gatherings, parties, and more.",
+        "pricing":"50,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+        "id":"11",
+        "thumb":"/images/products/prod11.png",
+        "category":"Catering",
+        "title":"Food For All Events",
+        "rating":"4.5",
+        "vendor":{
+            "name":"Abidemi Enterprises",
+            "dp":"/images/products/prod8.png"
+        },
+        "description":"Get your food ready and available for all your indoor and outdoor events at budget friendly prices.",
+        "pricing":"500,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+        "id":"12",
+        "thumb":"/images/products/prod12.png",
+        "category":"Decoration",
+        "title":"Wedding Decorations",
+        "rating":"4.5",
+        "vendor":{
+            "name":"Mike’s Interior Decor",
+            "dp":"/images/products/prod8.png"
+        },
+        "description":"Enjoy the best interior decoration to make your events glamorous and colourful. Keeping your memories beautiful and nice.",
+        "pricing":"300,000",
+        "media":[
+            "/images/productPage/prodImg1.png",
+            "/images/productPage/prodImg2.png",
+            "/images/productPage/prodImg3.png",
+            "/images/productPage/prodImg4.png",
+            "/images/productPage/prodImg5.png",
+            "/images/productPage/prodImg6.png"
+        ],
+        "features":[
+            {
+                "title":"Personalized Décor Themes",
+                "description":"Every event deserves its own story. We design décor concepts that perfectly match your event’s theme, style, and atmosphere — from elegant and classic to modern and vibrant."
+            },
+            {
+                "title":"Expert Consultation and Setup",
+                "description":"Our professional designers guide you through every step, from initial planning to on-site execution, ensuring your vision is brought to life seamlessly."
+            },
+            {
+                "title":"Premium Materials and Finishing",
+                "description":"Every vendor on eEvents is carefully vetted for quality, reliability, and professionalism so you can book with confidence."
+            },
+            {
+                "title":"Versatile for All Occasions",
+                "description":"Whether it’s a wedding, birthday, corporate event, or religious ceremony, our décor services adapt beautifully to any setting or scale."
+            },
+            {
+                "title":"Reliable and On-Time Execution",
+                "description":"We understand the importance of timing in event planning. Our team delivers prompt setup, flawless coordination, and meticulous attention to detail for a stress-free experience."
+            }
+        ],
+        "additionalService":[
+            {
+                "title": "Event Branding and Signage",
+                "description": "Custom welcome boards, photo walls, and signage that tie the décor into the event’s identity.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Tableware and Accessory Styling",
+                "description": "Elegant table settings, linens, and centerpiece coordination for a complete, polished look.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Draping and Fabric Styling",
+                "description": "Stylish fabric installations for ceilings, walls, and entrances that add warmth and sophistication.",
+                "cost": "30,000"
+            },
+            {
+                "title": "Lounge and VIP Area Design",
+                "description": "Design and furnish comfortable seating zones with a luxurious touch for VIP guests and special areas.",
+                "cost": "50,000"
+            },
+            {
+                "title": "Lighting Design and Ambiance Creation",
+                "description": "Stylish attendants to greet guests, assist with guest seating, and also, maintain order.",
+                "cost": "50,000"
+            }
+        ],
+        "reviews": [
+        {
+          "username": "tola_and_kunle",
+          "comment": "Best planners ever! They made our big day perfect.",
+          "stars": 5,
+          "createdAt": "2025-07-15T12:00:00.000Z"
+        }
+      ]
+    }
+]

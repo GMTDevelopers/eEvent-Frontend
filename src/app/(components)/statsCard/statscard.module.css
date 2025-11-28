@@ -1,0 +1,19 @@
+.card{
+    border: 1.5px solid #CFCFCF;
+    border-radius: 12px;
+    padding: 24px 36px 30px 32px;
+}
+.cardTitle{
+    font-weight: 700;
+}
+.statPack{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+.icon{
+    width: 28px;
+    height: 28px;
+    color: #82027D;
+}

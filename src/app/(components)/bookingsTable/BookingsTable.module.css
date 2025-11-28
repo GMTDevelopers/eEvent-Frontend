@@ -1,0 +1,116 @@
+/* Hide/show based on screen size */
+.desktopTable {
+  display: block;
+}
+.mobileCards {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .desktopTable { display: none; }
+  .mobileCards { display: block; }
+}
+
+/* === Desktop Table (unchanged from before) === */
+.table { width: 100%; border-collapse: collapse; background: white; font-size: 0.95rem; }
+.table th { background: #f8fafc; padding: 1rem; text-align: left; font-weight: 600; color: #475569; border-bottom: 2px solid #e2e8f0; }
+.table td { padding: 1rem; border-bottom: 1px solid #e2e8f0; }
+.table tr:hover { background: #f1f5f9; }
+
+/* === Mobile Cards === */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  position: relative;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.bookingId {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+.vendorName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0.5rem 0;
+}
+
+.service {
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.cardRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.cardRow span { color: #64748b; }
+.cardRow strong { color: #1e293b; }
+
+/* Status & Amount (shared) */
+.status {
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.pending    { background: #fff7ed; color: #c2410c; }
+.upcoming   { background: #eff6ff; color: #2563eb; }
+.completed  { background: #f0fdf4; color: #16a34a; }
+.amount { font-weight: 700; color: #1e293b; }
+
+/* Dots button & dropdown (shared) */
+.dotsBtn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+}
+
+.dotsBtn:hover { background: #e2e8f0; }
+
+.dropdown, .mobileDropdown {
+  position: absolute;
+  right: 1rem;
+  top: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  min-width: 200px;
+  z-index: 100;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.mobileDropdown { position: static; margin-top: 1rem; box-shadow: none; border: 1px solid #e2e8f0; }
+
+.dropdownItem {
+  width: 100%;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.dropdownItem:hover { background: #f8fafc; }
+.cancel { color: #dc2626; font-weight: 600; }
+.cancel:hover { background: #fef2f2; }

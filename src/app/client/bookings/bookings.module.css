@@ -1,0 +1,9 @@
+.stats{
+  margin: 36px 0 27px 0;
+}
+.statsPack{
+  width: 100%;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+}

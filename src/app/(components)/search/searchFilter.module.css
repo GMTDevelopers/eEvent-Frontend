@@ -1,0 +1,78 @@
+.bar1{
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.rightContainer{
+  width: 608px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.searchBtn{
+  width: 199px;
+  display: flex;
+  border-radius: 999px;
+  padding: 8px 12px;
+  justify-content: space-between;
+  border: 1.5px solid #CFCFCF;
+  align-items: center;
+}
+.searchMoreIcon{
+  color: #666666;
+}
+.moreCat{
+  width: 180px;
+  position: absolute;
+  margin-top: -20px;
+  top:70;
+  right: 0%;
+  background: white;
+  cursor: pointer;
+  z-index: 1;
+}
+.moreCat ul{
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+.moreCat ul li{
+  padding: 12px 18px;
+  font-size: 16px;
+  color: #636363;
+  font-weight: 600;
+}
+.searchContainer {
+  display: flex;
+  align-items: center;
+  width: 66%;
+  max-width: 420px;
+  border-radius: 9999px;           /* full pill shape */
+  padding: 12px 20px;
+  border: 1px solid #CFCFCF;
+}
+
+.searchIcon {
+  width: 20px;
+  height: 20px;
+  color: #9ca3af;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #374151;
+}
+
+.searchInput::placeholder {
+  color: #222222;
+  font-size: 16px;
+  font-weight: 500;
+}
+

@@ -1,0 +1,15 @@
+/* components/NaturalDescription.module.css */
+.description {
+  line-height: 1.7;
+  color: #374151;
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+
+.paragraph {
+  margin-bottom: 1rem;
+}
+
+.paragraph:last-child {
+  margin-bottom: 0;
+}
