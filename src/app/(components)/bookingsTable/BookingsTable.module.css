@@ -1,29 +1,57 @@
 /* Hide/show based on screen size */
 .desktopTable {
   display: block;
+  font-family: "Open Sans", "Open Sans Fallback";
+  font-style: normal;
+  color: #636363;
+  font-weight: 500;
 }
 .mobileCards {
   display: none;
+  font-family: "Open Sans", "Open Sans Fallback";
+  font-style: normal;
+  color: #636363;
 }
 
-@media (max-width: 767px) {
-  .desktopTable { display: none; }
-  .mobileCards { display: block; }
+@media (max-width: 47.9375rem) {
+  .desktopTable { 
+    display: none; 
+  }
+  .mobileCards { 
+    display: block; 
+  }
 }
 
 /* === Desktop Table (unchanged from before) === */
-.table { width: 100%; border-collapse: collapse; background: white; font-size: 0.95rem; }
-.table th { background: #f8fafc; padding: 1rem; text-align: left; font-weight: 600; color: #475569; border-bottom: 2px solid #e2e8f0; }
-.table td { padding: 1rem; border-bottom: 1px solid #e2e8f0; }
-.table tr:hover { background: #f1f5f9; }
-
+.table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  font-size: 16px; 
+}
+.table th { 
+  padding: 32px 16px; 
+  text-align: left; 
+  font-weight: 700; 
+  color: #222222; 
+  border-top: 1px solid #cfcfcf;
+  border-bottom: 1px solid #cfcfcf;
+}
+.table td { 
+  padding: 16px; 
+}
+.table tr:hover { 
+  background: #f1f5f9;
+}
+.dataRow{
+  position: relative;
+}
 /* === Mobile Cards === */
 .card {
   background: white;
-  border-radius: 12px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  border-radius: .75rem;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 .25rem .9375rem rgba(0,0,0,0.06);
   position: relative;
 }
 
@@ -31,32 +59,32 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.75rem;
+  margin-bottom: 12px;
 }
 
 .bookingId {
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 17.6px;
   color: #1e293b;
 }
 
 .vendorName {
-  font-size: 1.25rem;
+  font-size: 20px;
   font-weight: 700;
   color: #1e293b;
-  margin: 0.5rem 0;
+  margin: 8px 0;
 }
 
 .service {
   color: #64748b;
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
 }
 
 .cardRow {
   display: flex;
   justify-content: space-between;
-  margin: 0.5rem 0;
-  font-size: 0.95rem;
+  margin: 8px 0;
+  font-size: 15.2px;
 }
 
 .cardRow span { color: #64748b; }
@@ -64,51 +92,63 @@
 
 /* Status & Amount (shared) */
 .status {
-  padding: 0.35rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  padding: 5.6px 12px;
+  font-size: 16px;
 }
-.pending    { background: #fff7ed; color: #c2410c; }
-.upcoming   { background: #eff6ff; color: #2563eb; }
-.completed  { background: #f0fdf4; color: #16a34a; }
-.amount { font-weight: 700; color: #1e293b; }
+.pending    {color: #F0B502; }
+.upcoming   { color: #636363; }
+.completed  {color: #2ED074; }
+.amount { color: #636363; }
 
 /* Dots button & dropdown (shared) */
 .dotsBtn {
   background: none;
   border: none;
-  font-size: 1.8rem;
+  font-size: 28.8px;
   cursor: pointer;
-  padding: 0.2rem 0.5rem;
-  border-radius: 8px;
+  padding: 3.2px 8px;
+  border-radius: .5rem;
 }
 
 .dotsBtn:hover { background: #e2e8f0; }
 
-.dropdown, .mobileDropdown {
+.dropdown{
+  width: 20%;
   position: absolute;
-  right: 1rem;
-  top: 100%;
+  right: 16px;
+  top: 90%;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-  min-width: 200px;
+  border-radius: .5rem;
+  box-shadow: 0 .625rem 1.875rem rgba(0,0,0,0.18);
   z-index: 100;
   overflow: hidden;
-  margin-top: 0.5rem;
+  margin-top: 8px;
+}
+.mobileDropdown {
+  position: absolute;
+  right: 16px;
+  top: 100%;
+  background: white;
+  border-radius: .5rem;
+  box-shadow: 0 .625rem 1.875rem rgba(0,0,0,0.18);
+  min-width: fit-content;
+  z-index: 100;
+  overflow: hidden;
+  margin-top: 8px;
 }
 
-.mobileDropdown { position: static; margin-top: 1rem; box-shadow: none; border: 1px solid #e2e8f0; }
+.mobileDropdown { position: static; margin-top: 16px; box-shadow: none; border: .0625rem solid #e2e8f0; }
 
 .dropdownItem {
   width: 100%;
   text-align: left;
-  padding: 0.85rem 1rem;
+  padding: 13.6px 16px;
   border: none;
   background: none;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 16px;
+  color: #636363;
+  font-weight: 600;
 }
 
 .dropdownItem:hover { background: #f8fafc; }

@@ -4,8 +4,8 @@ import styles from './page.module.css';
 import SearchBar from '../(components)/searchBar/searchBar';
 import { useEffect, useState } from 'react';
 import ProductCard from '../(components)/productCard/page';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from '../(components)/header/page';
+import Pagination from '../(components)/pagination/page';
 
 const FindService = () => {
   const [allData, setAllData] = useState([]);        // ← Full dataset
@@ -31,12 +31,6 @@ const FindService = () => {
   const endIdx = startIdx + ITEMS_PER_PAGE;
   const visibleData = allData.slice(startIdx, endIdx);
 
-  const goToPage = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // Optional: scroll to top
-    }
-  };
 
   return (
     <div className={`main ${styles.service}`}>
@@ -60,37 +54,13 @@ const FindService = () => {
             vendorName={data.vendor.name}
           />
         ))}
-    </div>
-        {/* PAGINATION */}
-        {totalPages > 1 && (
-          <nav className={styles.pagination} aria-label="Page navigation">
-            <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} className={styles.pageBtn}>
-              <ChevronLeft size={18} />
-            </button>
-
-            <button onClick={() => goToPage(1)} disabled={currentPage === 1} className={styles.pageBtn}>
-              First
-            </button>
-
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => goToPage(page)}
-                className={`${styles.pageBtn} ${currentPage === page ? styles.active : ''}`}
-                aria-current={currentPage === page ? 'page' : undefined}
-              >
-                {page}
-              </button>
-            ))}
-
-            <button onClick={() => goToPage(totalPages)} disabled={currentPage === totalPages} className={styles.pageBtn}>
-              Last
-            </button>
-            <button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages} className={styles.pageBtn}>
-                <ChevronRight size={18} />
-            </button>
-          </nav>
-        )}
+      </div>
+      {/* PAGINATION */}
+        <Pagination 
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
     </div>
   );
 };

@@ -1,0 +1,118 @@
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b21a8; /* your purple */
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+
+.backBtn:hover {
+  color: #4c1d95;
+}
+.bannerImg{
+    width: 100%;
+}
+.mainContent{
+    border: 1px solid black;
+    display: flex;
+    gap: 32px;
+    /* gap: 2.644%; */
+    width: 100%;
+    height: auto;
+    padding: 0 3% 0 4%;
+    margin-top: 18px;
+}
+.aside{
+    border: 1px solid rgb(129, 72, 72);
+    width: 25%;
+    
+}
+.vendor{
+    background: #FFEAC466;
+    height: fit-content;
+    padding: 35px 0;
+    border-radius: 16px;
+}
+.vendorImgPack{
+    display: flex;
+    justify-content: center;
+}
+.vendorImg{
+    width: 206px;
+    height: 206px;
+    object-fit: cover;
+    border-radius: 999px;
+    border: 11px solid #fbfbfb;
+    margin: -150px auto 0 auto;
+}
+.vendorName{
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -2%;
+    text-align: center;
+    margin-bottom: 8px;
+}
+.vendorDetails{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.catPill{
+  width: fit-content;
+  padding: 8px 30px;
+  border-radius: 24px;
+  background: #ffffff;
+  margin-top: 12px;
+}
+.catPill li{
+  font-size: 19px;
+  font-weight: 600;
+}
+.catPill li::marker{
+  color: #82027D;
+}
+.ratingPack{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 32px;
+}
+.ratingStars{
+    margin: 15px 0 12px 0;
+}
+
+
+
+/*main section*/
+.mainSection{
+    width: 73%;
+    border: 1px solid red;
+}
+.mainSection h2{
+    margin-top: 26px;
+}
+.descPack{
+  width: 100%;
+  height: auto;
+  color: #636363;
+  margin: 32px 0px 48px 0;
+  padding: 16px 32px;
+  border: solid 1px #CFCFCF;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.vendorItem{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}

@@ -3,8 +3,11 @@
 
 import { useState } from "react";
 import styles from "./BookingsTable.module.css";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function BookingsTable({ bookings = [] }) {
+  const router = useRouter();
   const [openMenuId, setOpenMenuId] = useState(null);
 
   const toggleMenu = (id) => {
@@ -12,6 +15,7 @@ export default function BookingsTable({ bookings = [] }) {
   };
 
   const closeMenu = () => setOpenMenuId(null);
+
 
   return (
     <>
@@ -32,16 +36,16 @@ export default function BookingsTable({ bookings = [] }) {
           </thead>
           <tbody>
             {bookings.map((b) => (
-              <tr key={b.id}>
-                <td>{b.id}</td>
-                <td>{b.vendorName}</td>
-                <td>{b.service}</td>
-                <td>{b.dateBooked}</td>
-                <td>{b.eventDate}</td>
-                <td className={styles.amount}>₦{b.amount.toLocaleString()}</td>
-                <td>
-                  <span className={`${styles.status} ${styles[b.status.toLowerCase()]}`}>
-                    {b.status}
+              <tr className={styles.dataRow} key={b.id} >
+                <td onClick={closeMenu}>{b.id}</td>
+                <td onClick={closeMenu}>{b.businessName}</td>
+                <td onClick={closeMenu}>{b.serviceOrdered.serviceName}</td>
+                <td onClick={closeMenu}>{b.bookingDate}</td>
+                <td onClick={closeMenu}>{b.eventDate}</td>
+                <td onClick={closeMenu} className={styles.amount}>₦{b.totalCost.toLocaleString()}</td>
+                <td onClick={closeMenu}> 
+                  <span className={`${styles.status} ${styles[b.bookingStatus.toLowerCase()]}`}>
+                    {b.bookingStatus}
                   </span>
                 </td>
                 <td className={styles.actionCell}>
@@ -50,12 +54,12 @@ export default function BookingsTable({ bookings = [] }) {
                   </button>
                   {openMenuId === b.id && (
                     <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
-                      <button className={styles.dropdownItem}>View</button>
-                      <button className={styles.dropdownItem}>Mark completed</button>
-                      <button className={styles.dropdownItem}>Message vendor</button>
-                      <button className={styles.dropdownItem}>Reschedule booking</button>
-                      <button className={styles.dropdownItem}>Contact support</button>
-                      <button className={`${styles.dropdownItem} ${styles.cancel}`}>Cancel booking</button>
+                      <li className={styles.dropdownItem} onClick={() => router.push(`/client/bookings/${b.id}`)}>View</li>
+                      <li style={{color:"#09A14A"}} className={styles.dropdownItem}>Mark completed</li>
+                      <li className={styles.dropdownItem}>Message vendor</li>
+                      <li className={styles.dropdownItem}>Reschedule booking</li>
+                      <li className={styles.dropdownItem}>Contact support</li>
+                      <li className={`${styles.dropdownItem} ${styles.cancel}`}>Cancel booking</li>
                     </div>
                   )}
                 </td>
@@ -72,8 +76,8 @@ export default function BookingsTable({ bookings = [] }) {
             <div className={styles.cardHeader}>
               <div>
                 <div className={styles.bookingId}>{b.id}</div>
-                <span className={`${styles.status} ${styles[b.status.toLowerCase()]}`}>
-                  {b.status}
+                <span className={`${styles.status} ${styles[b.bookingStatus.toLowerCase()]}`}>
+                  {b.bookingStatus}
                 </span>
               </div>
               <button onClick={(e) => { e.stopPropagation(); toggleMenu(b.id); }} className={styles.dotsBtn}>
@@ -81,16 +85,16 @@ export default function BookingsTable({ bookings = [] }) {
               </button>
             </div>
 
-            <div className={styles.vendorName}>{b.vendorName}</div>
-            <div className={styles.service}>{b.service}</div>
+            <div className={styles.vendorName}>{b.businessName}</div>
+            <div className={styles.service}>{b.serviceOrdered.serviceName}</div>
 
             <div className={styles.cardRow}>
               <span>Event Date</span>
-              <strong>{b.eventDate}</strong>
+              <strong>{b.bookingDate}</strong>
             </div>
             <div className={styles.cardRow}>
               <span>Amount</span>
-              <strong className={styles.amount}>₦{b.amount.toLocaleString()}</strong>
+              <strong className={styles.amount}>₦{b.totalCost.toLocaleString()}</strong>
             </div>
 
             {/* Dropdown menu (same as desktop) */}

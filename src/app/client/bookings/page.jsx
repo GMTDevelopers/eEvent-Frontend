@@ -5,15 +5,36 @@ import styles from './bookings.module.css';
 import SearchFilter from '@/app/(components)/search/page';
 import { CheckCheck, Loader, Minimize2, X } from 'lucide-react';
 import BookingsTable from '@/app/(components)/bookingsTable/BookingsTable';
+import Pagination from '@/app/(components)/pagination/page';
+import { useEffect, useState } from 'react';
+
 
 
 const Bookings = () => {
-    const mockBookings = [
-        { id: "EEV-1143", vendorName: "Gala Events Co.", service: "Corporate Event Planning", dateBooked: "01/04/25", eventDate: "20/07/25", amount: 250000, status: "Pending" },
-        { id: "EEV-1144", vendorName: "Bright Lights Photography", service: "General Event Photography", dateBooked: "15/05/25", eventDate: "10/08/25", amount: 100000, status: "Pending" },
-        { id: "EEV-1146", vendorName: "SoundWave DJs", service: "Music and Entertainment", dateBooked: "30/07/25", eventDate: "15/11/25", amount: 75000, status: "Upcoming" },
-        { id: "EEV-1150", vendorName: "Themed Events Galore", service: "Event Coordination", dateBooked: "18/11/25", eventDate: "15/02/26", amount: 300000, status: "Completed" },
-    ];
+        
+    const [allData, setAllData] = useState([]);        // ← Full dataset
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const ITEMS_PER_PAGE = 15;
+
+  // Load data once
+    useEffect(() => {
+        fetch("/data/clientTransaction.json")
+            .then((res) => res.json())
+            .then((data) => {
+            setAllData(data);
+            const pages = Math.ceil(data.length / ITEMS_PER_PAGE);
+            setTotalPages(pages);
+            console.log("Total items:", data.length, "Pages:", pages);
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+    }, []);
+
+  // Re-calculate visible data whenever currentPage or allData changes
+    const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIdx = startIdx + ITEMS_PER_PAGE;
+    const visibleData = allData.slice(startIdx, endIdx);
+
     return ( 
         <div>
             <div className={styles.stats}>
@@ -26,7 +47,12 @@ const Bookings = () => {
                 </div>
             </div>
             <div className="table">
-                <BookingsTable bookings={mockBookings}/>
+                <BookingsTable bookings={visibleData}/> 
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={(page) => setCurrentPage(page)}
+                />             
             </div>
             
         </div>

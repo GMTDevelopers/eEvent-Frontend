@@ -46,8 +46,8 @@ export default function Home() {
         <header className={styles.header}>
           <div className={styles.headerTxt}>
             <p>The marketplace for all things <span>EVENTS</span> !</p>
-            <p style={{fontWeight:600}} className={`txtHeader ${styles.headerSubHeading}`}>Compare vendors, chat directly, and book securely.</p>
-            <p style={{fontWeight:600, marginTop:"-5px"}} className={`txtHeader ${styles.headerSubHeading}`}>We make event planning simple, transparent & safe.</p>
+            <p style={{fontWeight:600, color:"#FBFBFB"}} className={`txtHeader ${styles.headerSubHeading}`}>Compare vendors, chat directly, and book securely.</p>
+            <p style={{fontWeight:600, marginTop:"-5px", color:"#FBFBFB"}} className={`txtHeader ${styles.headerSubHeading}`}>We make event planning simple, transparent & safe.</p>
             <div className={styles.headerTxtBtns}>
               <div className={`btnCapsule ${styles.headerBtn1}`}>Explore services <SlArrowRight /></div>
               <div className={`btnCapsule ${styles.headerBtn2}`}>Become a vendor</div>
