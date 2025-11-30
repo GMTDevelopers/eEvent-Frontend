@@ -6,15 +6,11 @@
   border: none;
   font-size: 1rem;
   font-weight: 600;
-  color: #6b21a8; /* your purple */
+  color: #222222;
   cursor: pointer;
-  padding: 0.5rem 0;
-  transition: color 0.2s;
+  margin-top:20px;
 }
 
-.backBtn:hover {
-  color: #4c1d95;
-}
 .bannerImg{
     width: 100%;
 }
@@ -31,25 +27,26 @@
 .aside{
     border: 1px solid rgb(129, 72, 72);
     width: 25%;
+    padding-top: 150px;
     
 }
 .vendor{
-    background: #FFEAC466;
-    height: fit-content;
-    padding: 35px 0;
-    border-radius: 16px;
+  background: #FFEAC466;
+  height: fit-content;
+  padding: 35px 0;
+  border-radius: 16px;
 }
 .vendorImgPack{
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .vendorImg{
-    width: 206px;
-    height: 206px;
-    object-fit: cover;
-    border-radius: 999px;
-    border: 11px solid #fbfbfb;
-    margin: -150px auto 0 auto;
+  width: 206px;
+  height: 206px;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 11px solid #fbfbfb;
+  margin: -150px auto 0 auto;
 }
 .vendorName{
     font-weight: 700;
@@ -87,8 +84,28 @@
 .ratingStars{
     margin: 15px 0 12px 0;
 }
-
-
+.cityTitle{
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #222222;
+  letter-spacing: -2%;
+}
+.pillsPack{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 7px 8px;
+}
+.cityPills{
+  width: fit-content;
+  padding: 7px 10px;
+  border-radius: 24px;
+  background: #EFEFEF;
+  color: #222222;
+  font-size: 14px;
+  font-weight: 600;
+}
 
 /*main section*/
 .mainSection{
@@ -103,7 +120,7 @@
   height: auto;
   color: #636363;
   margin: 32px 0px 48px 0;
-  padding: 16px 32px;
+  padding: 16px 20px;
   border: solid 1px #CFCFCF;
   border-radius: 12px;
   display: flex;
