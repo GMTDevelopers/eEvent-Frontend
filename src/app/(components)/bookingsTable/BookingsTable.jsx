@@ -5,11 +5,16 @@ import { useState } from "react";
 import styles from "./BookingsTable.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useModal } from "../ModalProvider/ModalProvider";
+import SignIn from "@/app/navbar/(signIn)/signIn";
+import Reschedule from "../reschedule/page";
+import Contact from "../Contact/pages";
+import Cancle from "../cancle/cancle";
 
 export default function BookingsTable({ bookings = [] }) {
   const router = useRouter();
   const [openMenuId, setOpenMenuId] = useState(null);
-
+  const { openModal } = useModal();
   const toggleMenu = (id) => {
     setOpenMenuId(openMenuId === id ? null : id);
   };
@@ -57,9 +62,9 @@ export default function BookingsTable({ bookings = [] }) {
                       <li className={styles.dropdownItem} onClick={() => router.push(`/client/bookings/${b.id}`)}>View</li>
                       <li style={{color:"#09A14A"}} className={styles.dropdownItem}>Mark completed</li>
                       <li className={styles.dropdownItem}>Message vendor</li>
-                      <li className={styles.dropdownItem}>Reschedule booking</li>
-                      <li className={styles.dropdownItem}>Contact support</li>
-                      <li className={`${styles.dropdownItem} ${styles.cancel}`}>Cancel booking</li>
+                      <li className={styles.dropdownItem} onClick={() => openModal(<Reschedule />)}>Reschedule booking</li>
+                      <li className={styles.dropdownItem} onClick={() => openModal(<Contact />)} >Contact support</li>
+                      <li className={`${styles.dropdownItem}  ${styles.cancel}`} onClick={() => openModal(<Cancle />)} >Cancel booking</li>
                     </div>
                   )}
                 </td>
