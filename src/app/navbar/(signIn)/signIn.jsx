@@ -9,7 +9,7 @@ const SignIn = () => {
     const { openModal } = useModal();
     const { closeModal } = useModal();
     const { login } = useAuth();
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
