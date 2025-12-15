@@ -1,5 +1,5 @@
 import styles from './header.module.css';
-const Header = () => {
+const Header = ({img}) => {
     return ( 
         <header className={styles.header}>
             <img className={styles.serviceHeaderImg} src='/images/servicePage/serviceBG.png' alt="Service Background"/>

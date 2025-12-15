@@ -1,8 +1,8 @@
 .bookVendorForm{
-    width: auto;
+    width: 100%;
     margin-top: 28px;
     margin-bottom: 10px;
-    overflow: hidden;
+    overflow: hidden !important;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -24,6 +24,16 @@
     border-radius: 8px;
     border: 1px solid #CFCFCF;
     outline: none;
+}
+.bookVendorForm select option{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    display: block;
+}
+.addCost{
+   font-weight: 700;
+
 }
 .bookVendorForm select:invalid{
     font-weight: 500;

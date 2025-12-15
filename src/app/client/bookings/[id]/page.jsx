@@ -32,28 +32,28 @@ const BookingItem = /* async */ ({params}) => {
             {
                 !isLoading && <div className={styles.doubleContainer}>
                     <p>loading done and data will now be displayed</p> 
-                    <div className={styles.mainContent}>
-                        <aside className={styles.aside}>
-                            <div className={styles.vendor}>
-                                <div className={styles.vendorImgPack}>
-                                    <img className={styles.vendorImg} src="/images/productPage/userImg.png" alt="vendor" />
+                    <div className="mainContent">
+                        <aside className="aside">
+                            <div className="vendor">
+                                <div className="vendorImgPack">
+                                    <img className="vendorImg" src="/images/productPage/userImg.png" alt="vendor" />
                                 </div>
                                 
-                                <div className={styles.vendorDetails}>
-                                    <p className={styles.vendorName}>Tee Home of Decor.</p>
+                                <div className="vendorDetails">
+                                    <p className="vendorName">Tee Home of Decor.</p>
                                     <p style={{color:"#636363"}}>Joined March 2025</p>
-                                    <div className={styles.catPill}>
+                                    <div className="catPill">
                                         <li>Decoration</li>
                                     </div>
                                 </div>
 
-                                <div className={styles.ratingPack}>
-                                    <p className={styles.rating}>RATING</p>
-                                    <img className={styles.ratingStars} src="/images/productPage/ratings.png" alt="ratings" />
+                                <div className="ratingPack">
+                                    <p className="rating">RATING</p>
+                                    <img className="ratingStars" src="/images/productPage/ratings.png" alt="ratings" />
                                     <p style={{fontWeight:700}}>4.7 Stars  |  32 Reviews</p>
                                 </div>
                             </div>
-                            <div className={styles.descPack}>
+                            <div className="descPack">
                                 <p className={styles.cityTitle}>Available in these cities</p>
                                 <div className={styles.pillsPack}>
                                     <div className={styles.cityPills}>Lagos</div>
@@ -69,9 +69,9 @@ const BookingItem = /* async */ ({params}) => {
                                 
                             </div>
                         </aside>
-                        <section className={styles.mainSection}>
+                        <section className="mainSection">
                             <h2>VENDOR BOOKING DETAILS </h2>
-                            <div className={styles.descPack}>
+                            <div className="descPack">
                                 <li className={styles.vendorItem}>
                                     <p>Client Name</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{isData.clientName}</p>
@@ -141,7 +141,7 @@ const BookingItem = /* async */ ({params}) => {
                                     <p style={{color:"#222222", fontWeight:700}}>{isData.bookingStatus}</p>
                                 </li>
                             </div>
-                            <div className={styles.descPack}>
+                            <div className="descPack">
                                 <p style={{color:"#222222", fontWeight:700}}>SERVICE ORDERED</p>
                                 
                                 <li className={styles.vendorItem}>
@@ -164,7 +164,7 @@ const BookingItem = /* async */ ({params}) => {
                                     </li>
                                 ))}
                             </div>
-                            <div className={styles.descPack}>
+                            <div className="descPack">
                                 <li className={styles.vendorItem}>
                                     <p style={{color:"#222222", fontWeight:700}}>Total Cost:</p>
                                     <p style={{color:"#222222", fontWeight:700}}>₦{isData.totalCost}</p>

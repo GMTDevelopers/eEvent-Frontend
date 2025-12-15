@@ -37,9 +37,9 @@ const Bookings = () => {
 
     return ( 
         <div>
-            <div className={styles.stats}>
+            <div className="stats">
                 <SearchFilter name="My Bookings"/>
-                <div className={styles.statsPack}>
+                <div className="statsPack">
                     <StatsCard title="ACTIVE BOOKINGS" data='5' icon={Minimize2} />
                     <StatsCard title="PAYMENT PENDING" data='2' icon={Loader} />
                     <StatsCard title="COMPLETED ORDERS" data='12' icon={CheckCheck} />

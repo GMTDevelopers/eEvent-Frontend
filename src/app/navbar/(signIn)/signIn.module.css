@@ -88,3 +88,13 @@
 .cancleTxt{
     height: 118px;
 }
+/*Book Ticket */
+.signContainer h5{
+    margin-bottom: 11px;
+    text-transform: uppercase;
+}
+.banner{
+    width: 100%;
+    border-radius: 12px;
+    height: 216px;
+}

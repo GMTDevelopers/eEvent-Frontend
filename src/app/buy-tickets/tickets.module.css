@@ -1,0 +1,158 @@
+.header{
+    width: 100%;
+    height: 236px;
+    position: relative;
+}
+.serviceHeaderImg{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+.headerTxt{
+    border: 1px solid white;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    height: auto;
+    width: 60%;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    color: #FBFBFB;
+}
+.headerTxt p{
+    margin-top: 8px;
+}
+
+.searchForm{
+    width: 75%;
+    margin: 40px auto 35px auto;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+}
+.searchForm input{
+    flex: 1;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+.searchForm select{
+    flex: 1;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+.searchForm button{
+    padding: 0.8rem 2rem;
+    background: #82027D;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+
+
+
+.searchPillsPack{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+.searchPills{
+    display: flex;
+    width: fit-content;
+    gap: 18px;
+}
+.searchPill{
+    font-family: 'Open Sans';
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    border: 1px solid #CFCFCF;
+    cursor: pointer;
+    background: inherit;
+}
+
+
+.ticketDisplay{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap:16px;
+}
+.ticketCard{
+    width: 416px;
+    height: auto;
+    opacity: 1;
+    border-radius: 24px;
+    background: #FFFFFF;
+    box-shadow: 0px 13px 28px 0px #FFDBF51A;
+    padding: 12px 12px;
+}
+.ticketCard:hover{
+    transition: ease-in 90ms;
+    box-shadow: 0px 51px 51px 0px #FFDBF517;
+    box-shadow: 0px 115px 69px 0px #FFDBF50D;
+    box-shadow: 0px 205px 82px 0px #FFDBF503;
+    box-shadow: 0px 320px 90px 0px #FFDBF500;
+}
+.cardHeader{
+    width: auto;
+    height: auto;
+    position: relative;
+}
+.catPill{
+    width: fit-content;
+    position: absolute;
+    top: 12;
+    left: 24;
+    padding: 8px 30px;
+    background: #FFEAC4CC;
+    border-radius: 24px;
+}
+.catPill li{
+   font-size: 15px;
+   font-weight: 600;
+}
+.catPill li::marker{
+   color: #82027D;
+}
+.prodImg{
+    width: 392px;
+    height: 205px;
+    margin: auto auto;
+}
+.prodTitle{
+    margin-top: 16px;
+    margin-bottom: 7px;
+}
+
+.ticketDetails{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.row1{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.row1 div{
+    display: flex;
+    align-items: center;
+    color: #636363;
+    font-size: 14px;
+    gap: 8px;
+}
+.icon{
+    color: #82027D;
+    width: 17px;
+    height: 17px;
+
+}
+
+.prodPrice{
+    margin-top: 26px;
+}

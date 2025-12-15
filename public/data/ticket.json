@@ -1,0 +1,193 @@
+[
+    {
+        "id":1,
+        "category":"comedy",
+        "ticketName":"Nite of a Thousand Laughs",
+        "organizer":"DeChronicles Music Group",
+        "time": "6:00 AM",
+        "date": "November 5th, 2025",
+        "location": "National Theatre, Lagos",
+        "cost" : "10,000.00",
+        "description": "Join us for Chronicles: The Worship Experience, an uplifting and transformative night dedicated entirely to praising and worshipping our King. This is more than just a concert; it's a powerful encounter where music and faith intersect. Prepare your heart to be moved by inspirational performances from renowned gospel artists and worship leaders.",
+        "images":{
+            "img1":"/images/buyTicket/laughs.png",
+            "img2":"/images/buyTicket/fest.png",
+            "img3":"/images/buyTicket/classical.png"
+        },
+        "types":[
+            {
+                "name": "regular",
+                "cost": "15000.00",
+                "number": "15"
+            },
+            {
+                "name": "reserved",
+                "cost": "25000.00",
+                "number": "8"
+            },
+            {
+                "name": "vip",
+                "cost": "35000.00",
+                "number": "5"
+            }
+        ],
+        "totalTicket":"28"
+    },
+    {
+        "id":2,
+        "category":"concert",
+        "ticketName":"Chronicles Music Concert",
+        "organizer":"DeChronicles Music Group",
+        "time": "7:00 AM",
+        "date": "November 8th, 2025",
+        "location": "National Theatre, Lagos",
+        "cost" : "25,000.00",
+        "description":"Join us for Chronicles:\nThe Worship Experience, an uplifting and transformative night dedicated entirely to praising and worshipping our King.\n\nThis is more than just a concert; it's a powerful encounter where music and faith intersect. Prepare your heart to be moved by inspirational performances from renowned gospel artists and worship leaders.",
+        "images":{
+            "img1":"/images/buyTicket/chronicles.png",
+            "img2":"/images/buyTicket/fest.png",
+            "img3":"/images/buyTicket/classical.png"
+        },
+        "types":[
+            {
+                "name": "regular",
+                "cost": "15000.00",
+                "number": "15"
+            },
+            {
+                "name": "reserved",
+                "cost": "25000.00",
+                "number": "10"
+            },
+            {
+                "name": "vip",
+                "cost": "35000.00",
+                "number": "25"
+            }
+        ],
+        "totalTicket":"50"
+    },
+    {
+        "id":3,
+        "category":"concert",
+        "ticketName":"Music Fest - 2025",
+        "organizer":"DeChronicles Music Group",
+        "time": "7:00 PM",
+        "date": "November 16th, 2025",
+        "location": "National Theatre, Lagos",
+        "cost" : "125,000.00",
+        "description": "Join us for Chronicles: The Worship Experience, an uplifting and transformative night dedicated entirely to praising and worshipping our King. This is more than just a concert; it's a powerful encounter where music and faith intersect. Prepare your heart to be moved by inspirational performances from renowned gospel artists and worship leaders.",
+        "images":{
+            "img1":"/images/buyTicket/fest.png",
+            "img2":"/images/buyTicket/classical.png",
+            "img3":"/images/buyTicket/festival.png"
+        },
+        "types":[
+            {
+                "name": "regular",
+                "cost": "15000.00",
+                "number": "15"
+            },
+            {
+                "name": "reserved",
+                "cost": "25000.00",
+                "number": "5"
+            },
+            {
+                "name": "vip",
+                "cost": "35000.00",
+                "number": "15"
+            }
+        ]
+    },
+    {
+        "id":4,
+        "category":"Drama",
+        "ticketName":"Music Festival - Lagos",
+        "time": "5:00 PM",
+        "date": "November 12th, 2025",
+        "location": "National Theatre, Lagos",
+        "cost" : "125,000.00",
+        "description": "Join us for Chronicles: The Worship Experience, an uplifting and transformative night dedicated entirely to praising and worshipping our King. This is more than just a concert; it's a powerful encounter where music and faith intersect. Prepare your heart to be moved by inspirational performances from renowned gospel artists and worship leaders.",
+        "images":{
+            "img1":"/images/buyTicket/festival.png",
+            "img2":"/images/buyTicket/jazz.png",
+            "img3":"/images/buyTicket/classical.png"
+        },
+        "types":[
+            {
+                "name": "regular",
+                "cost": "15000.00",
+                "number": "15"
+            },
+            {
+                "name": "reserved",
+                "cost": "25000.00",
+                "number": "15"
+            },
+            {
+                "name": "vip",
+                "cost": "35000.00",
+                "number": "15"
+            }
+        ]
+    },
+    {
+        "id":5,
+        "category":"Theatre",
+        "ticketName":"A Night of Classical Music",
+        "time": "8:00 PM",
+        "date": "December 1th, 2025",
+        "location": "National Theatre, Lagos",
+        "cost" : "20,000.00",
+        "description": "Join us for Chronicles: The Worship Experience, an uplifting and transformative night dedicated entirely to praising and worshipping our King. This is more than just a concert; it's a powerful encounter where music and faith intersect. Prepare your heart to be moved by inspirational performances from renowned gospel artists and worship leaders.",
+        "images":{
+            "img1":"/images/buyTicket/classical.png",
+            "img2":"/images/buyTicket/jazz.png",
+            "img3":"/images/buyTicket/jazz.png"
+        },
+        "types":[
+            {
+                "name": "regular",
+                "cost": "15000.00"
+            },
+            {
+                "name": "reserved",
+                "cost": "25000.00"
+            },
+            {
+                "name": "vip",
+                "cost": "35000.00"
+            }
+        ]
+    },
+    {
+        "id":6,
+        "category":"Theatre",
+        "ticketName":"Jazz Music Festival",
+        "time": "8:00 PM",
+        "date": "January 16th, 2026",
+        "location": "National Theatre, Lagos",
+        "cost" : "12,000.00",
+        "description": "Join us for Chronicles: The Worship Experience, an uplifting and transformative night dedicated entirely to praising and worshipping our King. This is more than just a concert; it's a powerful encounter where music and faith intersect. Prepare your heart to be moved by inspirational performances from renowned gospel artists and worship leaders.",
+        "images":{
+            "img1":"/images/buyTicket/jazz.png",
+            "img2":"/images/buyTicket/jazz.png",
+            "img3":"/images/buyTicket/jazz.png"
+        },
+        "types":[
+            {
+                "name": "regular",
+                "cost": "15000.00"
+            },
+            {
+                "name": "reserved",
+                "cost": "25000.00"
+            },
+            {
+                "name": "vip",
+                "cost": "35000.00"
+            }
+        ]
+    }
+]

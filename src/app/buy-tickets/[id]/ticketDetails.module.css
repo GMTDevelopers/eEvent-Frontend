@@ -1,0 +1,93 @@
+.ticketSection{
+    width: 75%;
+    min-height: 863px;
+    margin: auto auto;
+    margin-top: 56px;
+}
+.BookTicket{
+    padding: 24px 33px 34px 40px;
+    background: #FFEAC466;
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.details {
+    margin-bottom: 9px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.details .cc{
+    display: flex;
+    align-items: center;
+    color: #636363;
+    font-size: 14px;
+    font-weight: 600;
+    gap: 8px;
+}
+.icon{
+    color: #82027D;
+    width: 17px;
+    height: 17px;
+
+}
+.bookForm{
+    display: flex;
+    height: 44px;
+    width: 60%;
+    justify-content: space-between;
+}
+.bookForm select{
+    width: 65%;
+    height: inherit;
+    padding: 10px 15px;
+    border-radius: 58px;
+    border: 1px solid #CFCFCF;
+    outline: none;
+    background: transparent;
+    color: #222222;
+}
+.bookForm select option{
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+    background: #FFEAC466;
+
+}
+.bookForm button{
+    width: 30% ;
+    padding: 1rem;
+    background: #82027D;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius:58px;
+    font-weight: bold ;
+}
+.extraDetails{
+    margin-top: 40px;
+}
+.images{
+    margin-top: 48px;
+    height: 314px;
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+}
+.images img{
+    width: 58%;
+    height: inherit;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+}
+.images img:last-child{
+    width: 35%;
+    height: inherit;
+    object-position: cover;
+    object-position: center;
+    border-radius: 12px;
+}
