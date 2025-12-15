@@ -1,11 +1,11 @@
 import styles from './header.module.css';
-const Header = ({img}) => {
+const Header = ({img,header, subHeader}) => {
     return ( 
         <header className={styles.header}>
-            <img className={styles.serviceHeaderImg} src='/images/servicePage/serviceBG.png' alt="Service Background"/>
+            <img className={styles.serviceHeaderImg} src={img} alt="Service Background"/>
             <div className={styles.headerTxt}>
-            <h1>Find trusted event services near you.</h1>
-            <p className={styles.txtHeader}>Your next great event starts here.</p>
+            <h1>{header}</h1>
+            <p className={styles.txtHeader}>{subHeader}</p>
             </div>
         </header>
     );

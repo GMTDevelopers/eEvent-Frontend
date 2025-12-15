@@ -4,6 +4,7 @@ import styles from './tickets.module.css';
 import { SlArrowRight } from 'react-icons/sl';
 import Link from 'next/link';
 import { Calendar, ClockFading, MapPin } from 'lucide-react';
+import Header from '../(components)/header/page';
 
 const BuyTicket = () => {
     const [tickets, setTickets] = useState([])
@@ -71,13 +72,7 @@ const BuyTicket = () => {
 
     return ( 
         <div className='main'>
-            <header className={styles.header}>
-                <img className={styles.serviceHeaderImg} src='/images/buyTicket/buyTicket.png' alt="Service Background"/>
-                <div className={styles.headerTxt}>
-                    <h1>Find and Book Tickets for Exciting Events Near You.</h1>
-                    <p className={styles.txtHeader}>Get tickets to concerts, exhibitions, or workshops with ease</p>
-                </div>
-            </header>
+            <Header img='/images/buyTicket/buyTicket.png' header='Find and Book Tickets for Exciting Events Near You.' subHeader='Get tickets to concerts, exhibitions, or workshops with ease' />
             <form onSubmit={handleSearch} className={styles.searchForm}>
 
                 <input type="text" placeholder="Enter City or ZIP Code To Search" value={location} onChange={(e) => setLocation(e.target.value)}  />

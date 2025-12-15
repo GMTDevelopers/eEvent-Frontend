@@ -34,7 +34,7 @@ const FindService = () => {
 
   return (
     <div className={`main ${styles.service}`}>
-      <Header />
+      <Header img='/images/servicePage/serviceBG.png' header='Find trusted event services near you.' subHeader='Your next great event starts here.'  />
 
       <div className={styles.searchContainer}>
         <SearchBar />
