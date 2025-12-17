@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { Check, Heart, MessageCircleMore, Settings } from 'lucide-react';
 const Navbar = () => {
     const { openModal } = useModal();
-    const {logedInUser, logout} = useAuth()
+    const {logedInUser, logout, userType} = useAuth()
     const [activeTab, setActiveTab] = useState()
     console.log("this is the nav bar", logedInUser)
     return ( 
@@ -26,11 +26,11 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className={Styles.navCta}>
-                    <div className="btnNoCapsule">Become a Vendor</div>
+                    <div className="btnNoCapsule"><Link href='/vendor/signUp'>Become a Vendor</Link></div>
                     <div className="btnCapsule" onClick={() => openModal(<SignIn />)}> <span>Sign In</span></div>
                 </div>
             </div>
-            {logedInUser && (
+            {logedInUser && userType && (
                 <div className={Styles.userNav}>
                     <p className={Styles.welcome}>Welcome, {logedInUser.data.firstName}</p>    
                     <div className={Styles.userNavMenu}>

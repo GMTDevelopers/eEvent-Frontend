@@ -7,6 +7,7 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [logedInUser, setLogedInUser] = useState(null);
+  const [userType, setUserType] = useState(true) // true for CLIENT USERS and flase for VENDOR USERS
   const [loading, setLoading] = useState(true);
 
   // Check if user was logged in before (on page load/refresh)
@@ -29,8 +30,22 @@ export function AuthProvider({ children }) {
 
       if (res.ok) {
         const userData = await res.json();
-        setLogedInUser(userData); // assuming /api/me returns { id, name, email, avatar }
-        console.log(userData)
+        console.log(userData.data.role[0])
+        if (userData?.data?.role[0]==="CLIENT"){
+          setLogedInUser(userData); // assuming /api/me returns { id, name, email, avatar }
+        } 
+        if (userData?.data?.role[0]==="VENDOR") {
+          try {
+            const vendorRes = await fetch("https://eevents-srvx.onrender.com/v1/vendors/me")
+            const vendorData = await vendorRes.json();
+            setUserType(false)
+            setLogedInUser(vendorData);
+          } catch (err) {
+            console.error("Failed to fetch vendor data", err);
+          }
+        }
+        
+        console.log(userData, userType)
       } else {
         logout(); // token invalid/expired
       }
@@ -75,7 +90,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ logedInUser, login, logout, loading }}>
+    <AuthContext.Provider value={{ logedInUser, login, logout, loading, userType }}>
       {loading ? <span>loading ...</span> : children }
     </AuthContext.Provider>
   );

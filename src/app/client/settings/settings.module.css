@@ -1,25 +1,25 @@
 .mainContent{
-    align-items: center;
+  align-items: center;
 }
 .mainSection{
-    text-align: center;
+  text-align: center;
 }
 .mainSection h2{
-    text-align: center;
-    margin-bottom: 32px;
+  text-align: center;
+  margin-bottom: 32px;
 }
 .photoPack{
-    width: 481px;
-    height: 481px;
-    border-radius: 24px;
-    position: relative;
-    overflow: hidden;
+  width: 481px;
+  height: 481px;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
 
 }
 .photoPack img{
-    width: 100%;
-    height: auto;
-    object-fit: fill;
+  width: 100%;
+  height: auto;
+  object-fit: fill;
     
 }
 .uploadBtn {
