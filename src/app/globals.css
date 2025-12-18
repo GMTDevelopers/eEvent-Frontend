@@ -264,3 +264,11 @@ a {
   object-position: top;
 }
 
+input{
+  width: 100%;
+  height: 56px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+}

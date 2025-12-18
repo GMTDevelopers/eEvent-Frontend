@@ -29,7 +29,7 @@ const VendorSignUp = () => {
         console.log(agreeText);
         console.log(error);
         // Navigate instead of submitting
-       /*  router.push('/vendor/create-account'); */ // change to your actual route
+        router.push('/vendor/signUp/register');
     };
 
     return ( 
