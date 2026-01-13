@@ -51,6 +51,7 @@
     border: none;
     border-radius: 8px;
     font-weight: bold ;
+    font-family: inherit;
 }
 .label{
     font-weight: 700;

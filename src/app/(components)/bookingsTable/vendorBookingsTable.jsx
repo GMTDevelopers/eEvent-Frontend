@@ -12,6 +12,9 @@ import Contact from "../Contact/pages";
 import Cancle from "../cancle/cancle";
 import Message from "../message/pages";
 import Accept from "../vendorReschedule/accept";
+import Reject from "../vendorReschedule/reject";
+import VendorAccept from "../vendorAcceptBooking/page";
+import MarkComplete from "../vendorMarkComplete/page";
 
 export default function VendorBookingsTable({ bookings = [] }) {
   const router = useRouter();
@@ -69,11 +72,9 @@ export default function VendorBookingsTable({ bookings = [] }) {
                     <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
                       <li className={styles.dropdownItem} onClick={() => router.push(`/vendor/bookings/${b.id}`)}>View</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<Accept />)}>Accept reschedule</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<Message />)}>Reject reschedule</li>
-
-                      <li style={{color:"#09A14A"}} className={styles.dropdownItem}>Accept booking</li>
+                      <li className={styles.dropdownItem} onClick={() => openModal(<Reject />)}>Reject reschedule</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<Message />)} >Message client</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<Reschedule />)}>Mark completed</li>
+                      <li className={styles.dropdownItem} onClick={() => openModal(<MarkComplete />)}>Mark completed</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<Contact />)} >Contact support</li>
                     </div>
                   )}

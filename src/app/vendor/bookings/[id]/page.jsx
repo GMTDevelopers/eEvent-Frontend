@@ -4,8 +4,8 @@ import styles from './bookingItem.module.css';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, Download } from 'lucide-react';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
-import Accept from '@/app/(components)/acceptBooking/page';
-import Reject from '@/app/(components)/rejectBooking/page';
+import Accept from '@/app/(components)/vendorAcceptBooking/page';
+import Reject from '@/app/(components)/vendorRejectBooking/page';
 import Message from '@/app/(components)/message/pages';
 import Contact from '@/app/(components)/Contact/pages';
 const BookingItem = /* async */ ({params}) => {

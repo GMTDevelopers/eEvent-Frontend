@@ -1,0 +1,52 @@
+.serviceMain{
+    min-height: auto;
+}
+.activeService{
+    width: 100%;
+    display: flex;
+/*     justify-content: space-between; */
+    gap: 16px;
+}
+
+.reRatings{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+}
+.reRatings h3{
+   
+    margin-top: 56px;
+    margin-bottom: 14px;
+}
+.review{
+  width: 100%;
+  border: 1px solid #CFCFCF;
+  border-radius: 12px;
+  padding: 16px 32px;
+}
+.reviewUser{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.reviewUser img{
+    width: 38px;
+    height: 38px;
+    border-radius: 300px;
+    object-fit: cover;
+}
+.reviewUser div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0px;
+}
+
+.reviewUser div small{
+    color: #636363;
+}
+.comment{
+    margin-top: 12px;
+    color: #636363;
+}

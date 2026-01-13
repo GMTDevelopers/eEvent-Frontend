@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styles from '../../navbar/(signIn)/signIn.module.css';
 
-const Accept = () => {
+const VendorAccept = () => {
     return ( 
         <div className={styles.signContainer}>
             <h3>ACCEPT BOOKING</h3>
@@ -19,4 +19,4 @@ const Accept = () => {
     );
 }
  
-export default Accept;
+export default VendorAccept;
