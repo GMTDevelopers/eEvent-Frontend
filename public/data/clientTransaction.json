@@ -18,6 +18,7 @@
     "contactPersonName": "Ajayi Michael",
     "ContactPersonPhone": "+2348012345678",
     "AltContactPersonPhone": "+2348139876543",
+    "paymentStatus": "fully paid",
     "bookingStatus": "pending",
     "serviceOrdered": {
       "serviceName": "Gold Chiavari Chairs with Cushions",
@@ -51,6 +52,7 @@
     "contactPersonName": "Chike Okafor",
     "ContactPersonPhone": "+2348123456789",
     "AltContactPersonPhone": "+2348056789123",
+    "paymentStatus": "pending",
     "bookingStatus": "upcoming",
     "serviceOrdered": {
       "serviceName": "Full Wedding Photography + Videography",
@@ -83,6 +85,7 @@
     "contactPersonName": "Mr. Tunde Adebayo",
     "ContactPersonPhone": "+2348034567890",
     "AltContactPersonPhone": "+2349098765432",
+    "paymentStatus": "half paid",
     "bookingStatus": "confirmed",
     "serviceOrdered": {
       "serviceName": "Continental Buffet for 500 Guests",
@@ -115,6 +118,7 @@
     "contactPersonName": "David Ogunleye",
     "ContactPersonPhone": "+2348145678901",
     "AltContactPersonPhone": "",
+    "paymentStatus": "half paid",
     "bookingStatus": "upcoming",
     "serviceOrdered": {
       "serviceName": "Premium DJ + Full Sound & Lighting",
@@ -147,6 +151,7 @@
     "contactPersonName": "Tobi Adeyemi",
     "ContactPersonPhone": "+2348167891234",
     "AltContactPersonPhone": "+2347011122334",
+    "paymentStatus": "fully paid",
     "bookingStatus": "completed",
     "serviceOrdered": {
       "serviceName": "Luxury Floral Decor + Backdrop",
@@ -179,6 +184,7 @@
     "contactPersonName": "Chioma Nwosu",
     "ContactPersonPhone": "+2349056781234",
     "AltContactPersonPhone": "+2348023456789",
+    "paymentStatus": "half paid",
     "bookingStatus": "upcoming",
     "serviceOrdered": {
       "serviceName": "300 Gold Chiavari Chairs + Tables",
@@ -211,6 +217,7 @@
     "contactPersonName": "Tolu Adebola",
     "ContactPersonPhone": "+2348178901234",
     "AltContactPersonPhone": "",
+    "paymentStatus": "pending",
     "bookingStatus": "completed",
     "serviceOrdered": {
       "serviceName": "4K Cinematic Video Coverage",
@@ -243,6 +250,7 @@
     "contactPersonName": "Mrs. Fatima Yusuf",
     "ContactPersonPhone": "+2348031112223",
     "AltContactPersonPhone": "+2349055556667",
+    "paymentStatus": "fully paid",
     "bookingStatus": "confirmed",
     "serviceOrdered": {
       "serviceName": "Full Event Coordination (500 pax)",
@@ -276,6 +284,7 @@
     "contactPersonName": "Amina Ibrahim",
     "ContactPersonPhone": "+2348143210987",
     "AltContactPersonPhone": "+2347018889999",
+    "paymentStatus": "fully paid",
     "bookingStatus": "upcoming",
     "serviceOrdered": {
       "serviceName": "Bridal Makeup + 10 Bridesmaids",
@@ -308,6 +317,7 @@
     "contactPersonName": "Mrs. Adekunle",
     "ContactPersonPhone": "+2348112233445",
     "AltContactPersonPhone": "",
+    "paymentStatus": "fully paid",
     "bookingStatus": "pending",
     "serviceOrdered": {
       "serviceName": "Kids Chairs & Tables (100 sets)",
@@ -340,6 +350,7 @@
     "contactPersonName": "Chukwudi Okonkwo",
     "ContactPersonPhone": "+2348032221111",
     "AltContactPersonPhone": "+2349098887777",
+    "paymentStatus": "pending",
     "bookingStatus": "confirmed",
     "serviceOrdered": {
       "serviceName": "Traditional Buffet for 800 Guests",
@@ -371,6 +382,7 @@
     "contactPersonName": "Yusuf Ahmed",
     "ContactPersonPhone": "+2349155556666",
     "AltContactPersonPhone": "",
+    "paymentStatus": "half paid",
     "bookingStatus": "pending",
     "serviceOrdered": {
       "serviceName": "Graduation Photography (300 students)",
@@ -400,6 +412,7 @@
     "contactPersonName": "Emmanuel Nwafor",
     "ContactPersonPhone": "+2348133334444",
     "AltContactPersonPhone": "",
+    "paymentStatus": "pending",
     "bookingStatus": "upcoming",
     "serviceOrdered": {
       "serviceName": "Live Choir Performance",

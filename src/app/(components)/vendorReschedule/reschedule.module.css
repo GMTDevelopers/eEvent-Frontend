@@ -1,0 +1,9 @@
+.rescheduleDetails{
+    width: 100%;
+}
+.detailItems{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+}

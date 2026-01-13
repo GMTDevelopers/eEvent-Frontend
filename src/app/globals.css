@@ -24,7 +24,7 @@ body {
   width: 100vw;
   max-width: 95%;
   margin: auto auto;
-  border: 1px solid black;
+/*   border: 1px solid black; */
 }
 
 
@@ -139,16 +139,16 @@ a {
 
 /* Double*/
 .mainContent{
-  border: 1px solid black;
+ /*  border: 1px solid black; */
   display: flex;
-  gap: 32px;
+  gap: 24px;
   width: 100%;
   height: auto;
   padding: 0 3% 0 4%;
   margin-top: 18px;
 }
 .aside{
-  border: 1px solid rgb(129, 72, 72);
+ /*  border: 1px solid rgb(129, 72, 72); */
   width: 25%;
 }
 .bookingTitle{
@@ -238,7 +238,7 @@ a {
 
 .mainSection{
   width: 73%;
-  border: 1px solid red;
+/*   border: 1px solid red; */
 }
 .mainSection h2{
   margin-top: 26px;
@@ -248,6 +248,9 @@ a {
   height: auto;
   color: #636363;
   margin: 32px 0px 48px 0;
+  border: 1px solid #CFCFCF;
+  border-radius: 12px;
+  padding: 16px 32px;
 }
 
 /* Deatils Header*/

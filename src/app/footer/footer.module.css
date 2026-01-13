@@ -7,6 +7,7 @@
   height: 494px;
   background-image: url('/images/footerBg.webp');
   background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   align-items: center;
   padding-left: 72px;
@@ -67,6 +68,7 @@
   font-weight: 500;
   color: #636363;
   letter-spacing: -2%;
+  justify-content: space-between;
 }
 .f2Pack1{
   width: 330px;

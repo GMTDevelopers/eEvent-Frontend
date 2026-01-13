@@ -1,0 +1,76 @@
+.green{
+    background: #2ED074;
+}
+.yellow{
+    background: #F0B502;
+}
+.purple{
+    background: #82027D;
+}
+.red{
+    background: #E50909;
+}
+.vendorStats{
+    display: flex;
+    justify-content: space-between;
+    gap: 19px;
+}
+.vendorStatsPack{
+    width: 50%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.vendorGraph{
+    border: 1.5px solid #cfcfcf;
+    width: 50%;
+    height: 369px;
+    border-radius: 14px;
+    overflow: hidden;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.graph{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+
+}
+.recentActivities{
+    border: 1.5px solid #cfcfcf;
+    background: #ffffff;
+    height: auto;
+    margin-top: 32px;
+    border-radius: 12px;
+    padding: 40px 58px 55px 48px;
+}
+.itemsPack{
+    margin-top: 48px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.activityItem{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.name{
+    width: 37%;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 53px;
+    height: 53px;
+    border-radius: 999px;
+    color: #ffffff;
+}

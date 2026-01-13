@@ -30,7 +30,8 @@ const SignIn = () => {
                 </div>
             </div>
             <form className={styles.signInForm} onSubmit={handleSubmit}>
-                <input placeholder="user name" type='text' name='user'/>
+                <input placeholder="email address" type='email' name='user'/>
+                {/* <input placeholder="user name" type='text' name='user'/> */}
                 <input type="password" placeholder="Password" name='password' />
                 <p className={styles.forgotPassword}>Forgot password?</p>
                 <button type="submit">

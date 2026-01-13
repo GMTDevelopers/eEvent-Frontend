@@ -45,6 +45,9 @@
     gap: 10%;
     background: #FFEAC4CC;
 }
+.vendorNav{
+    justify-content: space-between;
+}
 .welcome{
     font-weight: 700;
     font-style: Bold;

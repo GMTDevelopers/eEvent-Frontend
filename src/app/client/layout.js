@@ -12,7 +12,7 @@ export default function ClientLayout({ children }) {
         <>
             {logedInUser && (
                 <div className="main">
-                    <Header />
+                    <Header img='/images/servicePage/serviceBG.png' header='Find trusted event services near you.' subHeader='Your next great event starts here.'  />
                     <main>
                         {children}
                     </main> 

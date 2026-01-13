@@ -18,7 +18,7 @@ const Confirmation = () => {
             </div>
             
             <div className={styles.termsCond}>
-                Wezve sent a confirmation link to your email address. Please click the link in that email to verify your account and continue your registration on eEvents.
+                We've sent a confirmation link to your email address. Please click the link in that email to verify your account and continue your registration on eEvents.
                 <br /><br />
                 If you dont see the message in your inbox, kindly check your spam or promotions folder.
             </div>

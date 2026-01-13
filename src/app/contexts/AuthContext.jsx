@@ -36,7 +36,11 @@ export function AuthProvider({ children }) {
         } 
         if (userData?.data?.role[0]==="VENDOR") {
           try {
-            const vendorRes = await fetch("https://eevents-srvx.onrender.com/v1/vendors/me")
+            const vendorRes = await fetch("https://eevents-srvx.onrender.com/v1/vendors/me", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
             const vendorData = await vendorRes.json();
             setUserType(false)
             setLogedInUser(vendorData);
