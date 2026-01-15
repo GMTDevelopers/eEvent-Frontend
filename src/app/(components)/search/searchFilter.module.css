@@ -1,12 +1,17 @@
 .bar1{
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  gap: 27%;
   align-items: center;
   margin-bottom: 35px;
 }
+.bar1 h3{
+  width: 40%;
+
+}
 .rightContainer{
-  width: 608px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -21,6 +26,7 @@
   justify-content: space-between;
   border: 1.5px solid #CFCFCF;
   align-items: center;
+  cursor: pointer;
 }
 .searchMoreIcon{
   color: #666666;

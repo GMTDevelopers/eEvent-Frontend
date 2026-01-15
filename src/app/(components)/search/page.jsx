@@ -1,15 +1,18 @@
 'use client'
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Plus, Search } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import styles from './searchFilter.module.css'
+import { useAuth } from "@/app/contexts/AuthContext";
+import { useRouter } from 'next/navigation'
 
-const SearchFilter = ({name}) => {
+const SearchFilter = ({name, page}) => {
     const [query, setQuery] = useState('');
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef(null);
+    const router = useRouter()
     const [showMore, setShowMore] = useState(false);
     const moreCatRef = useRef(null);
-
+    const {logedInUser} = useAuth()
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -37,6 +40,7 @@ const SearchFilter = ({name}) => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [showMore]);
 
+
     return ( 
         <>
             <div className={styles.bar1}>
@@ -55,10 +59,14 @@ const SearchFilter = ({name}) => {
                         />
                         <Search className={styles.searchIcon} size={20} />
                     </form>
-                     <div onClick={() => setShowMore(!showMore)} className={styles.searchBtn}>
+                    {page==="findService" && <div onClick={() => setShowMore(!showMore)} className={styles.searchBtn}>
                         <p>All locations</p>
                         <ChevronDown className={styles.searchMoreIcon} size={20}/>
-                    </div>
+                    </div>}
+                    {page==="vendorService" && <div onClick={() => router.push('/vendor/service/addService')} className={styles.searchBtn}>
+                        <p>Add new service</p>
+                        <Plus className={styles.searchMoreIcon} size={20}/>
+                    </div>}
                     {showMore && (
                         <div className={styles.moreCat} ref={moreCatRef}>
                             <ul>
@@ -66,7 +74,7 @@ const SearchFilter = ({name}) => {
                                 <li>Snacks</li>
                                 <li>Security</li>
                                 <li>Decorative Lights</li>
-                                {logedInUser && (<li>Drinks and wines</li>)}
+                                {logedInUser? <li>Drinks and wines</li> : alert("you need to login")}
                             </ul>
                         </div>
                     )}

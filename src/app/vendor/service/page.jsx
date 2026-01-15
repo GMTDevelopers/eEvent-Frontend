@@ -3,8 +3,9 @@ import styles from '../bookings/[id]/bookingItem.module.css';
 import xStyles from './service.module.css'
 import SearchFilter from '@/app/(components)/search/page';
 import StatsCard from '@/app/(components)/statsCard/page';
-import { CheckCheck, Loader, Minimize2, X } from 'lucide-react';
+import { CheckCheck, Loader, Minimize2, Star, X } from 'lucide-react';
 import ProductCard from '@/app/(components)/productCard/page';
+import Header from '@/app/(components)/header/page';
 
 const VendorServices = /* async */ () => {
 
@@ -14,13 +15,14 @@ const VendorServices = /* async */ () => {
     return ( 
         <div>
             <div className={`main ${xStyles.serviceMain}`}>
+                <Header img='/images/servicePage/serviceBG.png' header='Find trusted event services near you.' subHeader='Your next great event starts here.' />
                 <div className="stats">
-                    <SearchFilter name="My Services"/>
+                    <SearchFilter name="My Services" page="vendorService"/>                    
                     <div className="statsPack">
-                        <StatsCard title="ACTIVE BOOKINGS" data='5' icon={Minimize2} />
-                        <StatsCard title="PAYMENT PENDING" data='2' icon={Loader} />
-                        <StatsCard title="COMPLETED ORDERS" data='12' icon={CheckCheck} />
-                        <StatsCard title="CANCELLED ORDERS" data='1' icon={X} />
+                        <StatsCard title="ACTIVE SERVICES" data='1' icon={Minimize2} />
+                        <StatsCard title="PENDING SERVICES" data='1' icon={Loader} />
+                        <StatsCard title="BOOKINGS THIS MONTH" data='3' icon={CheckCheck} />
+                        <StatsCard title="OVERALL RATING" data='4.5' icon={Star} />
                     </div>
                 </div>
             </div>

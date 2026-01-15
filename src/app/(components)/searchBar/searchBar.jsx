@@ -34,8 +34,8 @@ const SearchBar = () => {
             <div className={styles.bar1}>
                 <h3>eEvents Vendors & Services</h3>
                 <div className={styles.rightContainer}>
-                    <SearchFilter />
-                    <div onClick={() => setShowMore(!showMore)} className={styles.searchBtn}>
+                    <SearchFilter page="findService"/>
+                    {/* <div onClick={() => setShowMore(!showMore)} className={styles.searchBtn}>
                         <p>All locations</p>
                         <ChevronDown className={styles.searchMoreIcon} size={20}/>
                     </div>
@@ -49,7 +49,7 @@ const SearchBar = () => {
                                 {logedInUser && (<li>Drinks and wines</li>)}
                             </ul>
                         </div>
-                    )}
+                    )} */}
                 </div>
             </div>
             <div className={styles.bar2}>

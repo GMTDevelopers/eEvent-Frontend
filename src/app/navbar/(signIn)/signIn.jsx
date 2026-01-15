@@ -5,10 +5,12 @@ import styles from './signIn.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import UserSignUp from '../(userSignUp)/userSignUp';
+import { useState } from 'react';
 const SignIn = () => {
     const { openModal } = useModal();
     const { closeModal } = useModal();
     const { login } = useAuth();
+    const [loading, setLoading] = useState(true)
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,6 +19,7 @@ const SignIn = () => {
         const password = formData.get("password");
 
         await login(user, password);  // This does everything
+        setLoading(false)
         closeModal();
     };
 
@@ -34,8 +37,8 @@ const SignIn = () => {
                 {/* <input placeholder="user name" type='text' name='user'/> */}
                 <input type="password" placeholder="Password" name='password' />
                 <p className={styles.forgotPassword}>Forgot password?</p>
-                <button type="submit">
-                Sign In
+                <button style={loading?{color:"red"}:{color:"green"}} type="submit">{loading? "Sign In" : "loading"}
+                
                 </button>
                 <div className={styles.CTAdiv}>
                     <p style={{color:'#636363'}}>Don’t have an account?</p>
