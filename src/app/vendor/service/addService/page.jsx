@@ -10,6 +10,9 @@ import {ChevronLeft} from 'lucide-react';
 import ProgressIndicator from '@/app/(components)/progressIndicator/page';
 import { useState } from 'react';
 import GalleryStep from './(add-steps)/galleryStep';
+import ServiceStep from './(add-steps)/serviceFeature';
+import AdditionalService from './(add-steps)/additionalService';
+import ServicePricing from './(add-steps)/servicePricing';
 
 
 const stepsConfig = [
@@ -57,16 +60,8 @@ const AddServices = /* async */ () => {
             if (formData.registered === 'Yes' && !formData.certificate) {
                 stepErrors.certificate = 'Business certificate is required for registered businesses';
             }
-        } else if (currentStep === 3) {
-            // Verification Step
-            if (!formData.idType) stepErrors.idType = 'Means of identification is required';
-            if (!formData.idNumber.trim()) stepErrors.idNumber = 'ID number is required';
-            if (!formData.idFile) stepErrors.idFile = 'ID document upload is required';
-            if (!formData.businessFile) stepErrors.businessFile = 'Business/license document upload is required';
-            if (!formData.passportFile) stepErrors.passportFile = 'Passport/photo upload is required';
-            } else if (currentStep === 4) {
-            // Subscription Step – usually just plan selection
-            if (!formData.subscriptionPlan) stepErrors.subscriptionPlan = 'Please select a subscription plan';
+        } else if (currentStep === 4) {
+            
         }
 
         return stepErrors;
@@ -142,6 +137,9 @@ const AddServices = /* async */ () => {
                                 <div className={xStyles.stepsContainer}>
                                     
                                     {currentStep === 1 && <GalleryStep formData={formData} updateFormData={updateFormData} errors={errors} />}
+                                    {currentStep === 2 && <ServiceStep formData={formData} updateFormData={updateFormData} errors={errors} />}
+                                    {currentStep === 3 && <AdditionalService formData={formData} updateFormData={updateFormData} errors={errors} />}
+                                    {currentStep === 4 && <ServicePricing formData={formData} updateFormData={updateFormData} errors={errors} />}
                                 </div>
                                 
                                 <div className={formStyle.buttonsPack}>
