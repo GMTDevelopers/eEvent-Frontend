@@ -2,6 +2,9 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
+import Loading from "../(components)/loading/loading";
+import { getApiError } from "../(components)/error/error";
+import { refresh } from "next/cache";
 
 const AuthContext = createContext();
 
@@ -69,11 +72,18 @@ export function AuthProvider({ children }) {
         body: JSON.stringify({ user, password }),
       });
 
-      if (!loginRes.ok) throw new Error("Login failed");
+      const Data  = await loginRes.json();
 
-      const { data } = await loginRes.json();
-      const { accessToken, refreshToken } = data;
-      console.log(data)
+      if (!loginRes.ok){
+        throw{
+          status: Data.status,
+          code: Data.code ?? loginRes.status,
+          message: Data.message,
+          details: Data.data ?? null
+        }
+      }
+      
+      const { accessToken, refreshToken } = Data.data;
       // Save tokens
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
@@ -81,21 +91,97 @@ export function AuthProvider({ children }) {
       // Now get user profile
       await fetchUserProfile(accessToken);
 
+      return{
+        status: Data.status,
+      }
+
     } catch (err) {
-      alert("Login failed: " + err.message);
+      console.log(err)
+      throw{
+        status: err.status,
+        code: err.code ?? loginRes.status,
+        message: err.message,
+        details: err.data ?? null
+      }
     }
   };
 
-  const logout = () => {
+
+  const signUp = async (username, password, phone, email, middleName, firstName, lastName) => {
+
+    try {
+      const signUpRes = await fetch("https://eevents-srvx.onrender.com/v1/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password, phone, email, middleName, firstName, lastName}),
+      });
+
+      const data = await signUpRes.json();      
+      // it is the error that is thrown here
+      if (!signUpRes.ok) {
+        throw {
+          status: data.status,
+          code: data.code ?? signUpRes.status,
+          message: data.message,
+          details: data.data ?? null
+        };
+      }
+      console.log("Signup successful:", data);
+     
+      return{
+        status: data.status,
+        code: data.code ?? signUpRes.status,
+        message: data.message,
+        details: data.data ?? null
+      }
+    } catch (err) {
+    // the error thrown above is caught here and passed to the front-end
+      console.log("this is the catch error",err)
+      throw{
+        status: err.status,
+        code: err.code,
+        message: err.message,
+        details: err.data ?? null
+      };
+    }
+  };
+
+  const logout = async () => {
+    const token = localStorage.getItem("access_token");
+    try{
+      const result = await fetch("https://eevents-srvx.onrender.com/v1/auth/logout", {
+        method: "POST",
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+        
+      });
+      const data = await result.json()
+      if (!result.ok){
+        throw{
+          status: data.status,
+          message: data.message
+        }
+      }
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token")
+      
+      console.log(data.message)
+    }catch(err){
+      throw{
+        status: err.status,
+        message: err.message
+      }
+    }
+     
     setLogedInUser(null);
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-    // Optional: call backend logout if needed
   };
 
   return (
-    <AuthContext.Provider value={{ logedInUser, login, logout, loading, userType }}>
-      {loading ? <span>loading ...</span> : children }
+    <AuthContext.Provider value={{ logedInUser, login, logout, loading, userType, signUp }}>
+      {loading ? <Loading /> : children }
     </AuthContext.Provider>
   );
 }

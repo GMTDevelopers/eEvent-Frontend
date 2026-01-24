@@ -4,10 +4,49 @@ import styles from '../(signIn)/signIn.module.css'
 import Image from 'next/image';
 import SignIn from '../(signIn)/signIn';
 import Confirmation from '../(confirmation)/confirmation';
+import { useAuth } from '@/app/contexts/AuthContext';
+import ButtonLoader from '@/app/(components)/loading/buttonLoader';
+import { useState } from 'react';
 
 const UserSignUp = () => {
     const { openModal } = useModal();
     const { closeModal } = useModal();
+    const {signUp} = useAuth();
+    const [loading, setLoading] = useState(false)
+    const [formError, setFormError] = useState('')
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const username = formData.get("username");
+        const lastName = formData.get("lastName");
+        const firstName = formData.get("firstName");
+        const middleName = formData.get("middleName");
+        const email = formData.get("email");
+        const phone = formData.get("phone");
+        const password = formData.get("password");
+        setLoading(true)
+        try{
+            const result = await signUp(username, password, phone, email, middleName, firstName, lastName); 
+            if (result.status==='success') {
+                openModal(<Confirmation />)
+            }
+        } catch (err) {
+            console.log("this is signup error", err)
+            if (err.status === 'error') {
+                setFormError(err.message);
+            }
+            if (err.status === 'fail') {
+                setFormError(err.details);
+            }
+
+        }
+        setLoading(false)
+        
+    };
+
+
+
     return ( 
         <div className={styles.signContainer}>
             <div className={styles.signHeader}>
@@ -17,20 +56,26 @@ const UserSignUp = () => {
                     <p style={{color:'#636363'}}>Your information is secure</p>
                 </div>
             </div>
-            <form className={styles.signInForm} onSubmit={(e) => { e.preventDefault(); closeModal(); }}>
-                <input placeholder="Surname" type="text" />
-                <input placeholder="First name" type="text" />
-                <input placeholder="Other name" type="text" />
-                <input placeholder="Email address" type='email' />
-                <input placeholder="Phone number" type="tel" />
-                <input placeholder="Password" type="password" />
-                <input placeholder="Confirm password" type="password" />
-
+            <form className={styles.signInForm} onSubmit={handleSubmit}>
+                <input placeholder="User Name" name='username' type="text" />
+                <input placeholder="Surname" name='lastName' type="text" />
+                <input placeholder="First name" name='firstName' type="text" />
+                <input placeholder="Other name" name='middleName' type="text" />
+                <input placeholder="Email address" name='email' type='email' />
+                <input placeholder="Phone number" name='phone' type="tel" />
+                <input placeholder="Password" name='password' type="password" />
+                {/* <input placeholder="Confirm password" name='confirmPassword' type="password" /> */}
+                <p className='error'>{formError}</p>
                 <p className={styles.forgotPassword}>Forgot password?</p>
-                <button type="submit"> Create account </button>
+                <button style={{ display: "flex", alignItems:"center", justifyContent:"center" }} disabled={loading} type="submit">
+                    <span style={{ visibility: loading ? "hidden" : "visible" }}>
+                        Create account
+                    </span>
+                    {loading && <ButtonLoader />}
+                </button>
                 <div className={styles.CTAdiv}>
                     <p style={{color:'#636363'}}>Already have an account?</p>
-                    <p style={{color:'#82027D', cursor: 'pointer'}} onClick={() => openModal(<Confirmation />)}>Sign in here</p>
+                    <p style={{color:'#82027D', cursor: 'pointer'}} onClick={() => openModal(<SignIn />)}>Sign in here</p>
                 </div>
             </form>
             <div className={styles.termsCond}>

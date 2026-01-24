@@ -6,14 +6,16 @@ import { useAuth } from '../contexts/AuthContext';
 import { useState } from 'react';
 import SignIn from './(signIn)/signIn';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 import { Banknote, Check, Heart, MessageCircleMore, Settings, SquareChartGantt, UserRoundCog } from 'lucide-react';
 const Navbar = () => {
     const { openModal } = useModal();
     const {logedInUser, logout, userType} = useAuth()
     const [activeTab, setActiveTab] = useState()
+    const router = useRouter()
 
-    console.log(logedInUser)
-    console.log(userType)
+/*     console.log(logedInUser)
+    console.log(userType) */
     return ( 
         <>
             <div className={Styles.navbar}>
@@ -27,10 +29,16 @@ const Navbar = () => {
                         <Link href='/terms-of-use'><li onClick={() => setActiveTab('ToUse')} className={activeTab === "ToUse" ? Styles.active : ''}>Terms of Use</li></Link>
                     </ul>
                 </div>
-                <div className={Styles.navCta}>
-                    <div className="btnNoCapsule"><Link href='/vendor/signUp'>Become a Vendor</Link></div>
-                    <div className="btnCapsule" onClick={() => openModal(<SignIn />)}> <span>Sign In</span></div>
-                </div>
+                {
+                    logedInUser ? 
+                        <p style={{cursor:"pointer"}} onClick={()=> {logout(); router.push('/')}}>logout</p> :
+                        <div className={Styles.navCta}>
+                            <div className="btnNoCapsule"><Link href='/vendor/signUp'>Become a Vendor</Link></div>
+                            <div className="btnCapsule" onClick={() => openModal(<SignIn />)}> <span>Sign In</span></div>
+                        </div>
+                
+                }
+                
             </div>
             {logedInUser && userType && (
                 <div className={Styles.userNav}>

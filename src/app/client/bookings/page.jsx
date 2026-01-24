@@ -19,26 +19,27 @@ const Bookings = () => {
 
   // Load data once
     useEffect(() => {
-        fetch("/data/clientTransaction.json")
-            .then((res) => res.json())
-            .then((data) => {
+        const token = localStorage.getItem("access_token");
+        fetch("https://eevents-srvx.onrender.com/v1/bookings/client?skip=0&take=10",{
+            headers:{
+                authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data)
             setAllData(data);
-            const pages = Math.ceil(data.length / ITEMS_PER_PAGE);
-            setTotalPages(pages);
-            console.log("Total items:", data.length, "Pages:", pages);
-            })
-            .catch((error) => console.error("Error fetching data:", error));
+        }) 
+
+        .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
-  // Re-calculate visible data whenever currentPage or allData changes
-    const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIdx = startIdx + ITEMS_PER_PAGE;
-    const visibleData = allData.slice(startIdx, endIdx);
-
+    const visibleData = allData.data;
+    console.log("this is the visible data,", visibleData)
     return ( 
         <div>
             <div className="stats">
-                <SearchFilter name="My Bookings"/>
+                <SearchFilter name="My Bookings" page="myBookings"/> <br />
                 <div className="statsPack">
                     <StatsCard title="ACTIVE BOOKINGS" data='5' icon={Minimize2} />
                     <StatsCard title="PAYMENT PENDING" data='2' icon={Loader} />

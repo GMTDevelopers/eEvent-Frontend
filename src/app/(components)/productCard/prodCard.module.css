@@ -16,8 +16,9 @@
 }
 .cardHeader{
     width: auto;
-    height: auto;
+    height:auto;
     position: relative;
+    overflow: hidden;
 }
 .catPill{
     width: fit-content;
@@ -40,6 +41,7 @@
     width: 392px;
     height: 205px;
     margin: auto auto;
+    object-fit: cover;
 }
 .prodTitle{
     margin-top: 16px;

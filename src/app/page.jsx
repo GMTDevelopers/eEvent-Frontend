@@ -6,11 +6,13 @@ import Categories from "./(components)/categories/pages";
 import { useState, useRef, useEffect } from "react";
 import ProductCard from "./(components)/productCard/page";
 import Footer from "./footer/footer";
+import Loading from "./(components)/loading/loading";
 export default function Home() {
 
   const [showMore, setShowMore] = useState(false);
   const moreCatRef = useRef(null);
   const [Data, setData] = useState([])
+  const [loading, setLoading] = useState(null)
 
     // Hide when clicking outside
   useEffect(() => {
@@ -31,11 +33,13 @@ export default function Home() {
 
     //product data
     useEffect(() => {
-      fetch("/data/data.json")
+      setLoading(true)
+      fetch("https://eevents-srvx.onrender.com/v1/discovery/featured")
         .then((res) => res.json())
         .then((data) => {
           console.log(data);   // See what was fetched 
-          setData(data.slice(0, 6));       // Update state with the fetched data limit search to 6
+          setData(data.data);
+          setLoading(false)       // Update state with the fetched data limit search to 6
         })
       .catch((error) => console.error("Error fetching data:", error));
     }, []);
@@ -80,22 +84,23 @@ export default function Home() {
             <h3>FEATURED VENDORS AND SERVICES</h3>
             <div className="btnNoCapsule">view all<SlArrowRight /></div>
           </div>
-          <div className="cardPack">
-            {
-              Data && Data.map((data)=>(
+          {loading ? <div> <Loading /> </div> :
+            <div className="cardPack">
+              {Data && Data.map((data)=>(  
                 <ProductCard 
-                key={data.id} 
-                title={data.title} 
-                description={data.description} 
-                category={data.category} 
-                ratings={data.rating} 
-                price={data.pricing} 
-                thumb={data.thumb}
-                vendorName={data.vendor.name}
-                />
-              ))
-            }
-          </div>      
+                  key={data.id} 
+                  title={data.serviceName} 
+                  description={data.serviceDescription} 
+                  category={data.category} 
+                  ratings={data.ratings} 
+                  price={data.startingPrice} 
+                  thumb={data.serviceImage}
+                  vendorName={data.vendorName}
+                  vendorImg={data.vendorProfileImage}
+                /> 
+              ))}
+            </div>  
+          }
         </section>   
 
 

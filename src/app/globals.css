@@ -248,7 +248,7 @@ a {
   height: auto;
   color: #636363;
   margin: 32px 0px 48px 0;
-  border: 1px solid #CFCFCF;
+/*   border: 1px solid #CFCFCF; */
   border-radius: 12px;
   padding: 16px 32px;
 }
@@ -274,4 +274,7 @@ input{
   border-radius: 8px;
   border: 1px solid #ddd;
   outline: none;
+}
+.error{
+  color:  #ED4337;
 }

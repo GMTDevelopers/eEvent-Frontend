@@ -2,12 +2,12 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 27%;
+  gap: 17%;
   align-items: center;
-  margin-bottom: 35px;
+/*   margin-bottom: 35px; */
 }
 .bar1 h3{
-  width: 40%;
+  width: 100%;
 
 }
 .rightContainer{

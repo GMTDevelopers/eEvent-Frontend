@@ -63,6 +63,10 @@ const SearchFilter = ({name, page}) => {
                         <p>All locations</p>
                         <ChevronDown className={styles.searchMoreIcon} size={20}/>
                     </div>}
+                    {page==="myBookings" && <div onClick={() => setShowMore(!showMore)} className={styles.searchBtn}>
+                        <p>Apply filter</p>
+                        <ChevronDown className={styles.searchMoreIcon} size={20}/>
+                    </div>}
                     {page==="vendorService" && <div onClick={() => router.push('/vendor/service/addService')} className={styles.searchBtn}>
                         <p>Add new service</p>
                         <Plus className={styles.searchMoreIcon} size={20}/>

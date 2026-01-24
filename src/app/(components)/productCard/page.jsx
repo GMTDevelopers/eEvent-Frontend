@@ -3,7 +3,7 @@ import styles from "./prodCard.module.css";
 import { SlArrowRight } from "react-icons/sl";
 import Link from "next/link";
 
-const ProductCard = ({title, prodId, description, category, ratings, price, thumb, vendorName}) => {
+const ProductCard = ({title, prodId, description, category, ratings, price, thumb, vendorName, vendorImg}) => {
     return ( 
         <div className={styles.prodCard}>
             <div className={styles.cardHeader}>
@@ -21,7 +21,7 @@ const ProductCard = ({title, prodId, description, category, ratings, price, thum
                     </div>
                 </div>
                 <div className={styles.vendor}>
-                    <img className={styles.vendorImg} src="/images/products/prod1.png" alt="vendor" />
+                    <img className={styles.vendorImg} src={vendorImg} alt="vendor" />
                     <p style={{fontWeight:600, color:"#636363"}} className={styles.rating}>{vendorName}</p>
                 </div>
                 <p className={styles.prodDisc}>{description}</p>

@@ -47,7 +47,7 @@ export default function ProductTabs({gallery, features, addService, reviews}) {
               <div key={i} className={styles.featuresListTxt}>
                 <Image className={styles.cardFeaturesCheck} src='/images/check.png' width={27} height={19} alt="check"/>
                 <div>
-                  <p className="txtHeader">{feature.title}</p>
+                  <p className="txtHeader">{feature}</p>
                   <p style={{color:"#636363"}}>{feature.description}</p>
                 </div>
               </div>
