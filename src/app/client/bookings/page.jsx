@@ -27,7 +27,6 @@ const Bookings = () => {
         })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data)
             setAllData(data);
         }) 
 
@@ -35,7 +34,7 @@ const Bookings = () => {
     }, []);
 
     const visibleData = allData.data;
-    console.log("this is the visible data,", visibleData)
+
     return ( 
         <div>
             <div className="stats">

@@ -3,54 +3,67 @@ import { use, useEffect, useState } from 'react';
 import styles from './bookingItem.module.css';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
+import Loading from '@/app/(components)/loading/loading';
+
 const BookingItem = /* async */ ({params}) => {
     const router = useRouter();
     const {id} = use(params);
     const [isData, setIsData] = useState()
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
-        fetch("/data/clientTransaction.json")
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            console.error("Authentication token not found. Please log in.");
+            // Optionally, redirect to login page
+            // router.push('/login');
+            setIsLoading(false);
+            return;
+        }
+        fetch(`https://eevents-srvx.onrender.com/v1/clients/bookings/${id}`,{
+            headers:{
+                authorization:`Bearer ${token}`,
+            },
+        })
             .then((res) => res.json())
             .then((data) => {
-            setIsData(data.find((b) => b.id === id));
+            setIsData(data.data);
             setIsLoading(false)
-            console.log(data.find((b) => b.id === id));
+            console.log(data);
             })
             .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
-    if (!isData) return <p>No yoyoyoy booking found</p>;
+    if (!isData) return <Loading />;
 
     return ( 
         <div>
             <button onClick={() => router.back()} className={styles.backBtn}><ChevronLeft /> go back </button>
             {
                 isLoading &&<div>
-                    Loading........
+                    <Loading />
                 </div>
             }
             {
                 !isLoading && <div className={styles.doubleContainer}>
-                    <p>loading done and data will now be displayed</p> 
-                    <div className="mainContent">
+                    <div className={`mainContent ${styles.mainContent}`}>
                         <aside className="aside">
                             <div className="vendor">
                                 <div className="vendorImgPack">
-                                    <img className="vendorImg" src="/images/productPage/userImg.png" alt="vendor" />
+                                    <img className="vendorImg" src={isData.vendorProfileImage} alt="vendor" />
                                 </div>
                                 
                                 <div className="vendorDetails">
-                                    <p className="vendorName">Tee Home of Decor.</p>
-                                    <p style={{color:"#636363"}}>Joined March 2025</p>
+                                    <p className="vendorName">{isData.businessName}</p>
+                                    <p style={{color:"#636363"}}>Joined {new Date(isData.dateJoined).toLocaleDateString()}</p>
                                     <div className="catPill">
-                                        <li>Decoration</li>
+                                        <li>{isData.category}</li>
                                     </div>
                                 </div>
 
                                 <div className="ratingPack">
                                     <p className="rating">RATING</p>
                                     <img className="ratingStars" src="/images/productPage/ratings.png" alt="ratings" />
-                                    <p style={{fontWeight:700}}>4.7 Stars  |  32 Reviews</p>
+                                    <p style={{fontWeight:700}}>{isData.vendorRatings.rating} Stars  | {isData.vendorRatings.numberOfReviews} Reviews</p>
                                 </div>
                             </div>
                             <div className="descPack">
@@ -86,7 +99,7 @@ const BookingItem = /* async */ ({params}) => {
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Years of experience</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{isData.experience} Years</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{isData.yearsOfExperience} Years</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Business address</p>
@@ -98,11 +111,11 @@ const BookingItem = /* async */ ({params}) => {
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Operating states</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{isData.operatingStates.map((state)=>(<span>{state + ',' + " "}</span>))}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{isData?.citiesAvailableIn?.map((state)=>(<span key={state}>{state + ',' + " "}</span>))}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Booking date</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{isData.bookingDate}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{new Date(isData.bookingDate).toLocaleDateString()}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Event type</p>
@@ -130,11 +143,11 @@ const BookingItem = /* async */ ({params}) => {
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Alternate contact person phone</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{isData.AltContactPersonPhone}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{isData.alternateContactPersonPhone}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Event date & time</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{isData.bookingDate} | {isData.eventTime}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{new Date(isData.eventDate).toLocaleDateString()} | {isData.eventTime}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Booking status </p>
@@ -145,7 +158,7 @@ const BookingItem = /* async */ ({params}) => {
                                 <p style={{color:"#222222", fontWeight:700}}>SERVICE ORDERED</p>
                                 
                                 <li className={styles.vendorItem}>
-                                    <p> {isData.serviceOrdered.serviceName +' (x'+isData.serviceOrdered.units+")" } </p>
+                                    <p> {isData.serviceOrdered.name +' (x'+isData.serviceOrdered.quantity+")" } </p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Unit Price: {isData.serviceOrdered.unitPrice} </p>
@@ -157,8 +170,8 @@ const BookingItem = /* async */ ({params}) => {
                                 <br />
                                 <br />
                                 <p style={{color:"#222222", fontWeight:700}}>Additional Services</p>
-                                {isData.AdditionalServices.map((add)=>(
-                                    <li className={styles.vendorItem}>
+                                {isData?.AdditionalServices?.map((add)=>(
+                                    <li key={add.serviceName} className={styles.vendorItem}>
                                         <p>{add.serviceName}</p>
                                         <p style={{color:"#222222", fontWeight:700}}>₦{add.serviceCost}</p>
                                     </li>
