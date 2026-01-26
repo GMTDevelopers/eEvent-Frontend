@@ -1,13 +1,57 @@
 import Link from 'next/link';
 import styles from '../../navbar/(signIn)/signIn.module.css';
+import { useState } from 'react';
 
-const Cancle = () => {
+const Cancle = ({id}) => {
+
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const handleSubmit = async (e) => {
+        console.log(id)
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const cancel = formData.get("typeCancle");
+        const reason = formData.get("message");
+        try{
+            const token = localStorage.getItem("access_token");
+            if (cancel === "CANCEL"){
+                const cancelRes = await fetch(`https://eevents-srvx.onrender.com/v1/bookings/${id}/cancel`, {
+                    method: "PATCH",
+                    headers: { 
+                        "Content-Type": "application/json" ,
+                        authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ reason }),
+                });
+
+                const Data  = await cancelRes.json();
+                if (!cancelRes.ok){
+                    throw{
+                        status: Data.status,
+                        code: Data.code,
+                        message: Data.message,
+                    }
+                }
+                setSuccess(Data.message)
+                console.log(Data)
+            } else (
+                setError("Please type CANCEL exactly to confirm.")
+            )
+        }   catch(err){
+            setError(err.message)
+            console.log(err)
+        }
+        
+    };
+
     return ( 
         <div className={styles.signContainer}>
             <h3>CANCEL BOOKING</h3>
-            <form className={styles.signInForm}>
-                <textarea className={styles.cancleTxt} placeholder='Reason for cancelling' name="contact" id="" />
+             {error && <p className="error">{error}</p>}
+            <form className={styles.signInForm} onSubmit={handleSubmit}>
+                <textarea className={styles.cancleTxt} placeholder='Reason for cancelling' name="reason" id="" />
                 <input placeholder='Type [CANCEL]' type='text' name='typeCancle' />
+                {success && <p style={{color:"#2d9f35"}}>{success}</p>}
                 <button style={{backgroundColor:'#E50909'}} type="submit">
                 Submit request
                 </button>

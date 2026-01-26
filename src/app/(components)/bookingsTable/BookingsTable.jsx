@@ -66,7 +66,7 @@ export default function BookingsTable({ bookings = {} }) {
                         <li className={styles.dropdownItem}>Message vendor</li>
                         <li className={styles.dropdownItem} onClick={() => openModal(<Reschedule id={b.id} initDate={new Date(b.eventDate).toLocaleDateString()} />)}>Reschedule booking</li>
                         <li className={styles.dropdownItem} onClick={() => openModal(<Contact />)} >Contact support</li>
-                        <li className={`${styles.dropdownItem}  ${styles.cancel}`} onClick={() => openModal(<Cancle />)} >Cancel booking</li>
+                        <li className={`${styles.dropdownItem}  ${styles.cancel}`} onClick={() => openModal(<Cancle id={b.id}/>)} >Cancel booking</li>
                       </div>
                     )}
                   </td>
