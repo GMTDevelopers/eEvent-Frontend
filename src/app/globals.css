@@ -149,7 +149,7 @@ a {
 }
 .aside{
  /*  border: 1px solid rgb(129, 72, 72); */
-  width: 25%;
+  width: 35%;
 }
 .bookingTitle{
   font-weight: 700;
@@ -275,6 +275,14 @@ input{
   border: 1px solid #ddd;
   outline: none;
 }
+select{
+  width:  869px;
+  max-width: 869px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+
 .error{
   color:  #ED4337;
 }

@@ -6,11 +6,14 @@ import ProductTabs from '@/app/(components)/tabs/pages';
 import NaturalDescription from '@/app/(components)/natural-text/page';
 import Link from 'next/link';
 import Loading from '@/app/(components)/loading/loading';
+import { Rating } from 'react-simple-star-rating';
+import { useRouter } from 'next/navigation'
 /* https://grok.com/share/c2hhcmQtNQ_54091b1e-a166-46e9-8be2-895e1d5297bf */ /* chat to creating the input */
 const ProductCard = ({params}) => {
     const [prod, setProd] = useState([]);  
     const {id} = use(params)
     const [loading, setLoading] = useState(true)
+    const router = useRouter()
     useEffect(() => {
       fetch(`https://eevents-srvx.onrender.com/v1/discovery/services/${id}`)
         .then((res) => res.json())
@@ -42,7 +45,7 @@ const ProductCard = ({params}) => {
                                 
                                 <div className="vendorDetails">
                                     <p className="vendorName">name goes here.</p>
-                                    <p style={{color:"#636363"}}>Joined March 2025</p>
+                                    <p style={{color:"#636363"}}>{new Date(prod.dateJoined).toLocaleDateString("en-US", { month: "long", year: "numeric", })}</p>
                                     <div className="catPill">
                                         <li>{prod.category}</li>
                                     </div>
@@ -50,13 +53,20 @@ const ProductCard = ({params}) => {
 
                                 <div className="ratingPack">
                                     <p className="rating">RATING</p>
-                                    <img className="ratingStars" src="/images/productPage/ratings.png" alt="ratings" />
-                                    <p style={{fontWeight:700}}>{prod.vendorRatings.rating} Stars  | {prod.vendorRatings.numberOfReviews} Reviews</p>
+                                    <Rating
+                                        readonly
+                                        initialValue={prod.vendorRatings.rating}
+                                        allowFraction
+                                        size={34}
+                                        fillColor="#fbbf24"
+                                        emptyColor="#e5e7eb"
+                                    />  
+                                    <p style={{fontWeight:700}}>{prod.vendorRatings.rating.toFixed(1)} Stars  | {prod.vendorRatings.numberOfReviews} Reviews</p>
                                 </div>
                             </div>
                             <div className="bookingPricing">
                                 <p className="bookingTitle">BOOKING & PRICING</p>
-                                <Link href={`/find-service/${id}/bookVendor?data=${encodeURIComponent(JSON.stringify(prod))}`}><div className={styles.bookVendor}>Book vendor</div></Link> 
+                                <div onClick={()=>{router.push(`/find-service/${id}/bookVendor`)}} className='bookVendor'>Book vendor</div>
                             </div>
                         </aside>
                         <section className="mainSection">

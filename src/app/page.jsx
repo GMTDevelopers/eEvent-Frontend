@@ -97,6 +97,7 @@ export default function Home() {
                   thumb={data.serviceImage}
                   vendorName={data.vendorName}
                   vendorImg={data.vendorProfileImage}
+                  prodId={data.id}
                 /> 
               ))}
             </div>  

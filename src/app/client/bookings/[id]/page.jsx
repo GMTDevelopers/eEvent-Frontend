@@ -69,22 +69,18 @@ const BookingItem = /* async */ ({params}) => {
                             <div className="descPack">
                                 <p className={styles.cityTitle}>Available in these cities</p>
                                 <div className={styles.pillsPack}>
-                                    <div className={styles.cityPills}>Lagos</div>
-                                    <div className={styles.cityPills}>Ibadan</div>
-                                    <div className={styles.cityPills}>Ogun</div>
-                                    <div className={styles.cityPills}>Osogbo</div>
-                                    <div className={styles.cityPills}>Ife</div>
-                                    <div className={styles.cityPills}>Akure</div>
-                                    <div className={styles.cityPills}>Asaba</div>
-                                    <div className={styles.cityPills}>Benin</div>
-                                    <div className={styles.cityPills}>Ondo </div>
+                                    {
+                                        isData.citiesAvailableIn.map((city)=>(
+                                            <div className={styles.cityPills}>{city}</div>
+                                        ))
+                                    }
                                 </div>
                                 
                             </div>
                         </aside>
                         <section className="mainSection">
                             <h2>VENDOR BOOKING DETAILS </h2>
-                            <div className="descPack">
+                            <div style={{border:"1px solid #CFCFCF"}} className="descPack">
                                 <li className={styles.vendorItem}>
                                     <p>Client Name</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{isData.clientName}</p>
@@ -154,7 +150,7 @@ const BookingItem = /* async */ ({params}) => {
                                     <p style={{color:"#222222", fontWeight:700}}>{isData.bookingStatus}</p>
                                 </li>
                             </div>
-                            <div className="descPack">
+                            <div style={{border:"1px solid #CFCFCF"}} className="descPack">
                                 <p style={{color:"#222222", fontWeight:700}}>SERVICE ORDERED</p>
                                 
                                 <li className={styles.vendorItem}>
@@ -177,7 +173,7 @@ const BookingItem = /* async */ ({params}) => {
                                     </li>
                                 ))}
                             </div>
-                            <div className="descPack">
+                            <div style={{border:"1px solid #CFCFCF"}} className="descPack">
                                 <li className={styles.vendorItem}>
                                     <p style={{color:"#222222", fontWeight:700}}>Total Cost:</p>
                                     <p style={{color:"#222222", fontWeight:700}}>₦{isData.totalCost}</p>

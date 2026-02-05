@@ -35,9 +35,13 @@ const Settings = () => {
         if (form.password) payload.password = form.password;
 
         try {
-            const res = await fetch('/api/user', { //change the endpoint to the update on
+            const token = localStorage.getItem("access_token");
+            const res = await fetch(`https://eevents-srvx.onrender.com/v1/auth/reset-password`, {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`
+                },
                 body: JSON.stringify(payload),
             });
 

@@ -98,6 +98,8 @@
     width: 392px;
     height: 205px;
     margin: auto auto;
+    object-fit: cover;
+    object-position: center;
 }
 .prodTitle{
     margin-top: 16px;

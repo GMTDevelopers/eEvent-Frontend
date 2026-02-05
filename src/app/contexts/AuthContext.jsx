@@ -14,14 +14,51 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   // Check if user was logged in before (on page load/refresh)
-  useEffect(() => {
+/*   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (token) {
       fetchUserProfile(token);
     } else {
       setLoading(false);
     }
+  }, []); */
+  useEffect(() => {
+    const refreshToken = localStorage.getItem("refresh_token");
+
+    if (refreshToken) {
+      refreshAccessToken();
+    } else {
+      setLoading(false);
+    }
   }, []);
+
+  // when the access token expires this is function to refresh the token
+
+  const refreshAccessToken = async () => {
+    try {
+      const refreshToken = localStorage.getItem("refresh_token");
+
+      const res = await fetch(`https://eevents-srvx.onrender.com/v1/auth/refresh`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refreshToken }),
+      });
+
+      if (!res.ok) throw new Error("Refresh failed");
+
+      const { accessToken, refreshToken: newRefresh } = await res.json();
+
+      localStorage.setItem("access_token", accessToken);
+      localStorage.setItem("refresh_token", newRefresh);
+
+      await fetchUserProfile(accessToken);
+    } catch (err) {
+      await logout(); // refresh expired or invalid
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const fetchUserProfile = async (token) => {
     try {
@@ -147,14 +184,13 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    const token = localStorage.getItem("access_token");
     try{
+      const token = localStorage.getItem("access_token");
       const result = await fetch("https://eevents-srvx.onrender.com/v1/auth/logout", {
         method: "POST",
         headers:{
           Authorization: `Bearer ${token}`
-        }
-        
+        }        
       });
       const data = await result.json()
       if (!result.ok){
@@ -165,18 +201,13 @@ export function AuthProvider({ children }) {
       }
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token")
-      
-      console.log(data.message)
+      setLogedInUser(null);
     }catch(err){
-      throw{
-        status: err.status,
-        message: err.message
-      }
+      console.error("Error during logout process:", err);
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      setLogedInUser(null);
     }
-     
-    setLogedInUser(null);
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
   };
 
   return (

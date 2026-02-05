@@ -1,24 +1,20 @@
 // components/ProductTabs.jsx
 'use client';
-
+import dynamic from "next/dynamic";
 import { useState } from 'react';
 import { use } from 'react';
+import { Rating } from "react-simple-star-rating";
 
 /* import NaturalDescription from '@/components/NaturalDescription'; */
 import styles from './tabs.module.css';
 import ImageGallery from '../gallery/pages';
 import Image from 'next/image';
 
-export default function ProductTabs({gallery, features, addService, reviews}) {
-/*   // Unwrap params (required in client component)
-  const { id } = use(params);
 
-  // Use the passed product (from page)
-  const product = initialProduct; */
+export default function ProductTabs({gallery, features, addService, reviews}) {
 
   // Tabs state
   const [activeTab, setActiveTab] = useState('Gallery');
-
   const tabs = [
     { key: 'Gallery', label: 'Gallery' },
     { key: 'Features', label: 'Features' },
@@ -76,24 +72,31 @@ export default function ProductTabs({gallery, features, addService, reviews}) {
 
       case 'Reviews':
         return reviews?.length ? (
-          <div className={styles.reviews}>
-            <div className={styles.reviewLeft}>
-
-            </div>
-            <div className={styles.reviewRight}>
+          <div className={styles.reRatings}>
+            <h3>REVIEWS AND RATINGS </h3>
               {reviews.map((rev, i) => (
-                <div key={i} className={styles.review}>
-                  <p>
-                    <strong>{rev.username}</strong> Rating: {rev.stars} stars
-                  </p>
-                  <p>{rev.comment}</p>
-                  <small>
-                    {new Date(rev.createdAt).toLocaleDateString('en-NG')}
-                  </small>
-                </div>
-              ))}              
-            </div>
-
+                <div className={styles.review}>
+                  <div className={styles.reviewHeader}>
+                    <div className={styles.reviewUser}>
+                      <img src={rev.clientProfileImage} alt="user" />
+                      <div>
+                        <p><strong>{rev.clientName}</strong></p>
+                        <small>  </small>
+                      </div>  
+                    </div> 
+                    <Rating
+                      readonly
+                      initialValue={rev.clientRating}
+                      iconsCount={5}
+                      allowFraction
+                      size={24}
+                      fillColor="#fbbf24"
+                      emptyColor="#e5e7eb"
+                    />                               
+                  </div>                                    
+                  <p className={styles.comment}>{rev.clientReview}</p>
+                </div> 
+              ))}    
           </div>
         ) : (
           <p className={styles.empty}>No reviews yet.</p>

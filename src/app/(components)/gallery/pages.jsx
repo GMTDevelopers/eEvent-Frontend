@@ -21,7 +21,7 @@ export default function ImageGallery({ images = [] }) {
           return (
             <div
               key={i}
-              className={`${styles.item} ${styles[`item${i + 1}`]}`}
+              className={`${styles.item}`}
               onClick={() => {
                 setIndex(i);
                 setOpen(true);

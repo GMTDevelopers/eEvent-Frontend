@@ -5,6 +5,11 @@ import { SlArrowRight } from 'react-icons/sl';
 import Link from 'next/link';
 import { Calendar, ClockFading, MapPin } from 'lucide-react';
 import Header from '../(components)/header/page';
+import Pagination from '../(components)/pagination/page';
+import Loading from '../(components)/loading/loading';
+
+
+const TAKE = 10;
 
 const BuyTicket = () => {
     const [tickets, setTickets] = useState([])
@@ -13,16 +18,65 @@ const BuyTicket = () => {
     const [dates, setDates] = useState('all-dates');
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const [error, setError] = useState(null);
+
+    const fetchTickets = async (page) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const skip = (page - 1) * TAKE;
+
+            const params = new URLSearchParams({
+                take: TAKE,
+                skip,
+            });
+
+            if (searchQuery) {
+                params.append("search", searchQuery);
+            }
+
+            const res = await fetch(
+                `https://eevents-srvx.onrender.com/v1/tickets?${params.toString()}`
+            );
+
+            if (!res.ok) {
+                throw new Error(`Request failed (${res.status})`);
+            }
+
+            const json = await res.json();
+            console.log(json.data)
+
+            if (json.status !== "success") {
+                throw new Error(json.message || "Failed to fetch tickets");
+            }
+
+            setTickets(json.data.data || []);
+
+            const { total, take } = json.data.meta || {};
+            setTotalPages(Math.ceil((total || 0) / (take || TAKE)));
+        } catch (err) {
+            console.error("Fetch tickets error:", err);
+            setError(err.message || "Something went wrong");
+            setTickets([]);
+            setTotalPages(0);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     useEffect(() => {
-      fetch("/data/ticket.json", { cache: 'no-store',})
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);   // See what was fetched 
-          setTickets(data);       // Update state with the fetched data limit search to 6
-        })
-      .catch((error) => console.error("Error fetching data:", error));
-    }, []);
+       fetchTickets(currentPage);
+    }, [currentPage, searchQuery]);
+
+    const handlePageChange = (page) => {
+        if (page !== currentPage) {
+            setCurrentPage(page);
+        }
+    };
 
     const categories = [
         { id: 'all', name: 'All tickets' },
@@ -38,27 +92,6 @@ const BuyTicket = () => {
         { value: 'this-month', label: 'This Month' },
     ];
 
-    const fetchTickets = async () => {
-        setLoading(true);
-        const params = new URLSearchParams();
-        if (searchQuery.trim()) params.append('q', searchQuery.trim());
-        if (location.trim()) params.append('location', location.trim());
-        if (dates !== 'all-dates') params.append('dates', dates);
-        if (selectedCategory !== 'all') params.append('category', selectedCategory);
-
-        try {
-        const res = await fetch(`/api/tickets/search?${params.toString()}`, {
-            cache: 'no-store',
-        });
-        const data = await res.json();
-        setTickets(res.ok ? data : []);
-        } catch (err) {
-        setTickets([]);
-        } finally {
-        setLoading(false);
-        }
-    };
-
     const handleSearch = (e) => {
         e.preventDefault();
         fetchTickets();
@@ -73,17 +106,17 @@ const BuyTicket = () => {
     return ( 
         <div className='main'>
             <Header img='/images/buyTicket/buyTicket.png' header='Find and Book Tickets for Exciting Events Near You.' subHeader='Get tickets to concerts, exhibitions, or workshops with ease' />
-            <form onSubmit={handleSearch} className={styles.searchForm}>
+            <form onSubmit={(e) => { e.preventDefault(); setCurrentPage(1); }} className={styles.searchForm}>
 
-                <input type="text" placeholder="Enter City or ZIP Code To Search" value={location} onChange={(e) => setLocation(e.target.value)}  />
-                <select value={dates} onChange={(e) => setDates(e.target.value)}>
+               {/*  <input type="text" placeholder="Enter City or ZIP Code To Search" value={location} onChange={(e) => setLocation(e.target.value)}  />
+                 <select value={dates} onChange={(e) => setDates(e.target.value)}>
                 {dateOptions.map((opt) => ( 
                     <option key={opt.value} value={opt.value}>
                     {opt.label}
                     </option>
                 ))}
-                </select>
-                <input type="text" placeholder="Serch By Artist, Event or Venue" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                </select> */}
+                <input type="text" placeholder="Serch By Artist, Event or Venue" value={searchQuery} onChange={(e) => {setSearchQuery(e.target.value);setCurrentPage(1)}} />
                 <button type="submit">
                 Search
                 </button>
@@ -110,26 +143,27 @@ const BuyTicket = () => {
             </div>
 
             {/* Loading */}
-            {loading && <p>Loading tickets...</p>}
+            {loading && <Loading />}
+            {error && ( <p className="error"> {error} </p> )}
 
             <div className={styles.ticketDisplay}>
                 {tickets.length === 0 && !loading && <p>No tickets found.</p>}
                 {tickets.map((ticket) => (
-                    <div key={ticket.id} className={styles.ticketCard}>
+                    ticket.isActive && <div key={ticket.id} className={styles.ticketCard}>
                         <div className={styles.cardHeader}>
-                            <img className={styles.prodImg} src={ticket.images.img1} alt="product" />            
+                            <img className={styles.prodImg} src={ticket.image} alt="product" />            
                             <div className={styles.catPill}>
-                                <li>{ticket.category}</li>
+                                <li>{ticket.ticketType}</li>
                             </div>
                         </div>
                         <div className="cardHeader">
                             <div className={`sectionHeader ${styles.prodTitle}`}>
-                                <Link href={`/buy-tickets/${ticket.id}`}><p className="txtHeader">{ticket.ticketName}</p></Link>    
+                                <Link href={`/buy-tickets/${ticket.id}`}><p className="txtHeader">{ticket.eventName}</p></Link>    
                             </div>
                             <div className={styles.ticketDetails}>
                                 <div className={styles.row1}>
-                                    <div><ClockFading className={styles.icon} /> {ticket.time}</div>
-                                    <div><Calendar className={styles.icon} /> {ticket.date}</div>
+                                    <div><ClockFading className={styles.icon} /> {ticket.eventTime? new Date(ticket.eventTime).toLocaleTimeString() : " "}</div>
+                                    <div><Calendar className={styles.icon} /> {new Date(ticket.eventDate).toLocaleDateString()}</div>
                                 </div>
                                 <div className={styles.row1}>
                                     <div><MapPin className={styles.icon} /> {ticket.location}</div> 
@@ -139,15 +173,16 @@ const BuyTicket = () => {
                             <div className={styles.prodPrice}>
                                 <p className={styles.rating} style={{fontWeight:500, color:"#AAA6A6"}}>PRICING STARTS FROM</p>
                                 <div style={{marginBottom:"10px"}} className="sectionHeader">
-                                    <h3 style={{color:"#222222"}}>₦ {ticket.cost}</h3>
+                                    <h3 style={{color:"#222222"}}>₦ {ticket.price}</h3>
                                     <div className="btnNoCapsule">More details<SlArrowRight /></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 ))}
             </div>
+
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={!loading ? handlePageChange : () => {}} />
         </div>
     );
 }
