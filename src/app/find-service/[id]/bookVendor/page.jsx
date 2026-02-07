@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { useParams } from "next/navigation";
 import { Rating } from 'react-simple-star-rating';
 import Loading from '@/app/(components)/loading/loading';
+import SignIn from '@/app/navbar/(signIn)/signIn';
+import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 
 const BookVendor = () => {
     const [prod, setProd] = useState([]);  
@@ -23,8 +25,17 @@ const BookVendor = () => {
     const [phone, setPhone] = useState("");
     const [altPhone, setAltPhone] = useState("");
 
+
+    const [servicePrice, setServicePrice] = useState(0);
+    const [serviceQty, setServiceQty] = useState(1);
+    const [addServicePrice, setAddServicePrice] = useState(0);
+    const [addServiceQty, setAddServiceQty] = useState(0);
+    const [total, setTotal] = useState(0);
+
     const params = useParams();
     const id = params.id;
+
+    const { openModal } = useModal();
 
     useEffect(() => {
         console.log(id)
@@ -39,43 +50,22 @@ const BookVendor = () => {
     }, [id]);
 
     useEffect(() => {
-        const serviceSelect = document.getElementById('additionalService');
-        const serviceQtyInput = document.getElementById('unitsNeeded');
-        const addServiceQtyInput = document.getElementById('addQuantity');
+        const serviceTotal = servicePrice * serviceQty;
+        const addServiceTotal = addServicePrice * addServiceQty;
+        setTotal(serviceTotal + addServiceTotal);
+    }, [servicePrice, serviceQty, addServicePrice, addServiceQty]);
 
-        const totalDisplay = document.getElementById('additionalTotal');
-        console.log(serviceSelect?.selectedOptions[0]?.dataset.price)
-        function updateTotal() {
-            const servicePrice = parseFloat(String(serviceSelect?.selectedOptions[0]?.dataset.price || "10").replace(/,/g, ""))
-            const addServicePrice = parseFloat(String(serviceSelect?.selectedOptions[0]?.dataset.price || "0").replace(/,/g, ""))
-            
-            const serviceQty = parseInt(serviceQtyInput?.value || 1);
-            const addServiceQty = parseInt(addServiceQtyInput?.value || 1);
-            
-            const serviceTotalPrice = servicePrice * serviceQty || 0;
-            const addServiceTotalPrice = addServicePrice * addServiceQty || 0;
+    useEffect(() => {
+        const savedForm = sessionStorage.getItem("pendingBookingForm");
+        if (!savedForm) return;
 
-            const total = serviceTotalPrice + addServiceTotalPrice;
-            /* const total = price * qty; */
-            totalDisplay.textContent = '₦ ' + total.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  
-        }
-        
-        if (serviceSelect && addServiceQtyInput && serviceQtyInput && totalDisplay) {
-            serviceSelect.addEventListener('change', updateTotal);
-            addServiceQtyInput.addEventListener('input', updateTotal);
-            serviceQtyInput.addEventListener('input', updateTotal);
-            updateTotal(); // Initial calculation
-        }
+        const values = JSON.parse(savedForm);
 
-        // Cleanup (optional but clean)
-        return () => {
-            serviceSelect?.removeEventListener('change', updateTotal);
-            addServiceQtyInput?.removeEventListener('input', updateTotal);
-            serviceQtyInput?.removeEventListener('input', updateTotal);
-        };
+        Object.entries(values).forEach(([name, value]) => {
+            const field = document.querySelector(`[name="${name}"]`);
+            if (field) field.value = value;
+        });
     }, []);
-
 
     async function handleSubmit(formData){
         const data = {
@@ -85,50 +75,66 @@ const BookVendor = () => {
             eventTime: formData.get('eventTime'),
             eventDuration: formData.get('eventDuration'),
             eventLocation: formData.get('eventLocation'),
-            unitsNeeded: formData.get('unitsNeeded'),
+
+            serviceType: formData.get('serviceType'),
+            unitPrice: formData.get('unitPrice'),
+            unitsNeeded: Number(formData.get('unitsNeeded') || 1),
+
             additionalService: formData.get('additionalService'),
-            addQuantity: formData.get('addQuantity'),
+            addQuantity: Number(formData.get('addQuantity') || 0),
+
             preferredSetupDate: formData.get('preferredSetupDate'),
             preferredSetupTime: formData.get('preferredSetupTime'),
+
             specialInstructions: formData.get('specialInstructions'),
+
             contactPersonName: formData.get('contactPersonName'),
             ContactPersonPhone: formData.get('ContactPersonPhone'),
             AltContactPersonPhone: formData.get('AltContactPersonPhone'),
-            agree: formData.get('agree') === 'on'
+
+            agree: formData.get('agree') === 'on',
         };
         try {
+            const token = localStorage.getItem("access_token");
+            if (!token) {
+                // storing form data in session before asking for signIn
+                const entries = Object.fromEntries(formData.entries());
+                sessionStorage.setItem("pendingBookingForm", JSON.stringify(entries));
+                // signIn
+                openModal(<SignIn />)
+                return;
+            }
+           
             const bookingRes = await fetch("https://eevents-srvx.onrender.com/v1/bookings", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
                 body: JSON.stringify({ data}),
             });
 
-            const Data  = await bookingRes.json();
+           const result = await bookingRes.json();
 
-            if (!bookingRes.ok){
-                throw{
-                status: Data.status,
-                code: Data.code ?? bookingRes.status,
-                message: Data.message,
-                details: Data.data ?? null
-                }
+            if (!bookingRes.ok) {
+                throw {
+                    status: result.status,
+                    code: result.code ?? bookingRes.status,
+                    message: result.message,
+                    details: result.data ?? null,
+                };
             }
 
-            return{
-                status: Data.status,
-            }
+            // ✅ success handling (minimal, safe)
+            sessionStorage.removeItem("pendingBookingForm");
+            console.log("Booking successful:", result);
+            return result;                    
 
         } catch (err) {
             console.log(err)
-            throw{
-                status: err.status,
-                code: err.code ?? bookingRes.status,
-                message: err.message,
-                details: err.data ?? null
-            }
+            throw err
         }
-        console.log('Form submitted:', data);
-        return { success: true, data };
+
     }
 
     if (loading) return <Loading text="Fetching service..." />
@@ -204,33 +210,34 @@ const BookVendor = () => {
 
                         <input type="text" name='eventLocation' placeholder='Event location' required />
 
-                        <select value={selectServiceType} onChange={(e) => setSelectServiceType(e.target.value)} id="serviceType" name="serviceType">
+                        <select value={selectServiceType} onChange={(e) => {const price = Number(e.target.selectedOptions[0].dataset.price || 0);setServicePrice(price);}} id="serviceType" name="serviceType">
                             <option value="" selected hidden disabled>Select service type</option>
-                            {prod?.serviceVariants?.map((type) => (
-                                <option
-                                    key={type.title}
-                                    value={type.title}
-                                    data-price={type.cost}
-                                >
-                                    {type.title} (₦{type.cost})
-                                </option>
-                            ))}
+                            {prod?.serviceVariants === null ?
+                                (<option value={prod.serviceName} data-price={prod.servicePrice} >
+                                    {prod.serviceName} (₦{prod.servicePrice})
+                                </option>)
+                            :
+                               prod?.serviceVariants?.map((type) => (
+                                    <option key={type.title} value={type.title} data-price={type.cost} >
+                                        {type.title} (₦{type.cost})
+                                    </option>
+                                )) 
+                            }
+                           
                         </select>
-                        <input type="text" name='unitPrice' placeholder='Event location' required />
 
-                        <input type="number" min={0} id='unitsNeeded' name='unitsNeeded' placeholder='Units needed ( default is 1 unit )' 
-                            onKeyDown={(e) => {if (e.key === "-" || e.key === "e") e.preventDefault();}} />
+                        <input required type="number" min={1} name='unitsNeeded' placeholder='Units needed ( default is 1 unit )' onChange={(e) => setServiceQty(Number(e.target.value || 1))} />
 
                         {/* ADDITIONAL SERVICE – NOW USING data-price (SAFE & SIMPLE) */}
-                        <select id="additionalService" name="additionalService" defaultValue="">
+                        <select onChange={(e) => {const price = Number(e.target.selectedOptions[0].dataset.price || 0); setAddServicePrice(price);}} name="additionalService">
                             <option value=""  disabled>Select additional service</option>
                             {prod?.additionalService?.map((add) => (
                                 <option
-                                    key={add.title}
-                                    value={add.title}
-                                    data-price={add.cost}
+                                    key={add.name}
+                                    value={add.name}
+                                    data-price={add.price}
                                 >
-                                    {add.title} (₦{add.cost})
+                                    {add.name} (₦{add.price})
                                 </option>
                             ))}
                         </select>
@@ -239,10 +246,9 @@ const BookVendor = () => {
                         <input
                             type="number"
                             min="0"
-                            id="addQuantity"
                             name="addQuantity"
                             placeholder="Additional Service Units needed"                            
-                            onKeyDown={(e) => ["-", "e", "E", "."].includes(e.key) && e.preventDefault()}
+                            onChange={(e) => setAddServiceQty(Number(e.target.value || 0))}
                         />
 
                         <div className={bStyles.formFlex}>
@@ -261,7 +267,7 @@ const BookVendor = () => {
                         {/* TOTAL COST – NOW UPDATES LIVE */}
                         <div className={bStyles.formFlex}>
                             <p style={{color:"#636363", letterSpacing:'0.25rem'}}>TOTAL COST</p>
-                            <h2 id="additionalTotal">₦ 00.00</h2>
+                            <h2>₦ {total.toLocaleString("en-NG", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h2>
                         </div>
 
                         <div className={bStyles.termsCondition}>

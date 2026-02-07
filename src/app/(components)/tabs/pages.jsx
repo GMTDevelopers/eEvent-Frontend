@@ -59,8 +59,8 @@ export default function ProductTabs({gallery, features, addService, reviews}) {
             {addService.map((svc, i) => (
               <div key={i} className={styles.serviceCard}>
                 <div className={styles.serviceHeaderPack}>
-                  <p style={{fontWeight:700}} >{svc.title}</p>
-                  <p className='txtHeader'>₦ {svc.cost}</p>
+                  <p style={{fontWeight:700}} >{svc.name}</p>
+                  <p className='txtHeader'>₦ {svc.price}</p>
                 </div>                
                 <p style={{color:"#636363"}} className={styles.serviceDesc}>{svc.description}</p>
               </div>

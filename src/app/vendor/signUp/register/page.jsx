@@ -120,7 +120,50 @@ const VendorRegistration = () => {
     setFormData((prev) => ({ ...prev, ...newData }));
   };
 
+const buildPayload = () => {
+  return {
+    data: {
+      hasVendorAccount: true,
 
+      user: {
+        email: formData.email,
+        firstName: formData.firstName,
+        lastName: formData.surname,
+        phone: formData.phone,
+        profileImage: null,
+      },
+
+      business: {
+        name: formData.businessName,
+        category: formData.category,
+        registered: formData.registered === 'Yes',
+        certificate: formData.certificate,
+        description: formData.description,
+        yearsOfExperience: Number(formData.experience),
+        address: formData.address,
+        countryOfOperation: [formData.country],
+        operatingStates: formData.states,
+      },
+
+      verification: {
+        type: formData.idType,
+        maskedNumber: formData.idNumber,
+        image: formData.idFile,
+      },
+
+      subscription: {
+        name: formData.subscriptionPlan,
+      },
+    },
+  };
+};
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formDataPayload = buildPayload();
+    console.log(formDataPayload)
+  };
 
     return ( 
         <div style={{textAlign:'center'}} className="main">
@@ -138,15 +181,15 @@ const VendorRegistration = () => {
                     <div>
                         <ProgressIndicator currentStep={currentStep} steps={stepsConfig} />
                         <div className={formStyles.signInForm}>
-                            {currentStep === 4 && <AccountStep formData={formData} updateFormData={updateFormData} errors={errors} />}
+                            {currentStep === 1 && <AccountStep formData={formData} updateFormData={updateFormData} errors={errors} />}
                              {currentStep === 2 && <BusinessStep formData={formData} updateFormData={updateFormData} errors={errors} />}
                             {currentStep === 3 && <VerificationStep formData={formData} updateFormData={updateFormData} errors={errors} />}
-                            {currentStep === 1 && <SubscriptionStep formData={formData} updateFormData={updateFormData} errors={errors} />}
+                            {currentStep === 4 && <SubscriptionStep formData={formData} updateFormData={updateFormData} errors={errors} />}
                         </div>
 
                         <div className={styles.buttonsPack}>
                             {currentStep > 1 && ( <button type="button" className={styles.submitBtn} onClick={handleBack}> Back </button> )}
-                                <button type="button" className={styles.submitBtn} onClick={handleNext}>
+                                <button type="button" className={styles.submitBtn} onClick={currentStep === 4 ? handleSubmit: handleNext }>
                             {currentStep === 4 ? 'Proceed to payment' : 'Proceed'}
                             </button>
                         </div>
