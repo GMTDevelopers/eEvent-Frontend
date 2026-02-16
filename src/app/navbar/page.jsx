@@ -14,8 +14,8 @@ const Navbar = () => {
     const [activeTab, setActiveTab] = useState()
     const router = useRouter()
 
-/*     console.log(logedInUser)
-    console.log(userType) */
+     console.log(logedInUser)
+/*    console.log(userType) */
     return ( 
         <>
             <div className={Styles.navbar}>
@@ -31,7 +31,11 @@ const Navbar = () => {
                 </div>
                 {
                     logedInUser ? 
-                        <p style={{cursor:"pointer"}} onClick={()=> {logout(); router.push('/')}}>logout</p> :
+                        <div className={Styles.navCta}>
+                            <div className="btnNoCapsule"><Link href='/vendor/signUp'>Become a Vendor</Link></div>
+                            <p style={{cursor:"pointer"}} onClick={()=> {logout(); router.push('/')}}>logout</p>
+                        </div>
+                        :
                         <div className={Styles.navCta}>
                             <div className="btnNoCapsule"><Link href='/vendor/signUp'>Become a Vendor</Link></div>
                             <div className="btnCapsule" onClick={() => openModal(<SignIn />)}> <span>Sign In</span></div>
@@ -65,22 +69,22 @@ const Navbar = () => {
                 </div>
             )}
            { /* Verification Approved */}
-        { !userType && logedInUser?.data?.subscription?.id && ( 
-            
-            <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
-                <div className={Styles.userNavMenu}>
-                    <ul>
-                        <Link href='/vendor/overview' > <li onClick={() => setActiveTab('Overview')} className={activeTab === "Overview" ? Styles.active : ''} > <SquareChartGantt className={Styles.icons}/> Overview</li></Link>
-                        <Link href='/vendor/bookings' > <li onClick={() => setActiveTab('Bookings')} className={activeTab === "Bookings" ? Styles.active : ''}><Check className={Styles.icons} />Bookings</li></Link>
-                        <Link href='/vendor/service' > <li onClick={() => setActiveTab('Services')} className={activeTab === "Services" ? Styles.active : ''}><UserRoundCog className={Styles.icons} />Services</li></Link>
-                        <Link href='/vendor/earnings' > <li onClick={() => setActiveTab('Earnings')} className={activeTab === "Earnings" ? Styles.active : ''}><Banknote className={Styles.icons} />Earnings</li></Link>
-                        <Link href='/' > <li onClick={() => setActiveTab('Messages')} className={activeTab === "Messages" ? Styles.active : ''}><MessageCircleMore className={Styles.icons} /> Messages</li></Link>
-                        <Link href='/vendor/settings' > <li onClick={() => setActiveTab('Account')} className={activeTab === "Account" ? Styles.active: ''}><Settings className={Styles.icons} />My Account</li></Link>
-                    </ul>
+            { !userType && logedInUser?.data?.subscription?.id && (
+                
+                <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
+                    <div className={Styles.userNavMenu}>
+                        <ul>
+                            <Link href='/vendor/overview' > <li onClick={() => setActiveTab('Overview')} className={activeTab === "Overview" ? Styles.active : ''} > <SquareChartGantt className={Styles.icons}/> Overview</li></Link>
+                            <Link href='/vendor/bookings' > <li onClick={() => setActiveTab('Bookings')} className={activeTab === "Bookings" ? Styles.active : ''}><Check className={Styles.icons} />Bookings</li></Link>
+                            <Link href='/vendor/service' > <li onClick={() => setActiveTab('Services')} className={activeTab === "Services" ? Styles.active : ''}><UserRoundCog className={Styles.icons} />Services</li></Link>
+                            <Link href='/vendor/earnings' > <li onClick={() => setActiveTab('Earnings')} className={activeTab === "Earnings" ? Styles.active : ''}><Banknote className={Styles.icons} />Earnings</li></Link>
+                            <Link href='/' > <li onClick={() => setActiveTab('Messages')} className={activeTab === "Messages" ? Styles.active : ''}><MessageCircleMore className={Styles.icons} /> Messages</li></Link>
+                            <Link href='/vendor/settings' > <li onClick={() => setActiveTab('Account')} className={activeTab === "Account" ? Styles.active: ''}><Settings className={Styles.icons} />My Account</li></Link>
+                        </ul>
+                    </div>
+                    <p style={{color:"#E83E1C"}}>Account status: <span style={{color:"#2ED074"}}>ACTIVE</span> </p>    
                 </div>
-                <p style={{color:"#E83E1C"}}>Account status: <span style={{color:"#2ED074"}}>ACTIVE</span> </p>    
-            </div>
-          )} 
+            )}
         </>
         
     );

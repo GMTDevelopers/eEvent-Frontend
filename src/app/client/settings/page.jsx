@@ -11,16 +11,17 @@ const Settings = () => {
     const [photo, setPhoto] = useState(logedInUser.data.profileImage || '/images/defaultDP.jpg' )
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
-
+    const isPhotoChanged = photo instanceof File;
 
     const [form, setForm] = useState({
         firstName: logedInUser.data.firstName || '',
+        firstName: logedInUser.data.middleName || '',
         lastName: logedInUser.data.lasttName || '',
         email: logedInUser.data.email || '',
         phone: logedInUser.data.phone || '',
         notifications: logedInUser.data.notifications ?? true,
         password: '',
-  });
+    });
     const handlePhotoChange = (e) => {
         const file = e.target.files?.[0];
         if (file) setPhoto(file);
@@ -31,18 +32,36 @@ const Settings = () => {
         setLoading(true);
         setMessage('');
 
-        const payload = { notifications: form.notifications };
-        if (form.password) payload.password = form.password;
-
         try {
             const token = localStorage.getItem("access_token");
-            const res = await fetch(`https://eevents-srvx.onrender.com/v1/auth/reset-password`, {
+            if (!token) throw new Error('Not authenticated');
+
+            const formData = new FormData();
+
+            // ---- text fields ----
+            formData.append('notifications', form.notifications);
+            formData.append('firstName', form.firstName);
+            formData.append('lastName', form.lastName);
+            formData.append('middleName', form.middleName);
+            formData.append('phone', form.phone);
+            formData.append('email', form.email);
+
+
+            if (form.password) {
+                formData.append('password', form.password);
+            }
+
+            // ---- photo (only if changed) ----
+            if (photo instanceof File) {
+                formData.append('profileImage', photo);
+            }
+
+            const res = await fetch(`https://eevents-srvx.onrender.com/v1/auth/profile`, {
                 method: 'PATCH',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    authorization: `Bearer ${token}`
+                headers: {
+                    authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify(payload),
+                body: formData,
             });
 
             const data = await res.json();
@@ -50,12 +69,15 @@ const Settings = () => {
 
             setMessage('Profile updated successfully!');
             setForm({ ...form, password: '' });
+
         } catch (err) {
-        setMessage(err.message);
+            setMessage(err.message);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
+
+
 
 
     return ( 
@@ -85,11 +107,29 @@ const Settings = () => {
                 <section className={`${styles.mainSection} mainSection`}>
                     <h2>TAP FIELD TO UPDATE DATA</h2>
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Full name</label>
+                        <label className={styles.label}>First Name</label>
                         <input
+                            name="firstName"
                             type="text"
-                            value={form.firstName + form.lastName}
-                            disabled
+                            defaultValue={form.firstName}                            
+                            className={styles.inputDisabled}
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Middle Name</label>
+                        <input
+                            name="middleName"
+                            type="text"
+                            defaultValue={form.middleName}                            
+                            className={styles.inputDisabled}
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label className={styles.label}>Last name</label>
+                        <input
+                            name="lastName"
+                            type="text"
+                            defaultValue={form.lastName}                            
                             className={styles.inputDisabled}
                         />
                     </div>
@@ -98,8 +138,8 @@ const Settings = () => {
                         <label className={styles.label}>Email address</label>
                         <input
                             type="email"
-                            value={form.email}
-                            disabled
+                            defaultValue={form.email}
+                            name="email"
                             className={styles.inputDisabled}
                         />
                     </div>
@@ -108,8 +148,8 @@ const Settings = () => {
                         <label className={styles.label}>Phone number</label>
                         <input
                             type="tel"
-                            value={form.phone}
-                            disabled
+                            defaultValue={form.phone}
+                            name="phone"
                             className={styles.inputDisabled}
                         />
                     </div>

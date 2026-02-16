@@ -15,25 +15,46 @@ const Bookings = () => {
     const [allData, setAllData] = useState([]);        // ← Full dataset
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const ITEMS_PER_PAGE = 15;
+    const [loading, setLoading] = useState(null);
+    const ITEMS_PER_PAGE = 6;
+    
 
   // Load data once
     useEffect(() => {
-        fetch("/data/clientTransaction.json")
-            .then((res) => res.json())
-            .then((data) => {
-            setAllData(data);
-            const pages = Math.ceil(data.length / ITEMS_PER_PAGE);
-            setTotalPages(pages);
-            console.log("Total items:", data.length, "Pages:", pages);
-            })
-            .catch((error) => console.error("Error fetching data:", error));
-    }, []);
+        setLoading(true);
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            openModal(<SignIn />)
+            return;
+        }
+        const skip = (currentPage - 1) * ITEMS_PER_PAGE;
+        const query = new URLSearchParams({
+            /* category: categoryFilter, */
+            /* location: "", */
+            search: "",
+            skip: skip,
+            take: ITEMS_PER_PAGE,
+        });
+        fetch(`https://eevents-srvx.onrender.com/v1/vendors/bookings?${query.toString()}`,{
+            headers:{
+                authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data)
+            setAllData(data.data || []);
+            setCurrentPage(data.data.meta.page || 1);
+            setTotalPages(data.data.meta.lastPage || 0);
+        }) 
 
-  // Re-calculate visible data whenever currentPage or allData changes
-    const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIdx = startIdx + ITEMS_PER_PAGE;
-    const visibleData = allData.slice(startIdx, endIdx);
+        .catch((error) => console.error("Error fetching data:", error))
+        .finally( ()=> {
+            setLoading(false);
+        }  
+        )
+    }, [currentPage]);
+
 
     return ( 
         <div className='main'>
@@ -42,12 +63,12 @@ const Bookings = () => {
                 <SearchFilter name="My Bookings"/>
             </div>
             <div className="table">
-                <VendorBookingsTable bookings={visibleData}/> 
+               <VendorBookingsTable bookings={allData}/>
 
                 <Pagination
                     currentPage={currentPage}
                     totalPages={totalPages}
-                    onPageChange={(page) => setCurrentPage(page)}
+                    onPageChange={!loading ? setCurrentPage : () => {}}
                 />             
             </div>
             

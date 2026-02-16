@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styles from '../product.module.css'
 import bStyles from './bookingVendor.module.css'
 import Link from 'next/link';
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Rating } from 'react-simple-star-rating';
 import Loading from '@/app/(components)/loading/loading';
 import SignIn from '@/app/navbar/(signIn)/signIn';
@@ -36,6 +36,7 @@ const BookVendor = () => {
     const id = params.id;
 
     const { openModal } = useModal();
+    const router = useRouter();
 
     useEffect(() => {
         console.log(id)
@@ -67,33 +68,38 @@ const BookVendor = () => {
         });
     }, []);
 
+    const toBackendISO = (date) => {
+        if (!date) return null;
+        return new Date(date).toISOString().replace('.000', '');
+    };
+
     async function handleSubmit(formData){
         const data = {
+            vendorId: prod.vendorId,
+            serviceId: prod.serviceId,
             eventType: formData.get('eventType'),
             eventTitle: formData.get('eventTitle'),
-            eventDate: formData.get('eventDate'),
+            eventDate: toBackendISO(formData.get('eventDate')),
             eventTime: formData.get('eventTime'),
-            eventDuration: formData.get('eventDuration'),
+            eventDuration: Number(formData.get('eventDuration') || 1),
             eventLocation: formData.get('eventLocation'),
-
-            serviceType: formData.get('serviceType'),
-            unitPrice: formData.get('unitPrice'),
+/*             serviceType: formData.get('serviceType'), */
+            unitPrice: servicePrice,
             unitsNeeded: Number(formData.get('unitsNeeded') || 1),
-
-            additionalService: formData.get('additionalService'),
-            addQuantity: Number(formData.get('addQuantity') || 0),
-
-            preferredSetupDate: formData.get('preferredSetupDate'),
+            additionalServices:[{
+                name: formData.get('additionalService'),
+                quantity: Number(formData.get('addQuantity') || 0)
+            }],
+            preferredSetupDate: toBackendISO(formData.get('preferredSetupDate')),
             preferredSetupTime: formData.get('preferredSetupTime'),
-
             specialInstructions: formData.get('specialInstructions'),
-
             contactPersonName: formData.get('contactPersonName'),
-            ContactPersonPhone: formData.get('ContactPersonPhone'),
-            AltContactPersonPhone: formData.get('AltContactPersonPhone'),
+            contactPersonPhone: formData.get('ContactPersonPhone'),
+           /*  AltContactPersonPhone: formData.get('AltContactPersonPhone'), */
 
-            agree: formData.get('agree') === 'on',
+            totalCost: total
         };
+        console.log(data)
         try {
             const token = localStorage.getItem("access_token");
             if (!token) {
@@ -111,7 +117,7 @@ const BookVendor = () => {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify({ data}),
+                body: JSON.stringify(data),
             });
 
            const result = await bookingRes.json();
@@ -128,7 +134,9 @@ const BookVendor = () => {
             // ✅ success handling (minimal, safe)
             sessionStorage.removeItem("pendingBookingForm");
             console.log("Booking successful:", result);
-            return result;                    
+            router.back();  
+            return result;   
+                          
 
         } catch (err) {
             console.log(err)
@@ -153,7 +161,7 @@ const BookVendor = () => {
                         </div>
                         
                         <div className="vendorDetails">
-                            <p className="vendorName">Tee Home of Decor.</p>
+                            <p className="vendorName">{prod.vendorName}</p>
                             <p style={{color:"#636363"}}>{new Date(prod.dateJoined).toLocaleDateString("en-US", { month: "long", year: "numeric", })}</p>
                             <div className="catPill">
                                 <li>{prod.category}</li>
@@ -178,7 +186,7 @@ const BookVendor = () => {
                 <section className={styles.mainSection}>
                     <h2>Book Vendor- {prod.serviceName}</h2>
                     <form action={handleSubmit} className={bStyles.bookVendorForm}>
-                        <select value={eventType} onChange={(e) => setEventType(e.target.value)} required name="eventType">
+                        <select onChange={(e) => setEventType(e.target.value)} required name="eventType">
                             <option value="" selected hidden disabled>Event category</option>
                             <option value="Wedding">Wedding</option>
                             <option value="Birthday">Birthday</option>
@@ -202,15 +210,19 @@ const BookVendor = () => {
 
                         <select value={eventDuration} onChange={(e) => setEventDuration(e.target.value)} required name="eventDuration">
                             <option value="" selected hidden disabled>Event duration</option>
-                            <option value="1-3">1-3 hours</option>
-                            <option value="4-7">4-7 hours</option>
-                            <option value="8-11">8-11 hours</option>
-                            <option value="12-15">12-15 hours</option>
+                            <option value="1-3">1 hours</option>
+                            <option value="4-7">2 hours</option>
+                            <option value="8-11">3 hours</option>
+                            <option value="12-15">4 hours</option>
+                            <option value="12-15">5 hours</option>
+                            <option value="12-15">6 hours</option>
+                            <option value="12-15">7 hours</option>
+                            <option value="12-15">8 hours</option>
                         </select>
 
                         <input type="text" name='eventLocation' placeholder='Event location' required />
 
-                        <select value={selectServiceType} onChange={(e) => {const price = Number(e.target.selectedOptions[0].dataset.price || 0);setServicePrice(price);}} id="serviceType" name="serviceType">
+                        <select onChange={(e) => {const price = Number(e.target.selectedOptions[0].dataset.price || 0);setServicePrice(price);}} id="serviceType" name="serviceType">
                             <option value="" selected hidden disabled>Select service type</option>
                             {prod?.serviceVariants === null ?
                                 (<option value={prod.serviceName} data-price={prod.servicePrice} >
@@ -230,7 +242,7 @@ const BookVendor = () => {
 
                         {/* ADDITIONAL SERVICE – NOW USING data-price (SAFE & SIMPLE) */}
                         <select onChange={(e) => {const price = Number(e.target.selectedOptions[0].dataset.price || 0); setAddServicePrice(price);}} name="additionalService">
-                            <option value=""  disabled>Select additional service</option>
+                            <option value="" selected hidden disabled>Select additional service</option>
                             {prod?.additionalService?.map((add) => (
                                 <option
                                     key={add.name}
@@ -243,13 +255,7 @@ const BookVendor = () => {
                         </select>
 
                         {/* QUANTITY INPUT */}
-                        <input
-                            type="number"
-                            min="0"
-                            name="addQuantity"
-                            placeholder="Additional Service Units needed"                            
-                            onChange={(e) => setAddServiceQty(Number(e.target.value || 0))}
-                        />
+                        <input type="number" disabled={!addServicePrice} min={0} name="addQuantity" placeholder="Additional Service Units needed" onChange={(e) => setAddServiceQty(Number(e.target.value || 0))} />
 
                         <div className={bStyles.formFlex}>
                             <input type={isFocusedSD ? "date" : "text"} onFocus={() => setIsFocusedSD(true)} onBlur={(e) => !e.target.value && setIsFocusedSD(false)} placeholder='Preferred setup date' name="preferredSetupDate" required />

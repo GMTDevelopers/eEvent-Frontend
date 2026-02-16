@@ -3,12 +3,14 @@
 import styles from '../signUp.module.css'
 import formStyles from '@/app/navbar/(signIn)/signIn.module.css'
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AccountStep from './steps/accountStep';
 import ProgressIndicator from '@/app/(components)/progressIndicator/page';
 import BusinessStep from './steps/businessStep';
 import VerificationStep from './steps/verificationStep';
 import SubscriptionStep from './steps/SubscriptionStep';
+import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
+import { useAuth } from '@/app/contexts/AuthContext';
 
 const stepsConfig = [
   { id: 1, label: 'Account', title: 'Create new vendor account (1/4)' },
@@ -17,8 +19,28 @@ const stepsConfig = [
   { id: 4, label: 'Subscription', title: 'Create new vendor account - subscription (4/4)' },
 ];
 
+
 const VendorRegistration = () => {
+  const {logedInUser} = useAuth()
+  const { openModal } = useModal();
   const [currentStep, setCurrentStep] = useState(1);
+
+  const updateFormData = (newData) => {
+    setFormData((prev) => ({ ...prev, ...newData }));
+  };
+
+  useEffect(() => {
+    if (logedInUser?.data) {
+      updateFormData({
+        surname: logedInUser.data.lastName || "",
+        firstName: logedInUser.data.firstName || "",
+        otherName: logedInUser.data.middleName || "",
+        email: logedInUser.data.email || "",
+        phone: logedInUser.data.phone || "",
+      });
+    }
+  }, [logedInUser]);
+
   const [formData, setFormData] = useState({
     surname: '',
     firstName: '',
@@ -58,7 +80,7 @@ const VendorRegistration = () => {
       if (formData.email !== formData.confirmEmail) stepErrors.confirmEmail = 'Emails do not match';
       if (!/\S+@\S+\.\S+/.test(formData.email)) stepErrors.email = 'Email is invalid';
       if (!formData.phone.trim()) stepErrors.phone = 'Phone number is required';
-      if (!/^\+\d{10,15}$/.test(formData.phone.trim())) {
+      if (!/^\d{5,15}$/.test(formData.phone.trim())) {
         stepErrors.phone = 'Phone number must be in international format (e.g., +2348012345678)';
       }
     } else if (currentStep === 2) {
@@ -116,53 +138,85 @@ const VendorRegistration = () => {
     }
   };
 
-  const updateFormData = (newData) => {
-    setFormData((prev) => ({ ...prev, ...newData }));
+
+  const buildPayload = () => {
+    return {
+      data: {
+        hasVendorAccount: true,
+
+        user: {
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.surname,
+          phone: formData.phone,
+          profileImage: null,
+        },
+
+        business: {
+          name: formData.businessName,
+          category: formData.category,
+          registered: formData.registered === 'Yes',
+          certificate: formData.certificate,
+          description: formData.description,
+          yearsOfExperience: Number(formData.experience),
+          address: formData.address,
+          countryOfOperation: [formData.country],
+          operatingStates: formData.states,
+        },
+
+        verification: {
+          type: formData.idType,
+          maskedNumber: formData.idNumber,
+          image: formData.idFile,
+        },
+
+        subscription: {
+          name: formData.subscriptionPlan,
+        },
+      },
+    };
   };
 
-const buildPayload = () => {
-  return {
-    data: {
-      hasVendorAccount: true,
+  const buildFormData = () => {
+    const fd = new FormData();
 
-      user: {
-        email: formData.email,
-        firstName: formData.firstName,
-        lastName: formData.surname,
-        phone: formData.phone,
-        profileImage: null,
-      },
+    // 1. append JSON payload
+    fd.append("data", JSON.stringify(buildPayload().data));
 
-      business: {
-        name: formData.businessName,
-        category: formData.category,
-        registered: formData.registered === 'Yes',
-        certificate: formData.certificate,
-        description: formData.description,
-        yearsOfExperience: Number(formData.experience),
-        address: formData.address,
-        countryOfOperation: [formData.country],
-        operatingStates: formData.states,
-      },
+    // 2. append files separately
+    if (formData.certificate)
+      fd.append("certificate", formData.certificate);
 
-      verification: {
-        type: formData.idType,
-        maskedNumber: formData.idNumber,
-        image: formData.idFile,
-      },
+    if (formData.idFile)
+      fd.append("idFile", formData.idFile);
 
-      subscription: {
-        name: formData.subscriptionPlan,
-      },
-    },
+    if (formData.businessFile)
+      fd.append("businessFile", formData.businessFile);
+
+    if (formData.passportFile)
+      fd.append("passportFile", formData.passportFile);
+
+    return fd;
   };
-};
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formDataPayload = buildPayload();
-    console.log(formDataPayload)
+    const token = localStorage.getItem('access_token');
+    console.log(token)
+    if (!token) {
+      openModal(<SignIn />)
+      return;
+    }
+    const res = await fetch("https://eevents-srvx.onrender.com/v1/vendors", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: buildFormData(),
+    });
+
+    const result = await res.json();
+    console.log(result);
   };
 
     return ( 

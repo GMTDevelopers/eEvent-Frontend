@@ -10,6 +10,7 @@ import SignIn from "@/app/navbar/(signIn)/signIn";
 import Reschedule from "../reschedule/page";
 import Contact from "../Contact/pages";
 import Cancle from "../cancle/cancle";
+import Message from "../message/pages";
 
 export default function BookingsTable({ bookings = {} }) {
   const router = useRouter();
@@ -27,7 +28,8 @@ export default function BookingsTable({ bookings = {} }) {
       {/* DESKTOP TABLE — hidden on mobile */}
       <div className={styles.desktopTable}>
         { 
-          data.length === 0 ? <div style={{minHeight:"70px"}} className="sectionHeaderCenter"><span className="txtHeader">you are yet to book a service</span></div>  :
+          !data.status==="error" ? <div style={{minHeight:"70px"}} className="sectionHeaderCenter"><span className="txtHeader">you are yet to book a service</span></div>
+          : data.status==="success" && data.length === 0 ? <div className="sectionHeaderCenter"><span className="txtHeader"><Loading /></span></div>  :
           <table className={styles.table}>
             <thead>
               <tr>
@@ -43,30 +45,30 @@ export default function BookingsTable({ bookings = {} }) {
             </thead>
             <tbody> 
               {data.length !==0 && data.map((b) => (
-                <tr className={styles.dataRow} key={b.id} >
-                  <td onClick={closeMenu}>{b.id}</td>
-                  <td onClick={closeMenu}>{b.vendor.business.name}</td>
-                  <td onClick={closeMenu}>{b.service.title}</td>
-                  <td onClick={closeMenu}>{new Date(b.createdAt).toLocaleDateString()}</td>
+                <tr className={styles.dataRow} key={b.bookingId} >
+                  <td onClick={closeMenu}>{b.bookingId}</td>
+                  <td onClick={closeMenu}>{b.vendorName}</td>
+                  <td onClick={closeMenu}>{b.serviceName}</td>
+                  <td onClick={closeMenu}>{new Date(b.dateBooked).toLocaleDateString()}</td>
                   <td onClick={closeMenu}>{new Date(b.eventDate).toLocaleDateString()}</td>
-                  <td onClick={closeMenu} className={styles.amount}>₦{b.totalCost.toLocaleString()}</td>
+                  <td onClick={closeMenu} className={styles.amount}>₦{b.amount.toLocaleString()}</td>
                   <td onClick={closeMenu}> 
                     <span className={`${styles.status} ${styles[b.status?.toLowerCase()]}`}>
                       {b.status}
                     </span>
                   </td>
                   <td className={styles.actionCell}>
-                    <button onClick={() => toggleMenu(b.id)} className={styles.dotsBtn}>
+                    <button onClick={() => toggleMenu(b.bookingId)} className={styles.dotsBtn}>
                       ⋮
                     </button>
-                    {openMenuId === b.id && (
+                    {openMenuId === b.bookingId && (
                       <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
-                        <li className={styles.dropdownItem} onClick={() => router.push(`/client/bookings/${b.id}`)}>View</li>
+                        <li className={styles.dropdownItem} onClick={() => router.push(`/client/bookings/${b.bookingId}`)}>View</li>
                         <li style={{color:"#09A14A"}} className={styles.dropdownItem}>Mark completed</li>
-                        <li className={styles.dropdownItem}>Message vendor</li>
-                        <li className={styles.dropdownItem} onClick={() => openModal(<Reschedule id={b.id} initDate={new Date(b.eventDate).toLocaleDateString()} />)}>Reschedule booking</li>
+                        <li className={styles.dropdownItem} onClick={() => openModal(<Message bookingId={b.bookingId} receiverId={b.vendorUserId} />)}>Message vendor</li>
+                        <li className={styles.dropdownItem} onClick={() => openModal(<Reschedule id={b.bookingId} initDate={new Date(b.eventDate).toLocaleDateString()} />)}>Reschedule booking</li>
                         <li className={styles.dropdownItem} onClick={() => openModal(<Contact />)} >Contact support</li>
-                        <li className={`${styles.dropdownItem}  ${styles.cancel}`} onClick={() => openModal(<Cancle id={b.id}/>)} >Cancel booking</li>
+                        <li className={`${styles.dropdownItem}  ${styles.cancel}`} onClick={() => openModal(<Cancle id={b.bookingId}/>)} >Cancel booking</li>
                       </div>
                     )}
                   </td>
@@ -81,21 +83,21 @@ export default function BookingsTable({ bookings = {} }) {
       <div className={styles.mobileCards}> 
         {data.length === 0 ? <span className="txtHeader">you are yet to book a service</span> :
           data !== 0 && data.map((b) => (
-            <div key={b.id} className={styles.card} onClick={closeMenu}>
+            <div key={b.bookingId} className={styles.card} onClick={closeMenu}>
               <div className={styles.cardHeader}>
                 <div>
-                  <div className={styles.bookingId}>{b.id}</div>
+                  <div className={styles.bookingId}>{b.bookingId}</div>
                   <span className={`${styles.status} ${styles[b.status.toLowerCase()]}`}>
                     {b.status}
                   </span>
                 </div>
-                <button onClick={(e) => { e.stopPropagation(); toggleMenu(b.id); }} className={styles.dotsBtn}>
+                <button onClick={(e) => { e.stopPropagation(); toggleMenu(b.bookingId); }} className={styles.dotsBtn}>
                   ⋮
                 </button>
               </div>
 
-              <div className={styles.vendorName}>{b.vendor.business.name}</div>
-              <div className={styles.service}>{b.service.title}</div>
+              <div className={styles.vendorName}>{b.vendorName}</div>
+              <div className={styles.service}>{b.serviceName}</div>
 
               <div className={styles.cardRow}>
                 <span>Event Date</span>
@@ -103,11 +105,11 @@ export default function BookingsTable({ bookings = {} }) {
               </div>
               <div className={styles.cardRow}>
                 <span>Amount</span>
-                <strong className={styles.amount}>₦{b.totalCost.toLocaleString()}</strong>
+                <strong className={styles.amount}>₦{b.amount.toLocaleString()}</strong>
               </div>
 
               {/* Dropdown menu (same as desktop) */}
-              {openMenuId === b.id && (
+              {openMenuId === b.bookingId && (
                 <div className={styles.mobileDropdown}>
                   <button className={styles.dropdownItem}>View</button>
                   <button className={styles.dropdownItem}>Mark completed</button>

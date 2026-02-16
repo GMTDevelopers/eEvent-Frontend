@@ -23,7 +23,7 @@ export default function VendorBookingsTable({ bookings = [] }) {
   const toggleMenu = (id) => {
     setOpenMenuId(openMenuId === id ? null : id);
   };
-
+  const data = bookings.data||[]
   const closeMenu = () => setOpenMenuId(null);
 
 
@@ -46,31 +46,31 @@ export default function VendorBookingsTable({ bookings = [] }) {
             </tr>
           </thead>
           <tbody>
-            {bookings.map((b) => (
-              <tr className={styles.dataRow} key={b.id} >
-                <td onClick={closeMenu}>{b.id}</td>
-                <td onClick={closeMenu}>{b.businessName}</td>
-                <td onClick={closeMenu}>{b.serviceOrdered.serviceName}</td>
-                <td onClick={closeMenu}>{b.bookingDate}</td>
+            {data.length !==0 && data.map((b,index) => (
+              <tr className={styles.dataRow} key={index} >
+                <td onClick={closeMenu}>{b.bookingID}</td>
+                <td onClick={closeMenu}>{b.clientName}</td>
+                <td onClick={closeMenu}>{b.eventType}</td>
+                <td onClick={closeMenu}>{b.dateBooked}</td>
                 <td onClick={closeMenu}>{b.eventDate}</td>
-                <td onClick={closeMenu} className={styles.amount}>₦{b.totalCost.toLocaleString()}</td>
+                <td onClick={closeMenu} className={styles.amount}>₦{b.amount.toLocaleString()}</td>
                 <td onClick={closeMenu}> 
-                  <span className={`${styles.status} ${styles[b.bookingStatus.toLowerCase()]}`}>
+                  <span className={`${styles.status} ${styles[b.paymentStatus.toLowerCase()]}`}>
                     {b.paymentStatus}
                   </span>
                 </td>
                 <td onClick={closeMenu}> 
-                  <span className={`${styles.status} ${styles[b.bookingStatus.toLowerCase()]}`}>
-                    {b.bookingStatus}
+                  <span className={`${styles.status} ${styles[b.eventStatus.toLowerCase()]}`}>
+                    {b.eventStatus}
                   </span>
                 </td>
                 <td className={styles.actionCell}>
-                  <button onClick={() => toggleMenu(b.id)} className={styles.dotsBtn}>
+                  <button onClick={() => toggleMenu(b.bookingID)} className={styles.dotsBtn}>
                     ⋮
                   </button>
-                  {openMenuId === b.id && (
+                  {openMenuId === b.bookingID && (
                     <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
-                      <li className={styles.dropdownItem} onClick={() => router.push(`/vendor/bookings/${b.id}`)}>View</li>
+                      <li className={styles.dropdownItem} onClick={() => router.push(`/vendor/bookings/${b.bookingID}`)}>View</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<Accept />)}>Accept reschedule</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<Reject />)}>Reject reschedule</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<Message />)} >Message client</li>
@@ -87,34 +87,34 @@ export default function VendorBookingsTable({ bookings = [] }) {
 
       {/* MOBILE CARDS — hidden on desktop */}
       <div className={styles.mobileCards}>
-        {bookings.map((b) => (
-          <div key={b.id} className={styles.card} onClick={closeMenu}>
+        {data.map((b,index) => (
+          <div key={index} className={styles.card} onClick={closeMenu}>
             <div className={styles.cardHeader}>
               <div>
-                <div className={styles.bookingId}>{b.id}</div>
-                <span className={`${styles.status} ${styles[b.bookingStatus.toLowerCase()]}`}>
-                  {b.bookingStatus}
+                <div className={styles.bookingId}>{b.bookingID}</div>
+                <span className={`${styles.status} ${styles[b.eventStatus.toLowerCase()]}`}>
+                  {b.eventStatus}
                 </span>
               </div>
-              <button onClick={(e) => { e.stopPropagation(); toggleMenu(b.id); }} className={styles.dotsBtn}>
+              <button onClick={(e) => { e.stopPropagation(); toggleMenu(b.bookingID); }} className={styles.dotsBtn}>
                 ⋮
               </button>
             </div>
 
-            <div className={styles.vendorName}>{b.businessName}</div>
-            <div className={styles.service}>{b.serviceOrdered.serviceName}</div>
+            <div className={styles.vendorName}>{b.clientName}</div>
+            <div className={styles.service}>{b.eventType}</div>
 
             <div className={styles.cardRow}>
               <span>Event Date</span>
-              <strong>{b.bookingDate}</strong>
+              <strong>{b.dateBooked}</strong>
             </div>
             <div className={styles.cardRow}>
               <span>Amount</span>
-              <strong className={styles.amount}>₦{b.totalCost.toLocaleString()}</strong>
+              <strong className={styles.amount}>₦{b.amount.toLocaleString()}</strong>
             </div>
 
             {/* Dropdown menu (same as desktop) */}
-            {openMenuId === b.id && (
+            {openMenuId === b.bookingID && (
               <div className={styles.mobileDropdown}>
                 <button className={styles.dropdownItem}>View</button>
                 <button className={styles.dropdownItem}>Accept booking</button>

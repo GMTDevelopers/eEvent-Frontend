@@ -10,7 +10,7 @@ const Reschedule = ({id, initDate}) => {
         const reason = formData.get("message");
         try{
             const token = localStorage.getItem("access_token");
-            const rescheduleRes = await fetch(`https://eevents-srvx.onrender.com/v1/clients/bookings/${id}/reschedule`, {
+            const rescheduleRes = await fetch(`https://eevents-srvx.onrender.com/v1/client/bookings/${id}/reschedule`, {
                 method: "PATCH",
                 headers: { 
                     "Content-Type": "application/json" ,

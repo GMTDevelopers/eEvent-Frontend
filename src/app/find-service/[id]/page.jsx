@@ -4,7 +4,6 @@ import { useEffect, useState, use } from 'react';
 import styles from './product.module.css';
 import ProductTabs from '@/app/(components)/tabs/pages';
 import NaturalDescription from '@/app/(components)/natural-text/page';
-import Link from 'next/link';
 import Loading from '@/app/(components)/loading/loading';
 import { Rating } from 'react-simple-star-rating';
 import { useRouter } from 'next/navigation'
@@ -44,7 +43,7 @@ const ProductCard = ({params}) => {
                                 </div>
                                 
                                 <div className="vendorDetails">
-                                    <p className="vendorName">name goes here.</p>
+                                    <p className="vendorName">{prod.vendorName}</p>
                                     <p style={{color:"#636363"}}>{new Date(prod.dateJoined).toLocaleDateString("en-US", { month: "long", year: "numeric", })}</p>
                                     <div className="catPill">
                                         <li>{prod.category}</li>

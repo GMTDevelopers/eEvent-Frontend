@@ -8,37 +8,44 @@ import Accept from '@/app/(components)/vendorAcceptBooking/page';
 import Reject from '@/app/(components)/vendorRejectBooking/page';
 import Message from '@/app/(components)/message/pages';
 import Contact from '@/app/(components)/Contact/pages';
+import Loading from '@/app/(components)/loading/loading';
 const BookingItem = /* async */ ({params}) => {
     const router = useRouter();
     const {id} = use(params);
     const [isData, setIsData] = useState()
     const [isLoading, setIsLoading] = useState(true)
-    const [openMenuId, setOpenMenuId] = useState(null);
     const { openModal } = useModal();
-    const toggleMenu = (id) => {
-        setOpenMenuId(openMenuId === id ? null : id);
-    };
 
-    const closeMenu = () => setOpenMenuId(null);
     useEffect(() => {
-        fetch("/data/clientTransaction.json")
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            console.error("Authentication token not found. Please log in.");
+            setIsLoading(false);
+            openModal(<SignIn />)            
+            return;
+        }
+        fetch(`https://eevents-srvx.onrender.com/v1/vendors/bookings/${id}`,{
+            headers:{
+                authorization:`Bearer ${token}`,
+            },
+        })
             .then((res) => res.json())
             .then((data) => {
-            setIsData(data.find((b) => b.id === id));
+            setIsData(data.data);
             setIsLoading(false)
-            console.log(data.find((b) => b.id === id));
+            console.log(data);
             })
             .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
-    if (!isData) return <p>No yoyoyoy booking found</p>;
+    if (!isData) return <p>No booking found</p>;
 
     return ( 
         <div>
             <button onClick={() => router.back()} className={`section ${styles.backBtn}`}><ChevronLeft /> go back </button>
-            {
+             {
                 isLoading &&<div>
-                    Loading........
+                    <Loading />
                 </div>
             }
             {
@@ -70,15 +77,15 @@ const BookingItem = /* async */ ({params}) => {
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Client phone</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{isData.vendorPhoneNumber}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{isData.clientPhoneNumber}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Client email</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>eeventclient@mail.com</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{isData.clientEmail}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Booking date</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{isData.bookingDate}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{new Date(isData.bookingDate).toDateString()}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Event type</p>
@@ -90,7 +97,7 @@ const BookingItem = /* async */ ({params}) => {
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Event date</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{isData.bookingDate}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{new Date(isData.bookingDate).toDateString()}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Event time</p>
@@ -106,35 +113,31 @@ const BookingItem = /* async */ ({params}) => {
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Service booked</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>Full coverage</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{isData.serviceBooked}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Units needed</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{isData.serviceOrdered.units}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{isData.unitsNeeded}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Additional service</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>
-                                        {isData.AdditionalServices.map((add)=>(
+                                    {/* <p style={{color:"#222222", fontWeight:700}}>
+                                        {isData.serviceOrdered.AdditionalServices.map((add)=>(
                                             <>{add.serviceName}</>
                                         ))}
-                                    </p>
+                                    </p> */}
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Preferred setup date</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>Few hours before the event starts</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{new Date(isData.preferredSetupDate).toDateString()}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Preferred setup time</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>Few hours before the event starts</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{new Date(isData.preferredSetupTime).toTimeString()}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Special instructions</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>Please ensure every moment is captured</p>
-                                </li>
-                                <li className={styles.vendorItem}>
-                                    <p>Special instructions</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>Please ensure every moment is captured</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{isData.specialInstructions}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Contact person name</p>
@@ -153,7 +156,7 @@ const BookingItem = /* async */ ({params}) => {
                                     <p style={{color:"#222222", fontWeight:700}}>{isData.bookingStatus}</p>
                                 </li>                               
                             </div>
-                            <div className="descPack">
+                           {/*  <div className="descPack">
                                 <p style={{color:"#222222", fontWeight:700}}>SERVICE ORDERED</p>
                                 
                                 <li className={styles.vendorItem}>
@@ -175,7 +178,7 @@ const BookingItem = /* async */ ({params}) => {
                                         <p style={{color:"#222222", fontWeight:700}}>₦{add.serviceCost}</p>
                                     </li>
                                 ))}
-                            </div>
+                            </div> */}
                             <div className="descPack">
                                 <li className={styles.vendorItem}>
                                     <p style={{color:"#222222", fontWeight:700}}>Total Cost:</p>

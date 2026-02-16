@@ -22,7 +22,7 @@ const BuyTicket = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [error, setError] = useState(null);
 
-    const fetchTickets = async (page) => {
+    const fetchTickets = async (page = 1) => {
         setLoading(true);
         setError(null);
 
@@ -86,17 +86,11 @@ const BuyTicket = () => {
         { id: 'arts-theatre', name: 'Arts & Theatre' },
     ];
 
-    const dateOptions = [
-        { value: 'all-dates', label: 'All Dates' },
-        { value: 'this-week', label: 'This Week' },
-        { value: 'this-month', label: 'This Month' },
-    ];
-
-    const handleSearch = (e) => {
+/*     const handleSearch = (e) => {
         e.preventDefault();
         fetchTickets();
     };
-
+ */
     const handleCategoryClick = (catId) => {
         setSelectedCategory(catId);
         // Auto-fetch when category changes (you can remove if you prefer manual search only)
@@ -138,22 +132,23 @@ const BuyTicket = () => {
                         {cat.name}
                     </button>
                     ))}
+                    
                 </div>
                 
             </div>
 
             {/* Loading */}
-            {loading && <Loading />}
+           {/*  {loading && <Loading />} */}
             {error && ( <p className="error"> {error} </p> )}
 
             <div className={styles.ticketDisplay}>
                 {tickets.length === 0 && !loading && <p>No tickets found.</p>}
                 {tickets.map((ticket) => (
-                    ticket.isActive && <div key={ticket.id} className={styles.ticketCard}>
+                    <div key={ticket.id} className={styles.ticketCard}>
                         <div className={styles.cardHeader}>
-                            <img className={styles.prodImg} src={ticket.image} alt="product" />            
+                            <img className={styles.prodImg} src={ticket.ticketImage} alt="product" />            
                             <div className={styles.catPill}>
-                                <li>{ticket.ticketType}</li>
+                                <li>{ticket.category}</li>
                             </div>
                         </div>
                         <div className="cardHeader">
@@ -162,8 +157,8 @@ const BuyTicket = () => {
                             </div>
                             <div className={styles.ticketDetails}>
                                 <div className={styles.row1}>
-                                    <div><ClockFading className={styles.icon} /> {ticket.eventTime? new Date(ticket.eventTime).toLocaleTimeString() : " "}</div>
-                                    <div><Calendar className={styles.icon} /> {new Date(ticket.eventDate).toLocaleDateString()}</div>
+                                    <div><ClockFading className={styles.icon} /> {ticket.time}</div>
+                                    <div><Calendar className={styles.icon} /> {new Date(ticket.date).toLocaleDateString()}</div>
                                 </div>
                                 <div className={styles.row1}>
                                     <div><MapPin className={styles.icon} /> {ticket.location}</div> 
@@ -173,7 +168,7 @@ const BuyTicket = () => {
                             <div className={styles.prodPrice}>
                                 <p className={styles.rating} style={{fontWeight:500, color:"#AAA6A6"}}>PRICING STARTS FROM</p>
                                 <div style={{marginBottom:"10px"}} className="sectionHeader">
-                                    <h3 style={{color:"#222222"}}>₦ {ticket.price}</h3>
+                                    <h3 style={{color:"#222222"}}>₦ {ticket.leastPrice}</h3>
                                     <div className="btnNoCapsule">More details<SlArrowRight /></div>
                                 </div>
                             </div>

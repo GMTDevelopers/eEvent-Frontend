@@ -4,22 +4,23 @@ import styles from './bookingItem.module.css';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 import Loading from '@/app/(components)/loading/loading';
+import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 
 const BookingItem = /* async */ ({params}) => {
     const router = useRouter();
     const {id} = use(params);
     const [isData, setIsData] = useState()
     const [isLoading, setIsLoading] = useState(true)
+    const { openModal } = useModal();
     useEffect(() => {
         const token = localStorage.getItem("access_token");
         if (!token) {
             console.error("Authentication token not found. Please log in.");
-            // Optionally, redirect to login page
-            // router.push('/login');
             setIsLoading(false);
+            openModal(<SignIn />)            
             return;
         }
-        fetch(`https://eevents-srvx.onrender.com/v1/clients/bookings/${id}`,{
+        fetch(`https://eevents-srvx.onrender.com/v1/client/bookings/${id}`,{
             headers:{
                 authorization:`Bearer ${token}`,
             },

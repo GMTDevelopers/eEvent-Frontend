@@ -1,7 +1,23 @@
 import styles from '../../signUp.module.css'
 import formStyles from '@/app/navbar/(signIn)/signIn.module.css';
 import bStyles from '@/app/find-service/[id]/bookVendor/bookingVendor.module.css';
+import { useEffect, useState } from 'react';
 const BusinessStep = ({ formData, updateFormData, errors }) => {
+
+    const [countries, setCountries] = useState([]);
+    useEffect(() => {
+    fetch("https://restcountries.com/v3.1/region/africa?fields=name")
+        .then(res => res.json())
+        .then(data => {
+        const names = data
+            .map(c => c.name.common)
+            .sort((a, b) => a.localeCompare(b));
+
+        setCountries(names);
+        })
+        .catch(err => console.error(err));
+    }, []);
+
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         if (type === 'file') {
@@ -58,7 +74,14 @@ const BusinessStep = ({ formData, updateFormData, errors }) => {
                 {errors.address && <p className={styles.error}>{errors.address}</p>}
             </div>
             <div>
-                <input placeholder='Country of operation' type="text" name="country" value={formData.country} onChange={handleChange} />
+                <select name="country" value={formData.country} onChange={handleChange} required >
+                    <option value="" disabled>Select country</option>
+                    {countries.map(country => (
+                        <option key={country} value={country}>
+                            {country}
+                        </option>
+                    ))}
+                </select>        
                 {errors.country && <p className={styles.error}>{errors.country}</p>}
             </div>
             <div>

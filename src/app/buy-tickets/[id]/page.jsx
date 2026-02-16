@@ -37,47 +37,43 @@ const TicketDetails = () => {
         {!loading && ticket && (
           <div className="main">
             <header className="header">
-              <img className="bannerImg" src={ticket.image} alt="Banner" />
+              <img className="bannerImg" src={ticket.ticketImage} alt="Banner" />
             </header>
             <div className={styles.ticketSection}>
-                <h2>{ticket.ticketName}</h2>
+                <h2>{ticket.eventName}</h2>
                 <div className={styles.BookTicket}>
                     <ul className={styles.details}>
-                        <li style={{color:"#222222"}} className='txtHeader'>By: {ticket.organizer}</li>
+                        <li style={{color:"#222222"}} className='txtHeader'>By: {ticket.host}</li>
                         <li className={styles.cc}><MapPin className={styles.icon} /> {ticket.location}</li>
-                        <li className={styles.cc}><Calendar className={styles.icon} /> {new Date(ticket.eventDate).toLocaleDateString()}</li>
-                        <li className={styles.cc}><ClockFading className={styles.icon} />{ticket.eventTime? new Date(ticket.eventTime).toLocaleTimeString() : " "}</li>
-                        <li className={styles.cc}><Ticket className={styles.icon} /> {ticket.totalQuantity - ticket.soldQuantity} tickets left</li>
+                        <li className={styles.cc}><Calendar className={styles.icon} /> {new Date(ticket.date).toLocaleDateString()}</li>
+                        <li className={styles.cc}><ClockFading className={styles.icon} />{ticket.time}</li>
+                        <li className={styles.cc}><Ticket className={styles.icon} /> {ticket.ticketsLeft} tickets left</li>
                     </ul>
                     <form className={styles.bookForm}>
                         <select name="ticketType" value={ticketType} onChange={(e) => {
                             const option = e.target.selectedOptions[0];
-                            setTicketType({
-                            name: option.value,
-                            price: Number(option.dataset.price),
+                            setTicketType({ name: option.value, price: Number(option.dataset.price),
                             });
                         }}>
                             <option value="" disabled>Select ticket</option>
-                            {ticket?.ticketCategories?.map((type) => (
-                                <option
-                                    key={type.name}
-                                    value={type.name}
-                                    data-price={type.price}
-                                >
+                            {ticket?.ticketTypes?.map((type) => (                                
+                                <option key={type.name} value={type.name} data-price={type.price}>
                                     {type.name} (₦{type.price})
-                                </option>
+                                </option>                                
                             ))}
                         </select>
-                        <button type='button' onClick={() => openModal(<TicketBooking id={ticket.id} title={ticket.eventName} img={ticket.image} name={ticketType.name} cost={ticketType.price} />)}>Book ticket</button>
+                        <button type='button' onClick={() => openModal(<TicketBooking id={ticket.id} title={ticket.eventName} img={ticket.ticketImage} name={ticketType.name} cost={ticketType.price} />)}>Book ticket</button>
                     </form>
                 </div>
                 <div className={styles.extraDetails}>
-                    <NaturalDescription text={ticket.description}/>
+                    <NaturalDescription text={ticket.details}/>
                 </div>
-{/*                 <div className={styles.images}>
-                    <img src={ticket.images.img2} alt="Banner" />
-                    <img src={ticket.images.img3} alt="Banner" />
-                </div> */}
+                <div className={styles.images}>
+                    {ticket?.otherMedia?.map((media) => (
+                        <img src={media.image} alt="Banner" />
+                    ))}
+                    
+                </div>
             </div>
             
           </div>

@@ -1,7 +1,7 @@
 // app/components/AuthContext.jsx
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 import Loading from "../(components)/loading/loading";
 import { getApiError } from "../(components)/error/error";
 import { refresh } from "next/cache";
@@ -12,17 +12,18 @@ export function AuthProvider({ children }) {
   const [logedInUser, setLogedInUser] = useState(null);
   const [userType, setUserType] = useState(true) // true for CLIENT USERS and flase for VENDOR USERS
   const [loading, setLoading] = useState(true);
-
+  const isRefreshing = useRef(false);
   // Check if user was logged in before (on page load/refresh)
-/*   useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (token) {
       fetchUserProfile(token);
     } else {
       setLoading(false);
     }
-  }, []); */
-  useEffect(() => {
+  }, []);
+/*   useEffect(() => {
+    const accessToken = localStorage.getItem("access_token");
     const refreshToken = localStorage.getItem("refresh_token");
 
     if (refreshToken) {
@@ -30,7 +31,7 @@ export function AuthProvider({ children }) {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, []); */
 
   // when the access token expires this is function to refresh the token
 
@@ -90,7 +91,13 @@ export function AuthProvider({ children }) {
         }
         
         console.log(userData, userType)
-      } else {
+      } else if (res.status === 401){
+          const refreshToken = localStorage.getItem("refresh_token");
+          if (refreshToken) {
+            refreshAccessToken();
+          }
+      }
+       else {
         logout(); // token invalid/expired
       }
     } catch (err) {
