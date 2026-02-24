@@ -7,27 +7,37 @@ import styles from './overview.module.css'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useEffect, useState } from 'react';
 
-const graphData = [
-  { month: 'Jan', value: 3 },
-  { month: 'Feb', value: 7 },
-  { month: 'Mar', value: 6 },
-  { month: 'Apr', value: 5 },
-  { month: 'May', value: 6 },
-  { month: 'Jun', value: 9 },
-  { month: 'Jul', value: 8 },
-  { month: 'Aug', value: 7 },
-  { month: 'Sep', value: 6 },
-  { month: 'Oct', value: 10 },
-  { month: 'Nov', value: 9 },
-  { month: 'Dec', value: 8 },
-]
 
 
 const Overview = () => {
     const [stats, setStats] = useState()
     const [recentAct, setRecentAct] = useState()
+    const [chartData, setChartData] = useState([])
+    const formatMonthlyData = (apiData) => {
+        const monthMap = [
+            { key: 'january', label: 'Jan' },
+            { key: 'february', label: 'Feb' },
+            { key: 'march', label: 'Mar' },
+            { key: 'april', label: 'Apr' },
+            { key: 'may', label: 'May' },
+            { key: 'june', label: 'Jun' },
+            { key: 'july', label: 'Jul' },
+            { key: 'august', label: 'Aug' },
+            { key: 'september', label: 'Sep' },
+            { key: 'october', label: 'Oct' },
+            { key: 'november', label: 'Nov' },
+            { key: 'december', label: 'Dec' },
+        ];
+
+        return monthMap.map(({ key, label }) => ({
+            month: label,
+            value: apiData[key] ?? 0,
+        }));
+    };
+
     useEffect(() => {
         const token = localStorage.getItem("access_token");
+        const selectedYear = new Date().getFullYear();
         const getStats = async () => {
             try{
                 const statsRes = await fetch(`https://eevents-srvx.onrender.com/v1/vendors/dashboard/overview`, {
@@ -39,6 +49,8 @@ const Overview = () => {
                     const result = await statsRes.json();
                     console.log(result)
                     setStats(result.data)
+                    const FD = formatMonthlyData(result.data.bookingHistory[selectedYear] || [])
+                    setChartData(FD)
                 }
             }catch(err){
                 throw new Error(err)
@@ -79,7 +91,7 @@ const Overview = () => {
                 </div>
                 <div className={styles.vendorGraph}>
                     <ResponsiveContainer width="100%" height="100%">
-                        <LineChart margin={{ top: 20, right: 30, left: 30, bottom: 20 }} data={graphData}>
+                        <LineChart margin={{ top: 20, right: 30, left: 30, bottom: 20 }} data={chartData}>
                             <CartesianGrid style={{width:"20%"}} vertical={false} stroke="#eee" />
                             <XAxis dy={20} dataKey="month" axisLine={false} tickLine={false} />
                             <YAxis width={1} tickCount={10} axisLine={false} tickLine={false} />
@@ -92,7 +104,7 @@ const Overview = () => {
             <div className={styles.recentActivities}>
                 <h3>Recent Activities</h3>
                 <div className={styles.itemsPack}>
-                    {recentAct.map((act,index) => (
+                    {recentAct?.map((act,index) => (
                         <div key={index} className={styles.activityItem}>
                             <div className={styles.name}>
                                 {act.type==="booking" && <div className={`${styles.icon} ${styles.purple}`}><Minimize2 /></div>}

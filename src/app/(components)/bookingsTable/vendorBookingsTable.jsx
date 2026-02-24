@@ -48,11 +48,11 @@ export default function VendorBookingsTable({ bookings = [] }) {
           <tbody>
             {data.length !==0 && data.map((b,index) => (
               <tr className={styles.dataRow} key={index} >
-                <td onClick={closeMenu}>{b.bookingID}</td>
+                <td onClick={closeMenu}>{b.bookingId}</td>
                 <td onClick={closeMenu}>{b.clientName}</td>
                 <td onClick={closeMenu}>{b.eventType}</td>
-                <td onClick={closeMenu}>{b.dateBooked}</td>
-                <td onClick={closeMenu}>{b.eventDate}</td>
+                <td onClick={closeMenu}>{new Date(b.dateBooked).toDateString()}</td>
+                <td onClick={closeMenu}>{new Date(b.eventDate).toDateString()}</td>
                 <td onClick={closeMenu} className={styles.amount}>₦{b.amount.toLocaleString()}</td>
                 <td onClick={closeMenu}> 
                   <span className={`${styles.status} ${styles[b.paymentStatus.toLowerCase()]}`}>
@@ -65,16 +65,16 @@ export default function VendorBookingsTable({ bookings = [] }) {
                   </span>
                 </td>
                 <td className={styles.actionCell}>
-                  <button onClick={() => toggleMenu(b.bookingID)} className={styles.dotsBtn}>
+                  <button onClick={() => toggleMenu(b.bookingId)} className={styles.dotsBtn}>
                     ⋮
                   </button>
-                  {openMenuId === b.bookingID && (
+                  {openMenuId === b.bookingId && (
                     <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
-                      <li className={styles.dropdownItem} onClick={() => router.push(`/vendor/bookings/${b.bookingID}`)}>View</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<Accept />)}>Accept reschedule</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<Reject />)}>Reject reschedule</li>
+                      <li className={styles.dropdownItem} onClick={() => router.push(`/vendor/bookings/${b.bookingId}`)}>View</li>
+                      <li className={styles.dropdownItem} style={{color:"#2d9f35"}} onClick={() => openModal(<Accept id={b.bookingId}/>)}>Accept reschedule</li>
+                      <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => openModal(<Reject id={b.bookingId} />)}>Reject reschedule</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<Message />)} >Message client</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<MarkComplete />)}>Mark completed</li>
+                      <li className={styles.dropdownItem} onClick={() => openModal(<MarkComplete id={b.bookingId} />)}>Mark completed</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<Contact />)} >Contact support</li>
                     </div>
                   )}
@@ -91,12 +91,12 @@ export default function VendorBookingsTable({ bookings = [] }) {
           <div key={index} className={styles.card} onClick={closeMenu}>
             <div className={styles.cardHeader}>
               <div>
-                <div className={styles.bookingId}>{b.bookingID}</div>
+                <div className={styles.bookingId}>{b.bookingId}</div>
                 <span className={`${styles.status} ${styles[b.eventStatus.toLowerCase()]}`}>
                   {b.eventStatus}
                 </span>
               </div>
-              <button onClick={(e) => { e.stopPropagation(); toggleMenu(b.bookingID); }} className={styles.dotsBtn}>
+              <button onClick={(e) => { e.stopPropagation(); toggleMenu(b.bookingId); }} className={styles.dotsBtn}>
                 ⋮
               </button>
             </div>
@@ -114,7 +114,7 @@ export default function VendorBookingsTable({ bookings = [] }) {
             </div>
 
             {/* Dropdown menu (same as desktop) */}
-            {openMenuId === b.bookingID && (
+            {openMenuId === b.bookingId && (
               <div className={styles.mobileDropdown}>
                 <button className={styles.dropdownItem}>View</button>
                 <button className={styles.dropdownItem}>Accept booking</button>

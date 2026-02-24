@@ -38,7 +38,7 @@ const BookingItem = /* async */ ({params}) => {
 
     return ( 
         <div>
-            <button onClick={() => router.back()} className={styles.backBtn}><ChevronLeft /> go back </button>
+            <button onClick={() => router.back()} className="backBtn"><ChevronLeft /> go back </button>
             {
                 isLoading &&<div>
                     <Loading />

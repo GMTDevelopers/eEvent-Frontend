@@ -2,18 +2,19 @@ import Link from 'next/link';
 import styles from '@/app/navbar/(signIn)/signIn.module.css';
 import { useState } from 'react';
 
-const TicketBooking = ({title, img, cost, name, id}) => {
+const TicketBooking = ({title, img, cost, name, ticketId, categoryId}) => {
 
     const [error, setError] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [quantity, setQuantity] = useState('1')
+    const [success, setSuccess] = useState()
     const [ticket, setTicket] = useState(name + " " + " " +  "--" + " " + " " + "₦" + cost)
 
 
         const handleSubmit = async (e) => {
-            console.log(id)
+             e.preventDefault();
             const token = localStorage.getItem("access_token");
-            e.preventDefault();
+           
             const formData = new FormData(e.target);
             const quantity = formData.get("quantity");
             try{            
@@ -23,9 +24,10 @@ const TicketBooking = ({title, img, cost, name, id}) => {
                         "Content-Type": "application/json" ,
                         authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify({ quantity, id }),
+                    
+                    body: JSON.stringify({ quantity, categoryId, ticketId }),
                 });
-
+                console.log({quantity, quantity, categoryId, ticketId})
                 const Data  = await cancelRes.json();
                 if (!cancelRes.ok){
                     throw{
@@ -34,7 +36,7 @@ const TicketBooking = ({title, img, cost, name, id}) => {
                         message: Data.message,
                     }
                 }
-                setSuccess(Data.message)
+                setSuccess(Data)
                 console.log(Data)
             }   catch(err){
                 if (err.code === 401){

@@ -9,12 +9,54 @@ import Reject from '@/app/(components)/vendorRejectBooking/page';
 import Message from '@/app/(components)/message/pages';
 import Contact from '@/app/(components)/Contact/pages';
 import Loading from '@/app/(components)/loading/loading';
+import { useAuth } from '@/app/contexts/AuthContext';
 const BookingItem = /* async */ ({params}) => {
     const router = useRouter();
     const {id} = use(params);
-    const [isData, setIsData] = useState()
+    const [isData, setIsData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const { openModal } = useModal();
+    const {refreshAccessToken} = useAuth()
+
+
+    useEffect(() => {
+        const token = localStorage.getItem("access_token");
+
+        if (!token) {
+            console.error("Authentication token not found. Please log in.");
+            setIsLoading(false);
+            openModal(<SignIn />);
+            return;
+        }
+
+        fetch(`https://eevents-srvx.onrender.com/v1/vendors/bookings/${id}`, {
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+        })
+            .then((res) => {
+                if (res.status === 401) {
+                    refreshAccessToken()
+                }
+
+                if (!res.ok) {
+                    throw new Error("Something went wrong");
+                }
+
+                return res.json();
+            })
+            .then((data) => {
+                setIsData(data.data);
+                setIsLoading(false);
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+                setIsLoading(false);
+            });
+
+    }, []);
+
 
     useEffect(() => {
         const token = localStorage.getItem("access_token");
@@ -35,10 +77,13 @@ const BookingItem = /* async */ ({params}) => {
             setIsLoading(false)
             console.log(data);
             })
-            .catch((error) => console.error("Error fetching data:", error));
+            .catch((error) => {
+                console.error("Error fetching data:", error)
+                setIsLoading(false)
+            });
     }, []);
 
-    if (!isData) return <p>No booking found</p>;
+    if (isData.length === 0 && !isLoading) return <p>No booking found</p>;
 
     return ( 
         <div>
@@ -49,21 +94,21 @@ const BookingItem = /* async */ ({params}) => {
                 </div>
             }
             {
-                !isLoading && <div className={styles.doubleContainer}>
+                isData.length !== 0 && !isLoading && <div className={styles.doubleContainer}>
                     <div className="mainContent">
                         <aside className="aside">
                             <div className={`vendor ${styles.vendor}`}>
                                 <div className="vendorImgPack">
-                                    <img className="vendorImg" src="/images/productPage/userImg.png" alt="vendor" />
+                                    <img className="vendorImg" src={isData.clientProfileImage || "/images/defaultDP.jpg"} alt="vendor" />
                                 </div>
                                 
                                 <div className="vendorDetails">
-                                    <p className="vendorName">Olamade Nissi</p>
+                                    <p className="vendorName">{isData.clientName}</p>
                                     <p style={{color:"#636363"}}>Joined March 2025</p>
                                 </div>
                                 <br />
                                 <div className="vendorDetails">
-                                    <p style={{fontWeight:700}}>+234 810 234 5678</p>
+                                    <p style={{fontWeight:700}}>{isData.clientPhoneNumber}</p>
                                     <p style={{color:"#636363"}}>Phone number</p>
                                 </div>
                             </div>
@@ -121,11 +166,11 @@ const BookingItem = /* async */ ({params}) => {
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Additional service</p>
-                                    {/* <p style={{color:"#222222", fontWeight:700}}>
-                                        {isData.serviceOrdered.AdditionalServices.map((add)=>(
-                                            <>{add.serviceName}</>
+                                    <p style={{color:"#222222", fontWeight:700}}>
+                                        {isData.serviceOrdered?.AdditionalServices?.map((add)=>(
+                                            <>{add.name}</>
                                         ))}
-                                    </p> */}
+                                    </p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Preferred setup date</p>
@@ -133,7 +178,7 @@ const BookingItem = /* async */ ({params}) => {
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Preferred setup time</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{new Date(isData.preferredSetupTime).toTimeString()}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{new Date(isData.preferredSetupTime).toLocaleTimeString()}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Special instructions</p>
@@ -145,7 +190,7 @@ const BookingItem = /* async */ ({params}) => {
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Contact person phone number</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>{isData.ContactPersonPhone}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>{isData.contactPersonPhone}</p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Alternate contact person phone</p>
@@ -156,33 +201,35 @@ const BookingItem = /* async */ ({params}) => {
                                     <p style={{color:"#222222", fontWeight:700}}>{isData.bookingStatus}</p>
                                 </li>                               
                             </div>
-                           {/*  <div className="descPack">
+
+                            <div className="descPack">
                                 <p style={{color:"#222222", fontWeight:700}}>SERVICE ORDERED</p>
                                 
                                 <li className={styles.vendorItem}>
-                                    <p> {isData.serviceOrdered.serviceName +' (x'+isData.serviceOrdered.units+")" } </p>
+                                    <p> {isData.serviceOrdered.name +' (x'+isData.serviceOrdered.quantity+")" } </p>
                                 </li>
                                 <li className={styles.vendorItem}>
-                                    <p>Unit Price: {isData.serviceOrdered.unitPrice} </p>
+                                    <p>Unit Price: ₦{isData.serviceOrdered.unitPrice} </p>
                                 </li>
                                 <li className={styles.vendorItem}>
                                     <p>Total Cost:</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>₦{isData.serviceOrdered.totalCost}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>₦{isData.serviceOrdered.subtotal}</p>
                                 </li>
                                 <br />
                                 <br />
                                 <p style={{color:"#222222", fontWeight:700}}>Additional Services</p>
-                                {isData.AdditionalServices.map((add)=>(
+                                {isData.AdditionalServices?.map((add)=>(
                                     <li className={styles.vendorItem}>
                                         <p>{add.serviceName}</p>
                                         <p style={{color:"#222222", fontWeight:700}}>₦{add.serviceCost}</p>
                                     </li>
                                 ))}
-                            </div> */}
+                            </div> 
+
                             <div className="descPack">
                                 <li className={styles.vendorItem}>
                                     <p style={{color:"#222222", fontWeight:700}}>Total Cost:</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>₦{isData.totalCost}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>₦{isData.serviceOrdered.totalCost}</p>
                                 </li>
                             </div>
                             {/* When the Job has not been accepted yet? */}

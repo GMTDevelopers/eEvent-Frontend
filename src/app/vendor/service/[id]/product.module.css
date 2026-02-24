@@ -1,0 +1,19 @@
+
+.tabsSection{
+    width: 100%;
+    height: auto;
+    /* border: solid 1px black; */
+}
+.actionLinks{
+    margin-top: 36px;
+    display: flex;
+    justify-content: space-between;
+}
+.actionLinks div{
+    width: 55%;
+    display:flex;
+    justify-content: space-between;
+}
+.actionLinks a{
+    color: #82027D;
+}

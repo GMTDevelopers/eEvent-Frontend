@@ -102,7 +102,7 @@ export function AuthProvider({ children }) {
       }
     } catch (err) {
       console.error("Failed to fetch user", err);
-      logout();
+  /*     logout(); */
     } finally {
       setLoading(false);
     }
@@ -218,7 +218,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ logedInUser, login, logout, loading, userType, signUp }}>
+    <AuthContext.Provider value={{ logedInUser, login, logout, loading, userType, signUp, refreshAccessToken }}>
       {loading ? <Loading /> : children }
     </AuthContext.Provider>
   );

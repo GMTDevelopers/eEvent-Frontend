@@ -52,17 +52,17 @@ const TicketDetails = () => {
                     <form className={styles.bookForm}>
                         <select name="ticketType" value={ticketType} onChange={(e) => {
                             const option = e.target.selectedOptions[0];
-                            setTicketType({ name: option.value, price: Number(option.dataset.price),
+                            setTicketType({ name: option.value, price: Number(option.dataset.price), id:option.id
                             });
                         }}>
                             <option value="" disabled>Select ticket</option>
                             {ticket?.ticketTypes?.map((type) => (                                
-                                <option key={type.name} value={type.name} data-price={type.price}>
+                                <option key={type.name} value={type.name} data-price={type.price} id={type.id}>
                                     {type.name} (₦{type.price})
                                 </option>                                
                             ))}
                         </select>
-                        <button type='button' onClick={() => openModal(<TicketBooking id={ticket.id} title={ticket.eventName} img={ticket.ticketImage} name={ticketType.name} cost={ticketType.price} />)}>Book ticket</button>
+                        <button type='button' onClick={() => openModal(<TicketBooking categoryId={ticketType.id} ticketId={ticket.id} title={ticket.eventName} img={ticket.ticketImage} name={ticketType.name} cost={ticketType.price} />)}>Book ticket</button>
                     </form>
                 </div>
                 <div className={styles.extraDetails}>

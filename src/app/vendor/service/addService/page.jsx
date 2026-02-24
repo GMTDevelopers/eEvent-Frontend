@@ -8,11 +8,14 @@ import xStyles from './addService.module.css'
 import {ChevronLeft} from 'lucide-react';
 
 import ProgressIndicator from '@/app/(components)/progressIndicator/page';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GalleryStep from './(add-steps)/galleryStep';
 import ServiceStep from './(add-steps)/serviceFeature';
 import AdditionalService from './(add-steps)/additionalService';
 import ServicePricing from './(add-steps)/servicePricing';
+import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
+import SignIn from '@/app/navbar/(signIn)/signIn';
+import { useAuth } from '@/app/contexts/AuthContext';
 
 
 const stepsConfig = [
@@ -23,10 +26,46 @@ const stepsConfig = [
 ];
 
 const AddServices = /* async */ () => {
+    const {refreshAccessToken} = useAuth()
+    const { openModal } = useModal();
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState(1);
     const currentConfig = stepsConfig.find((s) => s.id === currentStep);
     const [errors, setErrors] = useState({});
+    const [vendorData, setVendorData] = useState([]);
+    const [vendorLoading, setVendorLoading] = useState(true);
+    const [error, setError] = useState({});
+    useEffect(() => {   
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            openModal(<SignIn />)
+            return;
+        }
+        const getVendor = async () => {
+            try{
+                setVendorLoading(true)
+                const reraRes = await fetch(`https://eevents-srvx.onrender.com/v1/vendors/me`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (reraRes.ok) {
+                    const res = await reraRes.json();
+                    console.log("vendor data",res)
+                    setVendorData(res.data.business)
+                    setVendorLoading(false)
+                }
+                if (reraRes.status=== 401) {
+                    refreshAccessToken()
+                }
+            }catch(err){
+                setError(err.message)
+            }finally{
+                setVendorLoading(false)
+            }         
+        }
+        getVendor()
+    }, [])
     const [formData, setFormData] = useState({
         serviceCategory: '',
         serviceTitle: '',
@@ -94,6 +133,28 @@ const AddServices = /* async */ () => {
             setErrors({}); // Clear errors on back
         }
     };
+
+/*     const handleSubmit = async (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem('access_token');
+        console.log(token)
+        if (!token) {
+            openModal(<SignIn />)
+            return;
+        }
+        const res = await fetch("https://eevents-srvx.onrender.com/v1/vendors", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: buildFormData(),
+        });
+
+        const result = await res.json();
+        console.log(result);
+    }; */
+
+
     return ( 
         <div>
             <button onClick={() => router.back()} className={`section ${styles.backBtn}`}><ChevronLeft /> go back </button>
@@ -102,14 +163,14 @@ const AddServices = /* async */ () => {
                     <aside className="aside">
                         <div className={`vendor ${styles.vendor}`}>
                             <div className="vendorImgPack">
-                                <img className="vendorImg" src="/images/productPage/userImg.png" alt="vendor" />
+                                <img className="vendorImg" src={vendorData?.logo || `/images/defaultDP.jpg` } alt="vendor" />
                             </div>
                             
                             <div className="vendorDetails">
-                                <p className="vendorName">Tee’s Sweet Treats</p>
-                                <p style={{color:"#636363"}}>Joined March 2025</p>
+                                <p className="vendorName">{vendorData.name}</p>
+                                <p style={{color:"#636363"}}>{vendorData?.date || `Joined March 2025`}</p>
                                 <div className="catPill">
-                                    <li>Catering</li>
+                                    <li>{vendorData?.category}</li>
                                 </div>
                             </div>
 
@@ -125,10 +186,13 @@ const AddServices = /* async */ () => {
                         <form className={xStyles.addForm} action="">
                             <select /* value={eventDuration}  onChange={(e) => setEventDuration(e.target.value)} */ required name="eventDuration">
                                 <option className={xStyles.option} value="" selected hidden disabled>Service category</option>
-                                <option className={xStyles.option} value="1-3">1-3</option>
-                                <option className={xStyles.option} value="4-7">4-7</option>
-                                <option className={xStyles.option} value="8-11">8-11</option>
-                                <option className={xStyles.option} value="12-15">12-15</option>
+                                <option className={xStyles.option} value="Makeup Artist">Makeup Artist</option>
+                                <option className={xStyles.option} value="Event Planner">Event Planner</option>
+                                <option className={xStyles.option} value="Music & DJ">Music & DJ</option>
+                                <option className={xStyles.option} value="Halls & venues">Halls & venues</option>
+                                <option className={xStyles.option} value="Photography">Photography</option>
+                                <option className={xStyles.option} value="Decorations">Decorations</option>
+                                <option className={xStyles.option} value="Drinks and wines">Drinks and wines</option>
                             </select>
                             <input type="text" name='serviceTitle' placeholder='Service title' required />
                             <textarea name="specialInstructions" placeholder='Service description'></textarea>
@@ -144,7 +208,7 @@ const AddServices = /* async */ () => {
                                 
                                 <div className={formStyle.buttonsPack}>
                                     {currentStep > 1 && ( <button type="button" className={formStyle.submitBtn} onClick={handleBack}> Back </button> )}
-                                        <button type="button" className={formStyle.submitBtn} onClick={handleNext}>
+                                        <button type="button" className={formStyle.submitBtn} onClick={currentStep === 4 ? handleSubmit: handleNext }>
                                     {currentStep === 4 ? 'Proceed to payment' : 'Next'}
                                     </button>
                                 </div>

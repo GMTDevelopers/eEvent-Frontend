@@ -31,8 +31,8 @@
 }
 
 .pageBtn.active {
-  background: #82027D;
-  border-color: #82027D;
+  background: #82027D !important;
+  border-color: #82027D !important;
   color: white;
   border-radius: 999px;
 }

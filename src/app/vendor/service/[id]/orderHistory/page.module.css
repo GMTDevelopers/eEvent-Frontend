@@ -1,0 +1,12 @@
+.statsContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 70px;
+    margin-top: 50px;
+}
+.statsPack{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}

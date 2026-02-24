@@ -33,8 +33,8 @@ const VerificationStep = ({ formData, updateFormData, errors }) => {
                 {errors.idFile && <p className={styles.error}>{errors.idFile}</p>}
             </div>
             <div>
-                Upload business document
-                <input placeholder='' type="file" name="businessFile" onChange={handleChange} accept="image/*,.pdf" />
+                Upload business logo
+                <input placeholder='' type="file" name="businessLogo" onChange={handleChange} accept="image/*,.pdf" />
                 {errors.businessFile && <p className={styles.error}>{errors.businessFile}</p>}
             </div>
             <div>

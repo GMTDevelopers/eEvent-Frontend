@@ -13,10 +13,10 @@ import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import { useAuth } from '@/app/contexts/AuthContext';
 
 const stepsConfig = [
-  { id: 1, label: 'Account', title: 'Create new vendor account (1/4)' },
-  { id: 2, label: 'Business', title: 'Create new vendor account - business (2/4)' },
-  { id: 3, label: 'Verification', title: 'Create new vendor account - verification (3/4)' },
-  { id: 4, label: 'Subscription', title: 'Create new vendor account - subscription (4/4)' },
+/*   { id: 1, label: 'Account', title: 'Create new vendor account (1/4)' }, */
+  { id: 1, label: 'Business', title: 'Create new vendor account - business (1/3)' },
+  { id: 2, label: 'Verification', title: 'Create new vendor account - verification (2/3)' },
+  { id: 3, label: 'Subscription', title: 'Create new vendor account - subscription (3/3)' },
 ];
 
 
@@ -24,30 +24,16 @@ const VendorRegistration = () => {
   const {logedInUser} = useAuth()
   const { openModal } = useModal();
   const [currentStep, setCurrentStep] = useState(1);
+  const [certificateUrl, setCertificateUrl] = useState('');
+  const [passportUrl, setPassportUrl] = useState('');
+  const [idUrl, setIdUrl] = useState('');
+  const [logoUrl, setLogoUrl] = useState('');
 
   const updateFormData = (newData) => {
     setFormData((prev) => ({ ...prev, ...newData }));
   };
 
-  useEffect(() => {
-    if (logedInUser?.data) {
-      updateFormData({
-        surname: logedInUser.data.lastName || "",
-        firstName: logedInUser.data.firstName || "",
-        otherName: logedInUser.data.middleName || "",
-        email: logedInUser.data.email || "",
-        phone: logedInUser.data.phone || "",
-      });
-    }
-  }, [logedInUser]);
-
   const [formData, setFormData] = useState({
-    surname: '',
-    firstName: '',
-    otherName: '',
-    email: '',
-    confirmEmail: '',
-    phone: '',
     businessName: '',
     category: '',
     registered: 'Yes',
@@ -56,7 +42,7 @@ const VendorRegistration = () => {
     experience: '',
     address: '',
     country: 'Nigeria',
-    states: '',
+    states: [],
     idType: 'National ID',
     idNumber: '',
     idFile: null,
@@ -70,20 +56,7 @@ const VendorRegistration = () => {
 
   const validateCurrentStep = () => {
     const stepErrors = {};
-
     if (currentStep === 1) {
-      // Account Step
-      if (!formData.surname.trim()) stepErrors.surname = 'Surname is required';
-      if (!formData.firstName.trim()) stepErrors.firstName = 'First name is required';
-      if (!formData.email.trim()) stepErrors.email = 'Email address is required';
-      if (!formData.confirmEmail.trim()) stepErrors.confirmEmail = 'Confirm email is required';
-      if (formData.email !== formData.confirmEmail) stepErrors.confirmEmail = 'Emails do not match';
-      if (!/\S+@\S+\.\S+/.test(formData.email)) stepErrors.email = 'Email is invalid';
-      if (!formData.phone.trim()) stepErrors.phone = 'Phone number is required';
-      if (!/^\d{5,15}$/.test(formData.phone.trim())) {
-        stepErrors.phone = 'Phone number must be in international format (e.g., +2348012345678)';
-      }
-    } else if (currentStep === 2) {
       // Business Step
       if (!formData.businessName.trim()) stepErrors.businessName = 'Business name is required';
       if (!formData.category) stepErrors.category = 'Business category is required';
@@ -97,14 +70,14 @@ const VendorRegistration = () => {
       if (formData.registered === 'Yes' && !formData.certificate) {
         stepErrors.certificate = 'Business certificate is required for registered businesses';
       }
-    } else if (currentStep === 3) {
+    } else if (currentStep === 2) {
       // Verification Step
       if (!formData.idType) stepErrors.idType = 'Means of identification is required';
       if (!formData.idNumber.trim()) stepErrors.idNumber = 'ID number is required';
       if (!formData.idFile) stepErrors.idFile = 'ID document upload is required';
-      if (!formData.businessFile) stepErrors.businessFile = 'Business/license document upload is required';
+      if (!formData.businessLogo) stepErrors.businessFile = 'Business/license document upload is required';
       if (!formData.passportFile) stepErrors.passportFile = 'Passport/photo upload is required';
-    } else if (currentStep === 4) {
+    } else if (currentStep === 3) {
       // Subscription Step – usually just plan selection
       if (!formData.subscriptionPlan) stepErrors.subscriptionPlan = 'Please select a subscription plan';
     }
@@ -122,7 +95,7 @@ const VendorRegistration = () => {
 
     setErrors({}); // Clear errors if valid
 
-    if (currentStep < 4) {
+    if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else {
       // Final submit
@@ -139,24 +112,14 @@ const VendorRegistration = () => {
   };
 
 
-  const buildPayload = () => {
+/*   const buildPayload = () => {
     return {
-      data: {
-        hasVendorAccount: true,
-
-        user: {
-          email: formData.email,
-          firstName: formData.firstName,
-          lastName: formData.surname,
-          phone: formData.phone,
-          profileImage: null,
-        },
-
         business: {
           name: formData.businessName,
           category: formData.category,
           registered: formData.registered === 'Yes',
-          certificate: formData.certificate,
+          logo: logoUrl,
+          certificate: certificateUrl,
           description: formData.description,
           yearsOfExperience: Number(formData.experience),
           address: formData.address,
@@ -167,57 +130,203 @@ const VendorRegistration = () => {
         verification: {
           type: formData.idType,
           maskedNumber: formData.idNumber,
-          image: formData.idFile,
+          image: idUrl,
         },
 
-        subscription: {
-          name: formData.subscriptionPlan,
-        },
-      },
-    };
-  };
-
-  const buildFormData = () => {
-    const fd = new FormData();
-
-    // 1. append JSON payload
-    fd.append("data", JSON.stringify(buildPayload().data));
-
-    // 2. append files separately
-    if (formData.certificate)
-      fd.append("certificate", formData.certificate);
-
-    if (formData.idFile)
-      fd.append("idFile", formData.idFile);
-
-    if (formData.businessFile)
-      fd.append("businessFile", formData.businessFile);
-
-    if (formData.passportFile)
-      fd.append("passportFile", formData.passportFile);
-
-    return fd;
-  };
+        subscriptionId: formData.subscriptionPlan,
+      }
+  }; */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('access_token');
-    console.log(token)
+    const token = localStorage.getItem("access_token");
+
     if (!token) {
-      openModal(<SignIn />)
+      openModal(<SignIn />);
       return;
     }
+
+    let certificateUrl = "";
+    let idUrl = "";
+    let passportUrl = "";
+    let logoUrl = "";
+
+    if (formData.certificate) {
+      const fd = new FormData();
+      fd.append("file", formData.certificate);
+
+      const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/certificate", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: fd,
+      });
+
+      const result = await res.json();
+      certificateUrl = result.data.url;
+    }
+
+    if (formData.idFile) {
+      const fd = new FormData();
+      fd.append("file", formData.idFile);
+
+      const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/id", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: fd,
+      });
+
+      const result = await res.json();
+      idUrl = result.data.url;
+    }
+
+    if (formData.passportFile) {
+      const fd = new FormData();
+      fd.append("file", formData.passportFile);
+
+      const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/id", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: fd,
+      });
+
+      const result = await res.json();
+      passportUrl = result.data.url;
+    }
+
+    if (formData.businessLogo) {
+      const fd = new FormData();
+      fd.append("file", formData.businessLogo);
+
+      const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/id", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: fd,
+      });
+
+      const result = await res.json();
+      logoUrl = result.data.url;
+    }
+
+    const payload = {
+      business: {
+        name: formData.businessName,
+        category: formData.category,
+        registered: formData.registered === "Yes",
+        logo: logoUrl,
+        certificate: certificateUrl,
+        description: formData.description,
+        yearsOfExperience: Number(formData.experience),
+        address: formData.address,
+        countryOfOperation: [formData.country],
+        operatingStates: formData.states,
+      },
+      verification: {
+        type: formData.idType,
+        maskedNumber: formData.idNumber,
+        image: idUrl,
+      },
+      subscriptionId: {
+        id: formData.subscriptionPlan,
+        name: "VIP",
+      },
+    };
+
+    console.log("FINAL PAYLOAD:", payload);
+
     const res = await fetch("https://eevents-srvx.onrender.com/v1/vendors", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: buildFormData(),
+      body: payload,
     });
 
     const result = await res.json();
     console.log(result);
+   
   };
+
+  /* const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('access_token');
+    const fd1 = new FormData();
+    fd1.append("file", formData.certificate);
+    const fd2 = new FormData();
+    fd2.append("file", formData.idFile);
+    const fd3 = new FormData();
+    fd3.append("file", formData.passportFile);
+    const fd4 = new FormData();
+    fd4.append("file", formData.businessLogo);
+    console.log(token)
+    if (!token) {
+      openModal(<SignIn />)
+      return;
+    }
+    if (formData.certificate){
+      const certRes = await fetch("https://eevents-srvx.onrender.com/v1/upload/certificate", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: fd1,
+      });
+      const certResult = await certRes.json();
+      console.log('certificate result', certResult);
+      setCertificateUrl(certResult.data.url)
+    }
+    if (formData.idFile){
+      const idRes = await fetch("https://eevents-srvx.onrender.com/v1/upload/id", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: fd2,
+      });
+      const idResult = await idRes.json();
+      console.log('id result', idResult);
+      setIdUrl(idResult.data.url)
+    }
+    if (formData.passportFile){
+      const passportRes = await fetch("https://eevents-srvx.onrender.com/v1/upload/profile", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: fd3,
+      });
+      const passportResult = await passportRes.json();
+      console.log('passport result',passportResult);
+      setPassportUrl(passportResult.data.url)
+    } 
+    if (formData.businessLogo){
+      const logoRes = await fetch("https://eevents-srvx.onrender.com/v1/upload/logo", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: fd4,
+      });
+      const logoResult = await logoRes.json();
+      console.log('certificate result', logoResult);
+      setLogoUrl(logoResult.data.url)
+    }
+
+    const submitedForm = new FormData();
+    submitedForm.append("business", JSON.stringify(buildPayload().business));
+    submitedForm.append("verification", JSON.stringify(buildPayload().verification));
+    submitedForm.append("subscriptionId", JSON.stringify(buildPayload().subscriptionId));
+    console.log(submitedForm);
+     const res = await fetch("https://eevents-srvx.onrender.com/v1/vendors", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: submitedForm,
+    });
+
+    const result = await res.json();
+    console.log(submitedForm);
+  }; */
 
     return ( 
         <div style={{textAlign:'center'}} className="main">
@@ -235,16 +344,16 @@ const VendorRegistration = () => {
                     <div>
                         <ProgressIndicator currentStep={currentStep} steps={stepsConfig} />
                         <div className={formStyles.signInForm}>
-                            {currentStep === 1 && <AccountStep formData={formData} updateFormData={updateFormData} errors={errors} />}
-                             {currentStep === 2 && <BusinessStep formData={formData} updateFormData={updateFormData} errors={errors} />}
-                            {currentStep === 3 && <VerificationStep formData={formData} updateFormData={updateFormData} errors={errors} />}
-                            {currentStep === 4 && <SubscriptionStep formData={formData} updateFormData={updateFormData} errors={errors} />}
+                            {/* {currentStep === 0 && <AccountStep formData={formData} updateFormData={updateFormData} errors={errors} />} */}
+                             {currentStep === 1 && <BusinessStep formData={formData} updateFormData={updateFormData} errors={errors} />}
+                            {currentStep === 2 && <VerificationStep formData={formData} updateFormData={updateFormData} errors={errors} />}
+                            {currentStep === 3 && <SubscriptionStep formData={formData} updateFormData={updateFormData} errors={errors} />}
                         </div>
 
                         <div className={styles.buttonsPack}>
                             {currentStep > 1 && ( <button type="button" className={styles.submitBtn} onClick={handleBack}> Back </button> )}
-                                <button type="button" className={styles.submitBtn} onClick={currentStep === 4 ? handleSubmit: handleNext }>
-                            {currentStep === 4 ? 'Proceed to payment' : 'Proceed'}
+                                <button type="button" className={styles.submitBtn} onClick={currentStep === 3 ? handleSubmit: handleNext }>
+                            {currentStep === 3 ? 'Proceed to payment' : 'Proceed'}
                             </button>
                         </div>
                     </div>

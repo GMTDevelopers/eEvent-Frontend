@@ -282,7 +282,18 @@ select{
   box-sizing: border-box;
 }
 
-
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222222;
+  cursor: pointer;
+  margin-top:20px;
+}
 .error{
   color:  #ED4337;
 }
