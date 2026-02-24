@@ -1,0 +1,144 @@
+/*  Tabs */
+.container {
+  max-width: 1200px;
+  margin: 56px auto 0 auto;
+}
+
+.tabBar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 54px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tab {
+  padding: 10px 20px;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1.5px solid #82027D;
+  color: #82027D;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background: #f3f4f6;
+}
+
+.tab.active {
+  background: #82027D;
+  border-color: #82027D;
+  color: white;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+/* .content {
+  min-height: 400px;
+} */
+
+
+/* features */
+.featuresList{
+  margin-top: 50px;
+}
+.featuresListTxt{
+  margin-top: 20px;
+  display: flex;
+  gap: 16px;
+
+}
+.featuresListTxt div{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #CFCFCF ;
+}
+.cardFeaturesCheck{
+  width: 24px;
+  height: 17px;
+}
+
+
+/* Additional Service */
+.addServiceSection{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;  
+}
+.serviceCard {
+  background: #f9fafb;
+  padding: 16px 32px;
+  border-radius: 12px;
+  border: 1px solid #CFCFCF;
+}
+.serviceHeaderPack{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.serviceDesc{
+  width: 60%;
+}
+
+
+/* REVIEWS  */
+.reRatings{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+.reRatings h3{
+  margin-top: 56px;
+  margin-bottom: 14px;
+}
+.review{
+  width: 100%;
+  border: 1px solid #CFCFCF;
+  border-radius: 12px;
+  padding: 16px 32px;
+}
+.reviewHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.reviewUser{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.reviewUser img{
+  width: 38px;
+  height: 38px;
+  border-radius: 300px;
+  object-fit: cover;
+}
+.reviewUser div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0px;
+}
+
+.reviewUser div small{
+  color: #636363;
+}
+.comment{
+  margin-top: 12px;
+  color: #636363;
+}
+.empty {
+  text-align: center;
+  color: #6b7280;
+  font-style: italic;
+  padding: 40px 0;
+}

@@ -143,8 +143,6 @@ const ProductCard = ({params, searchParams}) => {
                             <div className={styles.actionLinks}>
                                 <Link href='/find-service'><p style={{display:"flex", alignContent:"center"}}>View service listing <ChevronRight /></p></Link>
                                 <div>
-                                    <Link href='/find-service'><p>Message vendor</p></Link>
-                                    <Link href='/find-service'><p>Go to vendor profile</p></Link>
                                     <Link style={{color:'#E50909'}}  href='/find-service'><p>Mark inactive</p></Link>
                                 </div>
                             </div>

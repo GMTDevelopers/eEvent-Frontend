@@ -36,7 +36,7 @@ const VendorRegistration = () => {
   const [formData, setFormData] = useState({
     businessName: '',
     category: '',
-    registered: 'Yes',
+    registered: 'True',
     certificate: null,
     description: '',
     experience: '',
@@ -48,7 +48,7 @@ const VendorRegistration = () => {
     idFile: null,
     businessFile: null,
     passportFile: null,
-    subscriptionPlan: '1 Month - ₦15,000.00',
+    subscriptionPlan: '',
   });
   const [errors, setErrors] = useState({});
 
@@ -67,7 +67,7 @@ const VendorRegistration = () => {
       if (!formData.states.trim()) stepErrors.states = 'Operating states are required';
 
       // If business is registered, require certificate upload
-      if (formData.registered === 'Yes' && !formData.certificate) {
+      if (formData.registered === 'True' && !formData.certificate) {
         stepErrors.certificate = 'Business certificate is required for registered businesses';
       }
     } else if (currentStep === 2) {
@@ -211,7 +211,7 @@ const VendorRegistration = () => {
       business: {
         name: formData.businessName,
         category: formData.category,
-        registered: formData.registered === "Yes",
+        registered: formData.registered === "True",
         logo: logoUrl,
         certificate: certificateUrl,
         description: formData.description,
@@ -225,10 +225,7 @@ const VendorRegistration = () => {
         maskedNumber: formData.idNumber,
         image: idUrl,
       },
-      subscriptionId: {
-        id: formData.subscriptionPlan,
-        name: "VIP",
-      },
+      subscriptionId: formData.subscriptionPlan,
     };
 
     console.log("FINAL PAYLOAD:", payload);

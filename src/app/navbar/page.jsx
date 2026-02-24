@@ -78,7 +78,7 @@ const Navbar = () => {
                             <Link href='/vendor/bookings' > <li onClick={() => setActiveTab('Bookings')} className={activeTab === "Bookings" ? Styles.active : ''}><Check className={Styles.icons} />Bookings</li></Link>
                             <Link href='/vendor/service' > <li onClick={() => setActiveTab('Services')} className={activeTab === "Services" ? Styles.active : ''}><UserRoundCog className={Styles.icons} />Services</li></Link>
                             <Link href='/vendor/earnings' > <li onClick={() => setActiveTab('Earnings')} className={activeTab === "Earnings" ? Styles.active : ''}><Banknote className={Styles.icons} />Earnings</li></Link>
-                            <Link href='/' > <li onClick={() => setActiveTab('Messages')} className={activeTab === "Messages" ? Styles.active : ''}><MessageCircleMore className={Styles.icons} /> Messages</li></Link>
+                            <Link href='/vendor/message' > <li onClick={() => setActiveTab('Messages')} className={activeTab === "Messages" ? Styles.active : ''}><MessageCircleMore className={Styles.icons} /> Messages</li></Link>
                             <Link href='/vendor/settings' > <li onClick={() => setActiveTab('Account')} className={activeTab === "Account" ? Styles.active: ''}><Settings className={Styles.icons} />My Account</li></Link>
                         </ul>
                     </div>

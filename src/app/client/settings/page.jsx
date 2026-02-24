@@ -15,7 +15,7 @@ const Settings = () => {
 
     const [form, setForm] = useState({
         firstName: logedInUser.data.firstName || '',
-        firstName: logedInUser.data.middleName || '',
+        middleName: logedInUser.data.middleName || '',
         lastName: logedInUser.data.lasttName || '',
         email: logedInUser.data.email || '',
         phone: logedInUser.data.phone || '',

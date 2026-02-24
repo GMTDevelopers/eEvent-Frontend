@@ -35,7 +35,7 @@ const BusinessStep = ({ formData, updateFormData, errors }) => {
             </div>
             <div>
                 <select name="category" value={formData.category} onChange={handleChange}>
-                    <option value="" selected hidden disabled>Business category</option>
+                    <option value="" hidden disabled>Business category</option>
                     <option value="">Select category</option>
                     <option value="Catering">Catering</option>
                 </select>
@@ -43,13 +43,13 @@ const BusinessStep = ({ formData, updateFormData, errors }) => {
             </div>
             <div>
                 <select name="registered" value={formData.registered} onChange={handleChange}>
-                    <option value="" selected hidden disabled>Is your business registered?</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    <option value="" hidden disabled>Is your business registered?</option>
+                    <option value="True">True</option>
+                    <option value="False">False</option>
                 </select>
                 {errors.registered && <p className={styles.error}>{errors.registered}</p>}
             </div>
-            {formData.registered === 'Yes' && (
+            {formData.registered === 'True' && (
                 <div style={{textAlign:"left", color:"#636363"}}>
                     Upload business certificate 
                     <input placeholder='Upload business certificate' type="file" name="certificate" onChange={handleChange} accept="image/*,.pdf" />
@@ -62,11 +62,7 @@ const BusinessStep = ({ formData, updateFormData, errors }) => {
                 {errors.description && <p className={styles.error}>{errors.description}</p>}
             </div>
             <div>
-                <select name="experience" value={formData.experience} onChange={handleChange}>
-                    <option value="" selected hidden disabled>Years of experience</option>
-                    <option value="">Select years</option>
-                    <option value="1-3 Years">1-3 Years</option>
-                </select>
+                <input placeholder='Years of experience' type="number" name="experience" value={formData.experience} onChange={handleChange} />
                 {errors.experience && <p className={styles.error}>{errors.experience}</p>}
             </div>
             <div>
