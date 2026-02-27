@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
 import styles from './tickets.module.css';
-import { SlArrowRight } from 'react-icons/sl';
+import {  SlArrowRightCircle } from 'react-icons/sl';
 import Link from 'next/link';
 import { Calendar, ClockFading, MapPin } from 'lucide-react';
 import Header from '../(components)/header/page';
@@ -169,7 +169,7 @@ const BuyTicket = () => {
                                 <p className={styles.rating} style={{fontWeight:500, color:"#AAA6A6"}}>PRICING STARTS FROM</p>
                                 <div style={{marginBottom:"10px"}} className="sectionHeader">
                                     <h3 style={{color:"#222222"}}>₦ {ticket.leastPrice}</h3>
-                                    <div className="btnNoCapsule">More details<SlArrowRight /></div>
+                                    <div className="btnNoCapsule">More details<SlArrowRightCircle /></div>
                                 </div>
                             </div>
                         </div>

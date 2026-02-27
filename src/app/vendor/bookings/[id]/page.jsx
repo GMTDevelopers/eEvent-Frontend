@@ -5,11 +5,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, Download } from 'lucide-react';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import Accept from '@/app/(components)/vendorAcceptBooking/page';
-import Reject from '@/app/(components)/vendorRejectBooking/page';
 import Message from '@/app/(components)/message/pages';
 import Contact from '@/app/(components)/Contact/pages';
 import Loading from '@/app/(components)/loading/loading';
 import { useAuth } from '@/app/contexts/AuthContext';
+import VendorReject from '@/app/(components)/vendorRejectBooking/page';
 const BookingItem = /* async */ ({params}) => {
     const router = useRouter();
     const {id} = use(params);
@@ -234,7 +234,7 @@ const BookingItem = /* async */ ({params}) => {
                             </div>
                             {/* When the Job has not been accepted yet? */}
                             <div className={styles.action}>
-                                <p style={{color:"#E50909", fontWeight:600}} onClick={() => openModal(<Reject />)}>Reject  booking</p>
+                                <p style={{color:"#E50909", fontWeight:600}} onClick={() => openModal(<VendorReject />)}>Reject  booking</p>
                                 <p style={{color:"#2ED074", fontWeight:600}} onClick={() => openModal(<Accept />)}>Accept booking</p>
                             </div>
                             

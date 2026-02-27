@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react';
 import styles from '../../navbar/(signIn)/signIn.module.css';
 const Reschedule = ({id, initDate}) => {
