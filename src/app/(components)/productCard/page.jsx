@@ -2,12 +2,15 @@ import Image from "next/image";
 import styles from "./prodCard.module.css";
 import { SlArrowRight } from "react-icons/sl";
 import Link from "next/link";
+import { useState } from "react";
 
 const ProductCard = ({title, prodId, description, category, ratings, price, thumb, vendorName, vendorImg}) => {
+    const [isThumb, setIsThumb] = useState(thumb || "/images/defaultDP.jpg")
+    const [isVendorImg, setIsVendorImg] = useState(vendorImg || "/images/defaultDP.jpg")
     return ( 
         <div className={styles.prodCard}>
             <div className={styles.cardHeader}>
-                <img className={styles.prodImg} src={thumb} alt="product" />            
+                <img className={styles.prodImg} src={isThumb} alt="product" />            
                 <div className={styles.catPill}>
                     <li>{category}</li>
                 </div>
@@ -21,7 +24,7 @@ const ProductCard = ({title, prodId, description, category, ratings, price, thum
                     </div>
                 </div>
                 <div className={styles.vendor}>
-                    <img className={styles.vendorImg} src={vendorImg} alt="vendor" />
+                    <img className={styles.vendorImg} src={isVendorImg} alt="vendor" />
                     <p style={{fontWeight:600, color:"#636363"}} className={styles.rating}>{vendorName}</p>
                 </div>
                 <p className={styles.prodDisc}>{description}</p>

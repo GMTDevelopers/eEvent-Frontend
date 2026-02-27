@@ -34,7 +34,6 @@
 
 /* Logged in nav*/
 .userNav{
-    border: 1px solid black;
     display: flex;
     width: 95%;
     height: 76px;

@@ -22,7 +22,7 @@ const VendorProductCard = ({data, title, prodId, description, category, ratings,
                     </div>
                 </div>
                 <div className={styles.vendor}>
-                    <img className={styles.vendorImg} src={vendorImg} alt="vendor" />
+                    <img className={styles.vendorImg} src={vendorImg || "/images/defaultDP.jpg"} alt="vendor" />
                     <p style={{fontWeight:600, color:"#636363"}} className={styles.rating}>{vendorName}</p>
                 </div>
                 <p className={styles.prodDisc}>{description}</p>

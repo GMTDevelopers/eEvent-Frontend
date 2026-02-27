@@ -45,6 +45,7 @@
 }
 .prodTitle{
     margin-top: 16px;
+
 }
 .star{
     width: 17px;
@@ -75,6 +76,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    height: 70px;
 
 }
 .prodPrice div{

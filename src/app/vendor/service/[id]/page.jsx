@@ -90,7 +90,7 @@ const ProductCard = ({params, searchParams}) => {
                         <aside className="aside">
                             <div className="vendor">
                                 <div className="vendorImgPack">
-                                    <img className="vendorImg" src={prod?.vendorProfileImage} alt="vendor" />
+                                    <img className="vendorImg" src={prod?.vendorProfileImage || "/images/defaultDP.jpg"} alt="vendor" />
                                 </div>
                                 
                                 <div className="vendorDetails">

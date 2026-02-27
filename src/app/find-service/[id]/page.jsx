@@ -39,7 +39,7 @@ const ProductCard = ({params}) => {
                         <aside className="aside">
                             <div className="vendor">
                                 <div className="vendorImgPack">
-                                    <img className="vendorImg" src={prod.vendorProfileImage} alt="vendor" />
+                                    <img className="vendorImg" src={prod.vendorProfileImage || "/images/defaultDP.jpg"} alt="vendor" />
                                 </div>
                                 
                                 <div className="vendorDetails">
@@ -63,9 +63,21 @@ const ProductCard = ({params}) => {
                                     <p style={{fontWeight:700}}>{prod.vendorRatings.rating.toFixed(1)} Stars  | {prod.vendorRatings.numberOfReviews} Reviews</p>
                                 </div>
                             </div>
+                            <br />
                             <div className="bookingPricing">
                                 <p className="bookingTitle">BOOKING & PRICING</p>
                                 <div onClick={()=>{router.push(`/find-service/${id}/bookVendor`)}} className='bookVendor'>Book vendor</div>
+                            </div>
+                            <br />
+                            <div className="bookingPricing">
+                                <p className="bookingTitle">Available in these cities</p>
+                                {
+                                    prod.citiesAvailableIn.map((city)=>(
+                                        <div className="btnNoCapsule" style={{display:"grid", gridTemplateColumns:"1fr 1fr"}}>
+                                            <p>{city}</p>
+                                        </div>
+                                    ))
+                                }
                             </div>
                         </aside>
                         <section className="mainSection">

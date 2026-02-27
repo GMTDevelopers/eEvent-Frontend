@@ -7,7 +7,6 @@
 .settingsContainer{
     width: 70%;
     margin: 72px auto 76px auto;
-    border: 1px solid #e21b1b;
     height: 1003px ;
 }
 .photoPack{
@@ -16,7 +15,6 @@
     margin: auto auto;
     width: 70%;
     height: auto;
-    border: 1px solid blue;
 }
 .photoItem{
     display: flex;

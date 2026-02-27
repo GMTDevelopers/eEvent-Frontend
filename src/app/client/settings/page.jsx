@@ -91,8 +91,8 @@ const Settings = () => {
                     <StatsCard title="CANCELLED ORDERS" data='1' icon={X} />
                 </div>
             </div>
-            <form onSubmit={handleSubmit} className={`${styles.mainContent} mainContent`}>
-                <aside className={`${styles.photoPack} aside`}>
+            <form onSubmit={handleSubmit} className={`${styles.mainContent} sectionHeaderCenter`}>
+                <aside className={`${styles.photoPack}`}>
                     <img src={photo instanceof File ? URL.createObjectURL(photo) : photo} alt="profile" />
                     <label className={styles.uploadBtn}>
                         Upload profile photo
