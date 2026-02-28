@@ -3,7 +3,7 @@ import styles from './progress.module.css';
 const ProgressIndicator  = ({ currentStep, steps }) => {
     return ( 
         <div className={styles.progressContainer}>
-            {steps.map((step, index) => (
+            {steps?.map((step, index) => (
                 <div key={step.id} className={styles.stepWrapper}>
                 <div
                     className={`${styles.stepCircle} ${
