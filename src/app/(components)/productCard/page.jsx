@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import styles from "./prodCard.module.css";
-import { SlArrowRightCircle } from "react-icons/sl";
+import { SlArrowRight } from "react-icons/sl";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -33,7 +33,7 @@ const ProductCard = ({title, prodId, description, category, ratings, price, thum
                     <p className={styles.rating} style={{fontWeight:500, color:"#AAA6A6"}}>PRICING STARTS FROM</p>
                     <div className="sectionHeader">
                         <h3 style={{color:"#222222"}}>₦ {price}</h3>
-                        <Link href={`/find-service/${prodId}`}><div className="btnNoCapsule">More details<SlArrowRightCircle /></div></Link>
+                        <Link href={`/find-service/${prodId}`}><div className="btnNoCapsule">More details<SlArrowRight /></div></Link>
                     </div>
                 </div>
             </div>

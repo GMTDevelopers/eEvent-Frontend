@@ -14,6 +14,7 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-dropzone": "^14.3.8",
+    "react-icons": "^5.5.0",
     "react-is": "^19.2.3",
     "react-masonry-css": "^1.0.16",
     "react-simple-star-rating": "^5.1.7",
@@ -21,7 +22,7 @@
     "yet-another-react-lightbox": "^3.25.0"
   },
   "devDependencies": {
-    "baseline-browser-mapping": "^2.9.11",
+    "baseline-browser-mapping": "^2.10.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.1"
   }

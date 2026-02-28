@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import styles from "./page.module.css";
-import { SlArrowRightCircle } from "react-icons/sl";
+import { SlArrowRight } from "react-icons/sl";
 import Categories from "./(components)/categories/pages";
 import { useState, useRef, useEffect } from "react";
 import ProductCard from "./(components)/productCard/page";
@@ -53,7 +53,7 @@ export default function Home() {
             <p style={{fontWeight:600, color:"#FBFBFB"}} className={`txtHeader ${styles.headerSubHeading}`}>Compare vendors, chat directly, and book securely.</p>
             <p style={{fontWeight:600, marginTop:"-5px", color:"#FBFBFB"}} className={`txtHeader ${styles.headerSubHeading}`}>We make event planning simple, transparent & safe.</p>
             <div className={styles.headerTxtBtns}>
-              <div className={`btnCapsule ${styles.headerBtn1}`}>Explore services <SlArrowRightCircle /></div>
+              <div className={`btnCapsule ${styles.headerBtn1}`}>Explore services <SlArrowRight /></div>
               <div className={`btnCapsule ${styles.headerBtn2}`}>Become a vendor</div>
             </div>
           </div>
@@ -63,7 +63,7 @@ export default function Home() {
           <div className={styles.popularCatPack}>
             <div className="sectionHeader">
               <h3>Explore popular categories</h3>
-              <div className="btnNoCapsule" onClick={() => setShowMore(!showMore)}>view all<SlArrowRightCircle /></div>
+              <div className="btnNoCapsule" onClick={() => setShowMore(!showMore)}>view all<SlArrowRight /></div>
             </div>
             {showMore && (
               <div className={styles.moreCat} ref={moreCatRef}>
@@ -82,7 +82,7 @@ export default function Home() {
         <section className={styles.featured}>
           <div className="sectionHeader">
             <h3>FEATURED VENDORS AND SERVICES</h3>
-            <div className="btnNoCapsule">view all<SlArrowRightCircle /></div>
+            <div className="btnNoCapsule">view all<SlArrowRight /></div>
           </div>
           {loading ? <div> <Loading /> </div> :
             <div className="cardPack">

@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { SlArrowRightCircle } from 'react-icons/sl';
+import { SlArrowRight } from 'react-icons/sl';
 import styles from './footer.module.css';
 import Image from 'next/image';
 const Footer = () => {
@@ -21,7 +21,7 @@ const Footer = () => {
                     <p style={{fontWeight:600, color:"#FBFBFB"}} className={`txtHeader ${styles.footerSubHeading}`}>Find the perfect vendors, book securely, and bring</p>
                     <p style={{fontWeight:600, color:"#FBFBFB", marginTop:"-5px"}} className={`txtHeader ${styles.footerSubHeading}`}>your celebration to life with eEvents today!</p>
                     <div className={styles.footerTxtBtns}>
-                        <div className={`btnCapsule ${styles.footerBtn1}`}>Explore services <SlArrowRightCircle /></div>
+                        <div className={`btnCapsule ${styles.footerBtn1}`}>Explore services <SlArrowRight /></div>
                         <div className={`btnCapsule ${styles.footerBtn2}`}>Become a vendor</div>
                     </div>
                 </div>
