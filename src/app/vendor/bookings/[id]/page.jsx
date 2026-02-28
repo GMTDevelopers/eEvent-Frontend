@@ -12,7 +12,7 @@ import { useAuth } from '@/app/contexts/AuthContext';
 import VendorReject from '@/app/(components)/vendorRejectBooking/page';
 const BookingItem = /* async */ ({params}) => {
     const router = useRouter();
-    const {id} = use(params);
+    const {id} = params;
     const [isData, setIsData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const { openModal } = useModal();
