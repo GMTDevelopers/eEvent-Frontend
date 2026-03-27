@@ -3,17 +3,12 @@
 
 import { useState } from "react";
 import styles from "./BookingsTable.module.css";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useModal } from "../ModalProvider/ModalProvider";
-import SignIn from "@/app/navbar/(signIn)/signIn";
-import Reschedule from "../reschedule/page";
 import Contact from "../Contact/pages";
-import Cancle from "../cancle/cancle";
 import Message from "../message/pages";
 import Accept from "../vendorReschedule/accept";
 import Reject from "../vendorReschedule/reject";
-import VendorAccept from "../vendorAcceptBooking/page";
 import MarkComplete from "../vendorMarkComplete/page";
 
 export default function VendorBookingsTable({ bookings = [] }) {
@@ -73,7 +68,7 @@ export default function VendorBookingsTable({ bookings = [] }) {
                       <li className={styles.dropdownItem} onClick={() => router.push(`/vendor/bookings/${b.bookingId}`)}>View</li>
                       <li className={styles.dropdownItem} style={{color:"#2d9f35"}} onClick={() => openModal(<Accept id={b.bookingId}/>)}>Accept reschedule</li>
                       <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => openModal(<Reject id={b.bookingId} />)}>Reject reschedule</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<Message />)} >Message client</li>
+                      <li className={styles.dropdownItem} onClick={() => openModal(<Message bookingId={b.bookingId} receiverId={b.clientUserId}/>)} >Message client</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<MarkComplete id={b.bookingId} />)}>Mark completed</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<Contact />)} >Contact support</li>
                     </div>

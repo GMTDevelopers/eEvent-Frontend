@@ -12,7 +12,8 @@ import { useAuth } from '@/app/contexts/AuthContext';
 /* import VendorReject from '@/app/(components)/vendorRejectBooking/page'; */
 const BookingItem = /* async */ ({params}) => {
     const router = useRouter();
-    const {id} = params;
+    /* const {id} = params; */
+    const {id} = use(params);
     const [isData, setIsData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const { openModal } = useModal();
@@ -82,8 +83,8 @@ const BookingItem = /* async */ ({params}) => {
                 setIsLoading(false)
             });
     }, []);
-
-    if (isData.length === 0 && !isLoading) return <p>No booking found</p>;
+/* 
+    if (isData.length === 0 && !isLoading) return <p>No booking found</p>; */
 
     return ( 
         <div>

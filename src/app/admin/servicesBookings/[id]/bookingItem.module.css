@@ -1,0 +1,61 @@
+
+.vendor{
+  margin-top: 180px;
+}
+.cityTitle{
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #222222;
+  letter-spacing: -2%;
+}
+.pillsPack{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 7px 8px;
+}
+.cityPills{
+  width: fit-content;
+  padding: 7px 10px;
+  border-radius: 24px;
+  background: #EFEFEF;
+  color: #222222;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+.vendorItem{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.action{
+  width: 100%;
+  display: flex;
+  gap: 5%;
+  justify-content: right;
+  align-items: center;
+}
+.action p{
+  cursor: pointer;
+}
+.CTABtn{
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  justify-content: space-between;
+  color: #82027D;
+  cursor: pointer;
+}
+.CTABtn div{
+  width: 70%;
+  display: flex;
+  justify-content: right;
+  gap: 5%;
+}

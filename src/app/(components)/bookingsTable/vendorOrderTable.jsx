@@ -28,10 +28,10 @@ export default function VendorOrderTable({ bookings = [] }) {
           <tbody>
             {data?.length !==0 && data?.map((b,index) => (
               <tr className={styles.dataRow} key={index} >
-                <td>{b.bookingId}</td>
+                <td>{b.bookingId || b.bookingID}</td>
                 <td>{b.clientName}</td>
                 <td>{b.serviceBooked}</td>
-                <td>{new Date(b.dateBooked).toDateString()}</td>
+                <td>{new Date(b.dateBooked).toDateString() === 'Invalid Date' ? b.dateBooked: new Date(b.dateBooked).toDateString()}</td>
                 <td className={styles.amount}>₦{b.amountPaid.toLocaleString()}</td>
                 <td> 
                   <span className={`${styles.status} ${styles[b.status.toLowerCase()]}`}>

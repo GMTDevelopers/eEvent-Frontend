@@ -1,0 +1,63 @@
+.rescheduleDetails{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.rescheduleTermsCond{
+  
+    padding: 10px 0;
+}
+.detailItems{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap:7%;
+}
+.detailItems p:first-child{
+    width: 50%;
+    text-align: left;
+    color:#636363;
+}
+.detailItems p:last-child{
+    width: 80%;
+    text-align: right;
+    color:#222222;
+    font-weight: 700;
+}
+
+
+.bookForm{
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: auto;
+}
+.bookForm select{
+    height: inherit;
+    padding: 15px 24px;
+    border-radius: 12px;
+    border: 1px solid #CFCFCF;
+    outline: none;
+    background: transparent;
+    color: #222222;
+}
+.bookForm select option{
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+    background: #FFEAC466;
+
+}
+.bookForm button{
+    width: 100% ;
+    padding: 1rem;
+    background: #82027D;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius:58px;
+    font-weight: bold ;
+}

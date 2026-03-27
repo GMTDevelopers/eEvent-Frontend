@@ -10,8 +10,11 @@
   gap: 12px;
   margin-bottom: 4px;
   border-bottom: 1px solid #e5e7eb;
-}
 
+}
+.doubleTabBar{
+    justify-content: space-between;
+}
 .tab {
   padding: 10px 20px;
   border-radius: 9999px;

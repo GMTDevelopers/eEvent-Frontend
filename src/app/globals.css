@@ -276,7 +276,8 @@ input{
   outline: none;
 }
 select{
-  width:  869px;
+  width:  auto;
+/*   width:  869px; */
   max-width: 869px;
   min-width: 0;
   box-sizing: border-box;

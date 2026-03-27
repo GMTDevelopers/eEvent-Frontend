@@ -12,6 +12,7 @@ export function AuthProvider({ children }) {
   const [logedInUser, setLogedInUser] = useState(null);
   const [userType, setUserType] = useState(true) // true for CLIENT USERS and flase for VENDOR USERS
   const [loading, setLoading] = useState(true);
+  const [admin, setAdmin] = useState(false);
   const isRefreshing = useRef(false);
   // Check if user was logged in before (on page load/refresh)
   useEffect(() => {
@@ -72,6 +73,10 @@ export function AuthProvider({ children }) {
       if (res.ok) {
         const userData = await res.json();
         console.log(userData.data.role[0])
+        if (userData?.data?.role.includes("ADMIN")){
+          setAdmin(true)
+          setLogedInUser(userData); // assuming /api/me returns { id, name, email, avatar }
+        } 
         if (userData?.data?.role[0]==="CLIENT"){
           setLogedInUser(userData); // assuming /api/me returns { id, name, email, avatar }
         } 
@@ -218,7 +223,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ logedInUser, login, logout, loading, userType, signUp, refreshAccessToken }}>
+    <AuthContext.Provider value={{ logedInUser, admin, login, logout, loading, userType, signUp, refreshAccessToken }}>
       {loading ? <Loading /> : children }
     </AuthContext.Provider>
   );

@@ -3,10 +3,8 @@
 
 import { useState } from "react";
 import styles from "./BookingsTable.module.css";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useModal } from "../ModalProvider/ModalProvider";
-import SignIn from "@/app/navbar/(signIn)/signIn";
 import Reschedule from "../reschedule/page";
 import Contact from "../Contact/pages";
 import Cancle from "../cancle/cancle";

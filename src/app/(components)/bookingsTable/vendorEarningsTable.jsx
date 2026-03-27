@@ -3,18 +3,11 @@
 
 import { useState } from "react";
 import styles from "./BookingsTable.module.css";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useModal } from "../ModalProvider/ModalProvider";
-import SignIn from "@/app/navbar/(signIn)/signIn";
-import Reschedule from "../reschedule/page";
-import Contact from "../Contact/pages";
-import Cancle from "../cancle/cancle";
 import Message from "../message/pages";
 import Accept from "../vendorReschedule/accept";
 import Reject from "../vendorReschedule/reject";
-import VendorAccept from "../vendorAcceptBooking/page";
-import MarkComplete from "../vendorMarkComplete/page";
 
 export default function VendorEarningsTable({ bookings = [] }) {
   const router = useRouter();

@@ -1,7 +1,6 @@
 'use client'
 
 import StatsCard from '@/app/(components)/statsCard/page';
-import styles from './bookings.module.css';
 import SearchFilter from '@/app/(components)/search/page';
 import { CheckCheck, Loader, Minimize2, X } from 'lucide-react';
 import BookingsTable from '@/app/(components)/bookingsTable/BookingsTable';

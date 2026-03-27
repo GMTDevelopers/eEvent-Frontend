@@ -1,0 +1,10 @@
+.platformStats{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.graphs{
+    width: auto;
+    display: flex;
+    gap: 28px;
+    margin: 28px 0px 32px 0px;
+}

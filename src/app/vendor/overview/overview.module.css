@@ -22,8 +22,9 @@
 }
 .vendorGraph{
     border: 1.5px solid #cfcfcf;
+    min-width: 350px;
     width: 50%;
-    height: 369px;
+    height: 370px;
     border-radius: 14px;
     overflow: hidden;
     padding: 16px;

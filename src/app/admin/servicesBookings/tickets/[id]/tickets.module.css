@@ -1,0 +1,48 @@
+.ticketinfo{
+    width: 100%;
+    height: 440px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    overflow: hidden;
+    margin-top: 54px;
+}
+.ticketinfo img{
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+.ticketInfoData{
+    width: 100%;
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.ticketInfoData ul{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+}
+.ticketInfoData ul li{
+    display: flex;
+    justify-content: space-between;
+}
+.active{
+    color: #2ED074;
+}
+.pending{
+    color: #F0B502;
+}
+.cancled{
+    color: #f03202;
+}
+
+.purchase{
+    margin-top: 80px;
+    width: 100%;
+    text-align: center;
+}

@@ -6,6 +6,8 @@ import { Banknote, Check, CheckCheck, ChevronRight, Loader, Minimize2, Star, X }
 import styles from './overview.module.css'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useEffect, useState } from 'react';
+import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
+import SignIn from '@/app/navbar/(signIn)/signIn';
 
 
 
@@ -13,6 +15,7 @@ const Overview = () => {
     const [stats, setStats] = useState()
     const [recentAct, setRecentAct] = useState()
     const [chartData, setChartData] = useState([])
+    const { openModal } = useModal();
     const formatMonthlyData = (apiData) => {
         const monthMap = [
             { key: 'january', label: 'Jan' },
@@ -52,6 +55,10 @@ const Overview = () => {
                     const FD = formatMonthlyData(result.data.bookingHistory[selectedYear] || [])
                     setChartData(FD)
                 }
+                if (statsRes.status===401) {
+                    localStorage.removeItem('token');
+                    openModal(<SignIn />)
+                }
             }catch(err){
                 throw new Error(err)
             }          
@@ -67,6 +74,10 @@ const Overview = () => {
                     const res = await recentActRes.json();
                     console.log("overview stats",res)
                     setRecentAct(res.data)
+                }
+                if (recentActRes.status===401) {
+                    localStorage.removeItem('token');
+                    openModal(<SignIn />)
                 }
             }catch(err){
                 throw new Error(err)
@@ -86,7 +97,7 @@ const Overview = () => {
                 <div className={`${styles.vendorStatsPack} statsPack`}>
                     <StatsCard title="TOTAL BOOKINGS" data={stats?.totalBooking} icon={Minimize2} />
                     <StatsCard title="PENDING CONFIRMATION" data={stats?.pendingConfirmation} icon={Loader} />
-                    <StatsCard title="TOTAL EARNINGS" data={stats?.totalEarnings} icon={Banknote} />
+                    <StatsCard title="TOTAL EARNINGS" data={stats?.totalEarnings.toLocaleString()} icon={Banknote} />
                     <StatsCard title="AVERAGE RATING" data={stats?.averageRatings} icon={Star} />
                 </div>
                 <div className={styles.vendorGraph}>

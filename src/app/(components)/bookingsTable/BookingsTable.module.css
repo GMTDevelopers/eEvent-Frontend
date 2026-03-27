@@ -26,7 +26,7 @@
 .table { 
   width: 100%; 
   border-collapse: collapse; 
-  font-size: 16px; 
+  font-size: 14px; 
   table-layout: auto;
   /* table-layout: fixed; */
   overflow-x: scroll;
@@ -106,6 +106,8 @@
 .upcoming   { color: #636363; }
 .completed  {color: #2ED074; }
 .amount { color: #636363; }
+.reshedule { color: #82027D; }
+.approved {color: #2ED074;}
 
 /* Dots button & dropdown (shared) */
 .dotsBtn {
@@ -159,5 +161,7 @@
 }
 
 .dropdownItem:hover { background: #f8fafc; }
+.cancelled { color: #dc2626; font-weight: 600; }
 .cancel { color: #dc2626; font-weight: 600; }
+.inactive { color: #dc2626; font-weight: 600; }
 .cancel:hover { background: #fef2f2; }

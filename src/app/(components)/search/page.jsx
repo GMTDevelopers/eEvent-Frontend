@@ -5,7 +5,7 @@ import styles from './searchFilter.module.css'
 import { useAuth } from "@/app/contexts/AuthContext";
 import { useRouter } from 'next/navigation'
 
-const SearchFilter = ({name, page}) => {
+const SearchFilter = ({name, page, onSearch}) => {
     const [query, setQuery] = useState('');
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef(null);
@@ -17,9 +17,10 @@ const SearchFilter = ({name, page}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (query.trim()) {
+            if (onSearch){
+                onSearch(query);
+            }
             console.log('Searching for:', query);
-            // Replace with your search logic
-            alert(`Searching: ${query}`);
         }
     };
 

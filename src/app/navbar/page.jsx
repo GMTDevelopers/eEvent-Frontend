@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 import { Banknote, Check, Heart, MessageCircleMore, Settings, SquareChartGantt, UserRoundCog } from 'lucide-react';
 const Navbar = () => {
     const { openModal } = useModal();
-    const {logedInUser, logout, userType} = useAuth()
+    const {logedInUser, logout, userType, admin} = useAuth()
     const [activeTab, setActiveTab] = useState()
     const router = useRouter()
 
@@ -44,7 +44,7 @@ const Navbar = () => {
                 }
                 
             </div>
-            {logedInUser && userType && (
+            { !admin && logedInUser && userType && (
                 <div className={Styles.userNav}>
                     <p className={Styles.welcome}>Welcome, {logedInUser.data.firstName}</p>    
                     <div className={Styles.userNavMenu}>
@@ -83,6 +83,22 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <p style={{color:"#E83E1C"}}>Account status: <span style={{color:"#2ED074"}}>ACTIVE</span> </p>    
+                </div>
+            )}
+           { /* ADMIN USER */}
+            { admin && logedInUser?.data?.role.includes("ADMIN") && (
+                
+                <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
+                    <div className={Styles.userNavMenu}>
+                        <ul>
+                            <Link href='/admin/dashboard' > <li onClick={() => setActiveTab('Overview')} className={activeTab === "Overview" ? Styles.active : ''} > <SquareChartGantt className={Styles.icons}/> Overview</li></Link>
+                            <Link href='/admin/servicesBookings' > <li onClick={() => setActiveTab('Bookings')} className={activeTab === "Bookings" ? Styles.active : ''}><Check className={Styles.icons} />Services and Bookings</li></Link>
+                            <Link href='/vendor/service' > <li onClick={() => setActiveTab('Services')} className={activeTab === "Services" ? Styles.active : ''}><UserRoundCog className={Styles.icons} />User Management</li></Link>
+                            <Link href='/vendor/earnings' > <li onClick={() => setActiveTab('Earnings')} className={activeTab === "Earnings" ? Styles.active : ''}><Banknote className={Styles.icons} />Payments</li></Link>
+                            <Link href='/vendor/message' > <li onClick={() => setActiveTab('Messages')} className={activeTab === "Messages" ? Styles.active : ''}><MessageCircleMore className={Styles.icons} /> Messages</li></Link>
+                            <Link href='/vendor/settings' > <li onClick={() => setActiveTab('Account')} className={activeTab === "Account" ? Styles.active: ''}><Settings className={Styles.icons} />Support Center</li></Link>
+                        </ul>
+                    </div>
                 </div>
             )}
         </>
