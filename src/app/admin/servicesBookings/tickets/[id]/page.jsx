@@ -7,6 +7,7 @@ import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import Loading from '@/app/(components)/loading/loading';
 import SignIn from '@/app/navbar/(signIn)/signIn';
 import Image from 'next/image';
+import AdminTicketPurchaseTable from '@/app/(components)/bookingsTable/adminTicketsPurchaseTable';
 
 const TicketPage = ({params}) => {
     const router = useRouter();
@@ -148,8 +149,8 @@ const TicketPage = ({params}) => {
                 </div>
             }
             <div className={styles.purchase}>
-                <h3>TICKET PURCHASES ({purchaseData?.length})</h3>
-
+                <h3>TICKET PURCHASES</h3>
+                <AdminTicketPurchaseTable bookings={purchaseData} />
             </div>
         </div>
     );

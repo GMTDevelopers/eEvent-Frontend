@@ -56,7 +56,7 @@ const ServiceBooking = () => {
             const query = new URLSearchParams({
                 /* category: categoryFilter, */
                 /* location: "", */
-                skip: skip,
+                skip: 0,
                 take: TAKE,
             });
             if (searchValue & searchValue!='') {
@@ -78,6 +78,8 @@ const ServiceBooking = () => {
             .then((data) => {            
                 console.log("bookings data", data.data)
                 setAllData(data || []);
+                const { total, take } = data.data.meta || {};
+                setTotalPages(total/take || 0);
 /*                 setCurrentPage(data.data.meta.page || 1);
                 setTotalPages(data.data.meta.total/TAKE || 0); */
             }) 

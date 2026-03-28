@@ -32,7 +32,7 @@
   overflow-x: scroll;
 }
 .table th { 
-  padding: 32px 16px; 
+  padding: 16px 5px; 
   text-align: left; 
   font-weight: 700; 
   color: #222222; 
@@ -40,10 +40,11 @@
   border-bottom: 1px solid #cfcfcf;
 }
 .table td { 
-  padding: 16px; 
+  padding: 5px; 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: justify;
 }
 .table tr:hover { 
   background: #f1f5f9;
@@ -105,6 +106,7 @@
 .pending    {color: #F0B502; }
 .upcoming   { color: #636363; }
 .completed  {color: #2ED074; }
+.active  {color: #2ED074; }
 .amount { color: #636363; }
 .reshedule { color: #82027D; }
 .approved {color: #2ED074;}

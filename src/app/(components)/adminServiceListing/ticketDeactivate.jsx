@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import styles from '../../navbar/(signIn)/signIn.module.css';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
-const DeactivateListings = ({id}) => {
-    const router = useRouter();
+const TicketDeactivate = ({id}) => {
+
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const handleSubmit = async (e) => {
@@ -25,10 +24,6 @@ const DeactivateListings = ({id}) => {
                 });
 
                 const Data  = await deactivateRes.json();
-                if (deactivateRes.ok){
-                    setSuccess(Data.message)
-                    router.refresh();
-                }
                 if (!deactivateRes.ok){
                     throw{
                         status: Data.status,
@@ -36,9 +31,10 @@ const DeactivateListings = ({id}) => {
                         message: Data.message,
                     }
                 }
+                setSuccess(Data.message)
                 console.log(Data)
             } else (
-                setError("Please type AGREE exactly to confirm.")
+                setError("Please type DEACTIVATE exactly to confirm.")
             )
         }   catch(err){
             setError(err.message)
@@ -57,7 +53,7 @@ const DeactivateListings = ({id}) => {
             <form onSubmit={handleSubmit} className={styles.signInForm}>
                 <input placeholder='Type [DEACTIVATE]' type='text' name='typeDeactivate' />
                 {success && <p style={{color:"#2d9f35"}}>{success}</p>}
-                <button style={{backgroundColor:'#82027D'}} type="submit">
+                <button style={{backgroundColor:'#E50909'}} type="submit">
                     Deactivate service listing
                 </button>
             </form>
@@ -66,4 +62,4 @@ const DeactivateListings = ({id}) => {
     );
 }
  
-export default DeactivateListings;
+export default TicketDeactivate;
