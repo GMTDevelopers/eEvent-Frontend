@@ -16,12 +16,10 @@ const SearchFilter = ({name, page, onSearch}) => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (query.trim()) {
-            if (onSearch){
-                onSearch(query);
-            }
-            console.log('Searching for:', query);
+        if (onSearch){
+            onSearch(query);
         }
+        console.log('Searching for:', query);
     };
 
         // Hide when clicking outside
@@ -52,7 +50,13 @@ const SearchFilter = ({name, page, onSearch}) => {
                             ref={inputRef}
                             type="text"
                             value={query}
-                            onChange={(e) => setQuery(e.target.value)}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                setQuery(value);
+                                if (onSearch) {
+                                    onSearch(value);
+                                }
+                            }}
                             onFocus={() => setIsFocused(true)}
                             onBlur={() => setIsFocused(false)}
                             placeholder="Search here"

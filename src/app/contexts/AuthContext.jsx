@@ -5,6 +5,7 @@ import { createContext, useContext, useState, useEffect, useRef } from "react";
 import Loading from "../(components)/loading/loading";
 import { getApiError } from "../(components)/error/error";
 import { refresh } from "next/cache";
+import { useRouter } from "next/navigation";
 
 const AuthContext = createContext();
 
@@ -14,6 +15,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
   const isRefreshing = useRef(false);
+  const router = useRouter();
   // Check if user was logged in before (on page load/refresh)
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -139,7 +141,7 @@ export function AuthProvider({ children }) {
 
       // Now get user profile
       await fetchUserProfile(accessToken);
-
+      router.refresh();
       return{
         status: Data.status,
       }
