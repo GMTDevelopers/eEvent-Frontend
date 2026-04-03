@@ -1,5 +1,5 @@
 "use client"
-import VendorEarningsTable from "@/app/(components)/bookingsTable/vendorEarningsTable";
+import VendorEarningsTable from "@/app/(components)/bookingsTable/vendor/vendorEarningsTable";
 import { useModal } from "@/app/(components)/ModalProvider/ModalProvider";
 import Pagination from "@/app/(components)/pagination/page";
 import StatsCard from "@/app/(components)/statsCard/page";

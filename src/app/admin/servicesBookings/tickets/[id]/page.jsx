@@ -7,7 +7,7 @@ import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import Loading from '@/app/(components)/loading/loading';
 import SignIn from '@/app/navbar/(signIn)/signIn';
 import Image from 'next/image';
-import AdminTicketPurchaseTable from '@/app/(components)/bookingsTable/adminTicketsPurchaseTable';
+import AdminTicketPurchaseTable from '@/app/(components)/bookingsTable/admin/adminTicketsPurchaseTable';
 
 const TicketPage = ({params}) => {
     const router = useRouter();

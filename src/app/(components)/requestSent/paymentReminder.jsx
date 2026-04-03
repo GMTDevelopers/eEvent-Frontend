@@ -2,16 +2,16 @@
 import styles from '../../navbar/(signIn)/signIn.module.css';
 import Styles from '../vendorReschedule/reschedule.module.css';
 
-const SendRequest = ({user}) => {    
+const PaymentReminder = () => {    
     return ( 
         <div style={{display:"flex", flexDirection:"column", alignItems:"center", gap:"20px"}} className={styles.signContainer}>
             <img src="/images/sent.png" alt="sent" />
-            <h3>REQUEST SENT TO {user}</h3>
+            <h3>PAYMENT REMINDER SENT</h3>
             <div className={`${styles.termsCond} ${Styles.rescheduleTermsCond}`}>
-                <p style={{color:'#636363', textAlign:"justify"}}>Your request to mark this event as completed has been successfully sent to the {user}.</p>
+                <p style={{color:'#636363', textAlign:"justify"}}>A payment reminder has been sent to the vendor’s account profile and registered email address.</p>
             </div>            
         </div>
     );
 }
  
-export default SendRequest;
+export default PaymentReminder;

@@ -1,5 +1,5 @@
 'use client'
-import AdminBookingsTable from "@/app/(components)/bookingsTable/adminBookingsTable";
+import AdminBookingsTable from "@/app/(components)/bookingsTable/admin/adminBookingsTable";
 import Header from "@/app/(components)/header/page";
 import { useModal } from "@/app/(components)/ModalProvider/ModalProvider";
 import tabStyles from "@/app/(components)/tabs/tabs.module.css"
@@ -7,9 +7,9 @@ import Pagination from "@/app/(components)/pagination/page";
 import SignIn from "@/app/navbar/(signIn)/signIn";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import AdminServiceTable from "@/app/(components)/bookingsTable/adminServiceTable";
+import AdminServiceTable from "@/app/(components)/bookingsTable/admin/adminServiceTable";
 import SearchFilter from "@/app/(components)/search/page";
-import AdminTicketTable from "@/app/(components)/bookingsTable/adminTicketsTable";
+import AdminTicketTable from "@/app/(components)/bookingsTable/admin/adminTicketsTable";
 
 const ServiceBooking = () => {
     const { openModal } = useModal();

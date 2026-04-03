@@ -38,14 +38,14 @@
 }
 
 
-.vendorItem{
+/* .vendorItem{
   width: 100%;
   display: flex;
   justify-content: space-between;
   list-style-type: none;
   margin-top: 12px;
   margin-bottom: 12px;
-}
+} */
 .action{
   width: 100%;
   display: flex;

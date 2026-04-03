@@ -94,7 +94,7 @@ const Navbar = () => {
                             <Link href='/admin/dashboard' > <li onClick={() => setActiveTab('Overview')} className={activeTab === "Overview" ? Styles.active : ''} > <SquareChartGantt className={Styles.icons}/> Overview</li></Link>
                             <Link href='/admin/servicesBookings' > <li onClick={() => setActiveTab('Bookings')} className={activeTab === "Bookings" ? Styles.active : ''}><Check className={Styles.icons} />Services and Bookings</li></Link>
                             <Link href='/admin/userManagement' > <li onClick={() => setActiveTab('userManagement')} className={activeTab === "userManagement" ? Styles.active : ''}><UserRoundCog className={Styles.icons} />User Management</li></Link>
-                            <Link href='/admin/payments' > <li onClick={() => setActiveTab('Payments')} className={activeTab === "Payments" ? Styles.active : ''}><Banknote className={Styles.icons} />Payments</li></Link>
+                            <Link href='/admin/payment' > <li onClick={() => setActiveTab('Payments')} className={activeTab === "Payments" ? Styles.active : ''}><Banknote className={Styles.icons} />Payments</li></Link>
                             <Link href='/admin/messages' > <li onClick={() => setActiveTab('Messages')} className={activeTab === "Messages" ? Styles.active : ''}><MessageCircleMore className={Styles.icons} /> Messages</li></Link>
                             <Link href='/admin/supportCenter' > <li onClick={() => setActiveTab('Account')} className={activeTab === "Account" ? Styles.active: ''}><Settings className={Styles.icons} />Support Center</li></Link>
                         </ul>

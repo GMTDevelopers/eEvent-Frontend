@@ -2,12 +2,9 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./BookingsTable.module.css";
+import styles from "../BookingsTable.module.css";
 import { useRouter } from "next/navigation";
-import { useModal } from "../ModalProvider/ModalProvider";
-import ApproveListings from "../adminServiceListing/approve";
-import DeactivateListings from "../adminServiceListing/deactivate";
-
+import { useModal } from "../../ModalProvider/ModalProvider";
 
 export default function AdminTicketPurchaseTable({ bookings = [] }) {
   const router = useRouter();

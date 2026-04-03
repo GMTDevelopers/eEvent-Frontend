@@ -6,7 +6,7 @@ import SearchFilter from '@/app/(components)/search/page';
 import { CheckCheck, Loader, Minimize2, X } from 'lucide-react';
 import Pagination from '@/app/(components)/pagination/page';
 import { useEffect, useState } from 'react';
-import VendorBookingsTable from '@/app/(components)/bookingsTable/vendorBookingsTable';
+import VendorBookingsTable from '@/app/(components)/bookingsTable/vendor/vendorBookingsTable';
 
 
 

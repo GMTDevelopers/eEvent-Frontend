@@ -2,13 +2,13 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./BookingsTable.module.css";
+import styles from "../BookingsTable.module.css";
 import { useRouter } from "next/navigation";
-import { useModal } from "../ModalProvider/ModalProvider";
+import { useModal } from "../../ModalProvider/ModalProvider";
 import SignIn from "@/app/navbar/(signIn)/signIn";
-import UpdateStatus from "../adminUpdateStatus/updatePaymentStatus";
-import ManageReschedule from "../adminReschedule/manageReschedule";
-import ManageCancle from "../adminCancle/managecancle";
+import UpdateStatus from "../../adminUpdateStatus/updatePaymentStatus";
+import ManageReschedule from "../../adminReschedule/manageReschedule";
+import ManageCancle from "../../adminCancle/managecancle";
 
 export default function AdminBookingsTable({ bookings = [] }) {
   const router = useRouter();

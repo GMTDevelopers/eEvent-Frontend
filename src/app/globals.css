@@ -247,10 +247,10 @@ a {
   width: 100%;
   height: auto;
   color: #636363;
-  margin: 32px 0px 48px 0;
+  margin: 0px 0px 0px 0;
 /*   border: 1px solid #CFCFCF; */
   border-radius: 12px;
-  padding: 16px 32px;
+  padding: 16px 0px;
 }
 
 /* Deatils Header*/
@@ -297,4 +297,13 @@ select{
 }
 .error{
   color:  #ED4337;
+}
+
+.vendorItem{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

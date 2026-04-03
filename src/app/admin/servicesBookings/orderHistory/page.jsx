@@ -11,7 +11,7 @@ import { Banknote, ChevronLeft, ChevronRight, Minimize2, RotateCw, UserStar } fr
 import Link from 'next/link';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import SignIn from '@/app/navbar/(signIn)/signIn';
-import VendorOrderTable from '@/app/(components)/bookingsTable/vendorOrderTable';
+import VendorOrderTable from '@/app/(components)/bookingsTable/vendor/vendorOrderTable';
 /* https://grok.com/share/c2hhcmQtNQ_54091b1e-a166-46e9-8be2-895e1d5297bf */ /* chat to creating the input */
 const ProductCard = ({searchParams}) => {
     const [history, setHistory] = useState([]); 

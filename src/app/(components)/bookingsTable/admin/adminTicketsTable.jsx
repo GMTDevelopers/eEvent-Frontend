@@ -2,12 +2,12 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./BookingsTable.module.css";
+import styles from "../BookingsTable.module.css";
 import { useRouter } from "next/navigation";
-import { useModal } from "../ModalProvider/ModalProvider";
-import ApproveListings from "../adminServiceListing/approve";
-import DeactivateListings from "../adminServiceListing/deactivate";
-import TicketDelete from "../adminServiceListing/ticketDelete";
+import { useModal } from "../../ModalProvider/ModalProvider";
+import ApproveListings from "../../adminServiceListing/approve";
+import DeactivateListings from "../../adminServiceListing/deactivate";
+import TicketDelete from "../../adminServiceListing/ticketDelete";
 
 
 export default function AdminTicketTable({ bookings = [] }) {

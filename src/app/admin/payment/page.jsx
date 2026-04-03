@@ -1,41 +1,43 @@
 "use client"
+import VendorEarningsTable from "@/app/(components)/bookingsTable/vendor/vendorEarningsTable";
 import tabStyles from "@/app/(components)/tabs/tabs.module.css"
 import Header from "@/app/(components)/header/page";
 import { useModal } from "@/app/(components)/ModalProvider/ModalProvider";
 import Pagination from "@/app/(components)/pagination/page";
 import SearchFilter from "@/app/(components)/search/page";
 import StatsCard from "@/app/(components)/statsCard/page";
-import {User, User2, UserCheck, UserCheck2 } from "lucide-react";
+import { Banknote, Loader, Minimize2, Star, User, User2, UserCheck, UserCheck2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import AdminVendorTable from "@/app/(components)/bookingsTable/admin/adminVendorTable";
 import { useRouter } from "next/navigation";
 import AdminClientTable from "@/app/(components)/bookingsTable/admin/adminClientTable";
 import SignIn from "@/app/navbar/(signIn)/signIn";
+import AdminSubscriptionTable from "@/app/(components)/bookingsTable/admin/adminSubscriptionTable";
 
-const UserManagement = () => {
+const Payment = () => {
     const { openModal } = useModal();
     const [stats, setStats] = useState()
     const router = useRouter();
     
-    const [vendorData, setVendorData] = useState([]);
-    const [clientData, setClientData] = useState([]);
+    const [paymentData, setpaymentData] = useState([]);
+    const [subData, setsubData] = useState([]);
 
     const [loading, setLoading] = useState(null);
     const [error, setError] = useState()
     const TAKE = 10;
 
-    const [vendorCurrentPage, setVendorCurrentPage] = useState(1);
-    const [vendorTotalPages, setVendorTotalPages] = useState(0);
+    const [paymentCurrentPage, setpaymentCurrentPage] = useState(1);
+    const [paymentTotalPages, setpaymentTotalPages] = useState(0);
 
-    const [clientCurrentPage, setClientCurrentPage] = useState(1);
-    const [clientTotalPages, setClientTotalPages] = useState(0);
+    const [subCurrentPage, setsubCurrentPage] = useState(1);
+    const [subTotalPages, setsubTotalPages] = useState(0);
     const [searchValue, setSearchValue] = useState("");
 
     //tabs
-    const [activeTab, setActiveTab] = useState('Vendors');
+    const [activeTab, setActiveTab] = useState('Payment History');
     const tabs = [
-        { key: 'Vendors', label: 'Vendors' },
-        { key: 'Clients', label: 'Clients' },
+        { key: 'Payment History', label: 'Payment History' },
+        { key: 'Vendor Subscriptions', label: 'Vendor Subscriptions' },
     ];
 
     const handleSearch = (value) => {
@@ -83,7 +85,7 @@ const UserManagement = () => {
              if (searchValue) {
                 query.append("search", searchValue);
             }
-            fetch(`https://eevents-srvx.onrender.com/v1/admin/vendors?${query.toString()}`,{
+            fetch(`https://eevents-srvx.onrender.com/v1/admin/transactions?${query.toString()}`,{
                 headers:{
                     authorization: `Bearer ${token}`,
                 },
@@ -97,10 +99,10 @@ const UserManagement = () => {
                 return res.json()
             })
             .then((data) => {            
-                console.log("vendor data", data.data)
-                setVendorData(data.data || []);
+                console.log("transactions data", data.data)
+                setpaymentData(data.data || []);
                 const { total, take } = data.data.meta || {};
-                setVendorTotalPages(total/take || 0);
+                setpaymentTotalPages(total/take || 0);
             }) 
 
             .catch((error) => console.error("Error fetching data:", error))
@@ -110,7 +112,7 @@ const UserManagement = () => {
             )
         }
 
-        const getClient = (page = 1) => {
+        const getSubscriptions = (page = 1) => {
             const skip = (page - 1) * TAKE;
             const query = new URLSearchParams({
                 skip,
@@ -119,7 +121,7 @@ const UserManagement = () => {
              if (searchValue) {
                 query.append("search", searchValue);
             }
-            fetch(`https://eevents-srvx.onrender.com/v1/admin/clients?${query.toString()}`,{
+            fetch(`https://eevents-srvx.onrender.com/v1/admin/subscriptions/vendors?${query.toString()}`,{
                 headers:{
                     authorization: `Bearer ${token}`,
                 },
@@ -133,10 +135,10 @@ const UserManagement = () => {
                 return res.json()
             })
             .then((data) => {            
-                console.log("client data", data.data)
-                setClientData(data.data || []);
+                console.log("subscriptions data", data.data)
+                setsubData(data.data || []);
                 const { total, take } = data.data.meta || {};
-                setClientTotalPages(total/take || 0);
+                setsubTotalPages(total/take || 0);
             }) 
             .catch((error) => console.error("Error fetching data:", error))
             .finally( ()=> {
@@ -145,24 +147,36 @@ const UserManagement = () => {
             )
         }
         getStats()
-        getVendor(vendorCurrentPage)
-        getClient(clientCurrentPage)
-    }, [ searchValue, vendorCurrentPage, clientCurrentPage]);
+        getVendor(paymentCurrentPage)
+        getSubscriptions(subCurrentPage)
+    }, [ searchValue, paymentCurrentPage, subCurrentPage]);
 
     const renderContent = () => {
         switch (activeTab) {
-            case 'Vendors':
-                return vendorData?.length != 0 ? (
-                    <AdminVendorTable bookings={vendorData} />
+            case 'Payment History':
+                return paymentData?.length != 0 ? (
+                    <div>
+                        <p>this is payment</p>
+                        {/* <AdminVendorTable bookings={paymentData} /> */}
+                    </div>
+                    
                     
                 ) : (
-                    <AdminVendorTable bookings={[]} />
+                    <div>
+                        <p>this is no payment</p>
+                        {/* <AdminVendorTable bookings={paymentData} /> */}
+                    </div>
+                   
                 );
-            case 'Clients':
-                return clientData?.length != 0 ? ( 
-                    <AdminClientTable bookings={clientData} />
+            case 'Vendor Subscriptions':
+                return subData?.length != 0 ? ( 
+                    <div>
+                        <AdminSubscriptionTable bookings={subData} />
+                    </div>
                 ): (
-                    <AdminClientTable bookings={[]} />
+                    <div>
+                        <AdminSubscriptionTable bookings={[]} />
+                    </div>
                 );
             default:
                 return null;
@@ -170,13 +184,13 @@ const UserManagement = () => {
         
     };
     const handleVendorPageChange = (page) => {
-        if (page !== vendorCurrentPage) {
-            setVendorCurrentPage(page);
+        if (page !== paymentCurrentPage) {
+            setpaymentCurrentPage(page);
         }
     };
     const handleClientPageChange = (page) => {
-        if (page !== clientCurrentPage) {
-            setClientCurrentPage(page);
+        if (page !== subCurrentPage) {
+            setsubCurrentPage(page);
         }
     };
 
@@ -202,23 +216,23 @@ const UserManagement = () => {
             <br />
             <div className={`statsPack`}>
                 <StatsCard title="TOTAL VENDORS" data={stats?.totalVendors || 0} icon={User2} />
-                <StatsCard title="ACTIVE VENDORS" data={stats?.activeVendors || 0} icon={UserCheck2} />
-                <StatsCard title="TOTAL USERS" data={stats?.totalUsers || 0} icon={User} />
-                <StatsCard title="ACTIVE USERS" data={stats?.activeUsers || 0} icon={UserCheck} />
+                <StatsCard title="ACTIVE SUBSCRIPTIONS" data={stats?.activeVendors || 0} icon={UserCheck2} />
+                <StatsCard title="SUBSCRIPTION REVENUE" data={stats?.totalUsers || 0} icon={User} />
+                <StatsCard title="SUBSCRIPTION FEE" data={stats?.activeUsers || 0} icon={UserCheck} />
             </div>
             <br /><br />
             <div className="table">
                 {renderContent()}
-                {activeTab === 'Vendors' &&
-                    <Pagination currentPage={vendorCurrentPage} 
-                        totalPages={vendorTotalPages}
+                {activeTab === 'Payment History' &&
+                    <Pagination currentPage={paymentCurrentPage} 
+                        totalPages={paymentTotalPages}
                         onPageChange={!loading ? handleVendorPageChange : () => {}}
                     />    
                 }
-                {activeTab==='Clients' &&
+                {activeTab==='Vendor Subscriptions' &&
                     <Pagination
-                        currentPage={clientCurrentPage} 
-                        totalPages={clientTotalPages}
+                        currentPage={subCurrentPage} 
+                        totalPages={subTotalPages}
                         onPageChange={!loading ? handleClientPageChange : () => {}}
                     />
                 }      
@@ -228,4 +242,4 @@ const UserManagement = () => {
     );
 }
  
-export default UserManagement;
+export default Payment;

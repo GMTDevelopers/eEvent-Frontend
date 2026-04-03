@@ -44,15 +44,15 @@ export default function BookingsTable({ bookings = {} }) {
             <tbody> 
               {data.length !==0 && data.map((b) => (
                 <tr className={styles.dataRow} key={b.bookingId} >
-                  <td onClick={closeMenu}>{b.bookingId}</td>
-                  <td onClick={closeMenu}>{b.vendorName}</td>
-                  <td onClick={closeMenu}>{b.serviceName}</td>
-                  <td onClick={closeMenu}>{new Date(b.dateBooked).toDateString()}</td>
-                  <td onClick={closeMenu}>{new Date(b.eventDate).toDateString()}</td>
-                  <td onClick={closeMenu} className={styles.amount}>₦{b.amount.toLocaleString()}</td>
+                  <td onClick={closeMenu}>{b?.bookingId}</td>
+                  <td onClick={closeMenu}>{b?.vendorName}</td>
+                  <td onClick={closeMenu}>{b?.serviceName}</td>
+                  <td onClick={closeMenu}>{new Date(b?.dateBooked).toDateString() || "N/A"}</td>
+                  <td onClick={closeMenu}>{new Date(b?.eventDate).toDateString() || "N/A"}</td>
+                  <td onClick={closeMenu} className={styles.amount}>₦{b?.amount.toLocaleString() || "N/A"}</td>
                   <td onClick={closeMenu}> 
                     <span className={`${styles.status} ${styles[b.status?.toLowerCase()]}`}>
-                      {b.status}
+                      {b?.status}
                     </span>
                   </td>
                   <td className={styles.actionCell}>

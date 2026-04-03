@@ -2,22 +2,22 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./BookingsTable.module.css";
+import styles from "../BookingsTable.module.css";
 import { useRouter } from "next/navigation";
-import { useModal } from "../ModalProvider/ModalProvider";
-import ApproveListings from "../adminServiceListing/approve";
-import AdminVendorMessage from "../message/adminVendorMessage";
-import DeactivateListings from "../adminServiceListing/deactivate";
+import { useModal } from "../../ModalProvider/ModalProvider";
+import ApproveListings from "../../adminServiceListing/approve";
+import AdminVendorMessage from "../../message/adminVendorMessage";
+import DeactivateListings from "../../adminServiceListing/deactivate";
 
 
-export default function AdminVendorTable({ bookings = [] }) {
+export default function AdminServiceTable({ bookings = [] }) {
   const router = useRouter();
   const [openMenuId, setOpenMenuId] = useState(null);
   const { openModal } = useModal();
   const toggleMenu = (id) => {
     setOpenMenuId(openMenuId === id ? null : id);
   };
-  const data = bookings.data||[]
+  const data = bookings.data.data||[]
   const closeMenu = () => setOpenMenuId(null);
 
   return (
@@ -27,48 +27,41 @@ export default function AdminVendorTable({ bookings = [] }) {
         <table style={{fontSize:"13px"}} className={styles.table}>
           <thead>
             <tr>
-              <th>Vendor ID</th>
+              <th>Service ID</th>
               <th>Vendor name</th>
-              <th>Business name</th> 
-              <th>Date registered</th>
-              <th>Total revenue</th>
-              <th>Last Booking</th>
-              <th>Service listings</th>
-              <th>Total bookings</th>
-              <th>Subscription status</th>      
+              <th>Service</th> 
+              <th>Category</th>
+              <th>Date added</th>
+              <th>Total orders</th>
+              <th>Status</th>      
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {data?.length !==0 && data.map((b,index) => (
               <tr className={styles.dataRow} key={index} >
-                <td onClick={closeMenu}>{b?.vendorID}</td>
-                <td onClick={closeMenu}>{b?.vendorName}</td>
-                <td onClick={closeMenu}>{b?.businessName}</td>
-                <td onClick={closeMenu}>{new Date(b?.dateRegistered).toLocaleDateString()}</td>
-                <td onClick={closeMenu} className={styles.amount}>{b.totalRevenue}</td>
-                <td onClick={closeMenu}>{new Date(b?.lastBooking).toLocaleDateString()}</td>
-                <td onClick={closeMenu}>{b?.serviceListingsCount}</td>
-                <td onClick={closeMenu}>{b?.totalBookings}</td>
+                <td onClick={closeMenu}>{b.serviceID}</td>
+                <td onClick={closeMenu}>{b.vendorName}</td>
+                <td onClick={closeMenu}>{b.service}</td>
+                <td onClick={closeMenu}>{b.category}</td>
+                <td onClick={closeMenu}>{new Date(b.dateAdded).toLocaleDateString()}</td>
+                <td onClick={closeMenu} className={styles.amount}>{b.totalOrders}</td>
                 <td onClick={closeMenu}> 
-                  <span className={`${styles.status} ${styles[b?.subscriptionStatus.toLowerCase()]}`}>
-                    {b?.subscriptionStatus.toLowerCase()}
+                  <span className={`${styles.status} ${styles[b.status.toLowerCase()]}`}>
+                    {b.status.toLowerCase()}
                   </span>
                 </td>
                 <td className={styles.actionCell}>
-                  <button onClick={() => toggleMenu(b.vendorID)} className={styles.dotsBtn}>
+                  <button onClick={() => toggleMenu(b.serviceID)} className={styles.dotsBtn}>
                     ⋮
                   </button>
-                  {openMenuId === b.vendorID && (
+                  {openMenuId === b.serviceID && (
                     <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
-                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/userManagement/${b.vendorID}`)}>View vendor information</li>
-                      <li className={styles.dropdownItem} style={{color:"#2ED074"}} onClick={() => openModal(<ApproveListings id={b.serviceID} />)}>Approve vendor</li>
+                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/servicesBookings/serviceDetails/${b.serviceID}`)}>View service listing</li>
+                      <li className={styles.dropdownItem} style={{color:"#2ED074"}} onClick={() => openModal(<ApproveListings id={b.serviceID} />)}>Approve service listing</li>
                       <li className={styles.dropdownItem} onClick={() => router.push(`/admin/servicesBookings/orderHistory?id=${b.serviceID}`)}>View booking history</li>
                       <li className={styles.dropdownItem} onClick={() => openModal(<AdminVendorMessage id={b.vendorId} />)}>Message vendor</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<DeactivateListings id={b.serviceID} />)}>View conversations</li>
-                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/servicesBookings/orderHistory?id=${b.serviceID}`)}>Export vendor report (.pdf)</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<AdminVendorMessage id={b.vendorId} />)}>Suspend vendor</li>
-                      <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => openModal(<DeactivateListings id={b.serviceID} />)}>Delete vendor</li>
+                      <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => openModal(<DeactivateListings id={b.serviceID} />)} >Deactivate listing</li>
                     </div>
                   )}
                 </td>

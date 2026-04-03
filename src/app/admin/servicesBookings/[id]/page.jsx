@@ -162,55 +162,55 @@ const BookingItem = /* async */ ({params}) => {
                         <section className="mainSection">
                             <h2>BOOKING DETAILS </h2>
                             <div className="descPack">
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Client Name</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.clientName}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Client phone</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.clientPhoneNumber}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Client email</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.clientEmail}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Booking date</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{new Date(bookingData?.createdAt).toDateString()}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Event type</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.eventType}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Event title</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.eventTitle}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Event date</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{new Date(bookingData?.eventDate).toDateString()}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Event time</p>
                                     <p style={{color:"#222222", fontWeight:700}}> {bookingData?.eventTime || "Not Stated"}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Event duration</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.eventDuration || "Not Stated"} hours</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Event location</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.eventLocation || "Not Stated"}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Service booked</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.serviceBooked}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Units needed</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.unitsNeeded}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Additional service</p>
                                     <p style={{color:"#222222", fontWeight:700}}>
                                         {bookingData?.AdditionalServices?.map((add)=>(
@@ -218,35 +218,35 @@ const BookingItem = /* async */ ({params}) => {
                                         ))}
                                     </p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Preferred setup date</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{new Date(bookingData?.preferredSetupDate).toDateString()}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Preferred setup time</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{new Date(bookingData?.preferredSetupTime).toLocaleTimeString()}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Special instructions</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.specialInstructions || "Not Stated"}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Contact person name</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.contactPersonName || "Not Stated"}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Contact person phone number</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.contactPersonPhone || "Not Stated"}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Alternate contact person phone</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.AltContactPersonPhone || "Not Stated"}</p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Booking status </p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.bookingStatus}</p>
                                 </li>                               
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Payment status </p>
                                     <p style={{color:"#222222", fontWeight:700}}>{bookingData?.paymentStatus}</p>
                                 </li>                               
@@ -255,13 +255,13 @@ const BookingItem = /* async */ ({params}) => {
                             <div className="descPack">
                                 <p style={{color:"#222222", fontWeight:700}}>SERVICE ORDERED</p>
                                 
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p> {bookingData?.serviceOrdered.name +' (x'+bookingData?.serviceOrdered.quantity+")" } </p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Unit Price: ₦{bookingData?.serviceOrdered.unitPrice.toLocaleString()} </p>
                                 </li>
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p>Total Cost:</p>
                                     <p style={{color:"#222222", fontWeight:700}}>₦{bookingData?.serviceOrdered.subtotal.toLocaleString()}</p>
                                 </li>
@@ -269,7 +269,7 @@ const BookingItem = /* async */ ({params}) => {
                                 <br />
                                 <p style={{color:"#222222", fontWeight:700}}>Additional Services</p>
                                 {bookingData?.AdditionalServices?.map((add)=>(
-                                    <li className={styles.vendorItem}>
+                                    <li className='vendorItem'>
                                         <p>{add.serviceName}</p>
                                         <p style={{color:"#222222", fontWeight:700}}>₦{add.serviceCost}</p>
                                     </li>
@@ -277,7 +277,7 @@ const BookingItem = /* async */ ({params}) => {
                             </div> 
 
                             <div className="descPack">
-                                <li className={styles.vendorItem}>
+                                <li className='vendorItem'>
                                     <p style={{color:"#222222", fontWeight:700}}>Total Cost:</p>
                                     <p style={{color:"#222222", fontWeight:700}}>₦{bookingData?.serviceOrdered.totalCost.toLocaleString()}</p>
                                 </li>

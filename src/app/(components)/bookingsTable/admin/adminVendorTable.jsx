@@ -2,15 +2,17 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./BookingsTable.module.css";
+import styles from "../BookingsTable.module.css";
 import { useRouter } from "next/navigation";
-import { useModal } from "../ModalProvider/ModalProvider";
-import ApproveListings from "../adminServiceListing/approve";
-import AdminVendorMessage from "../message/adminVendorMessage";
-import DeactivateListings from "../adminServiceListing/deactivate";
+import { useModal } from "../../ModalProvider/ModalProvider";
+import DeactivateListings from "../../adminServiceListing/deactivate";
+import ApproveVendor from "../../adminApproveVendor/approveVendor";
+import SuspendVendor from "../../adminSuspendVendor/suspendVendor";
+import DeleteVendor from "../../adminDelete/deleteVendor";
 
 
-export default function AdminClientTable({ bookings = [] }) {
+
+export default function AdminVendorTable({ bookings = [] }) {
   const router = useRouter();
   const [openMenuId, setOpenMenuId] = useState(null);
   const { openModal } = useModal();
@@ -27,43 +29,47 @@ export default function AdminClientTable({ bookings = [] }) {
         <table style={{fontSize:"13px"}} className={styles.table}>
           <thead>
             <tr>
-              <th>Client ID</th>
-              <th>Client name</th>
-              <th>Phone number</th> 
+              <th>Vendor ID</th>
+              <th>Vendor name</th>
+              <th>Business name</th> 
               <th>Date registered</th>
-              <th>Last order</th>
-              <th>Total payment</th>
-              <th>Total orders</th>
-              <th>Account status</th>      
+              <th>Total revenue</th>
+              <th>Last Booking</th>
+              <th>Service listings</th>
+              <th>Total bookings</th>
+              <th>Subscription status</th>      
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {data?.length !==0 && data.map((b,index) => (
               <tr className={styles.dataRow} key={index} >
-                <td onClick={closeMenu}>{b?.clientID}</td>
-                <td onClick={closeMenu}>{b?.clientName}</td>
-                <td onClick={closeMenu}>{b?.phoneNumber}</td>
+                <td onClick={closeMenu}>{b?.vendorID}</td>
+                <td onClick={closeMenu}>{b?.vendorName}</td>
+                <td onClick={closeMenu}>{b?.businessName}</td>
                 <td onClick={closeMenu}>{new Date(b?.dateRegistered).toLocaleDateString()}</td>
-                <td onClick={closeMenu}>{new Date(b?.lastOrder).toLocaleDateString()}</td>
-                <td onClick={closeMenu} className={styles.amount}>{b?.totalPayment}</td>
-                <td onClick={closeMenu}>{b?.totalOrders}</td>
+                <td onClick={closeMenu} className={styles.amount}>{b.totalRevenue}</td>
+                <td onClick={closeMenu}>{new Date(b?.lastBooking).toLocaleDateString()}</td>
+                <td onClick={closeMenu}>{b?.serviceListingsCount}</td>
+                <td onClick={closeMenu}>{b?.totalBookings}</td>
                 <td onClick={closeMenu}> 
-                  <span className={`${styles.status} ${styles[b?.accountStatus.toLowerCase()]}`}>
-                    {b?.accountStatus.toLowerCase()}
+                  <span className={`${styles.status} ${styles[b?.subscriptionStatus.toLowerCase()]}`}>
+                    {b?.subscriptionStatus.toLowerCase()}
                   </span>
                 </td>
                 <td className={styles.actionCell}>
-                  <button onClick={() => toggleMenu(b.clientID)} className={styles.dotsBtn}>
+                  <button onClick={() => toggleMenu(b.vendorID)} className={styles.dotsBtn}>
                     ⋮
                   </button>
-                  {openMenuId === b.clientID && (
+                  {openMenuId === b.vendorID && (
                     <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
-                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/servicesBookings/serviceDetails/${b.serviceID}`)}>View client profile</li>
-                      <li className={styles.dropdownItem} style={{color:"#2ED074"}} onClick={() => openModal(<ApproveListings id={b.serviceID} />)}>Message client</li>
-                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/servicesBookings/orderHistory?id=${b.serviceID}`)}>View order history</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<AdminVendorMessage id={b.vendorId} />)}>Deactivate client</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<DeactivateListings id={b.serviceID} />)}>Delete client</li>
+                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/userManagement/${b.vendorID}`)}>View vendor information</li>
+                      <li className={styles.dropdownItem} style={{color:"#2ED074"}} onClick={() => openModal(<ApproveVendor vName={b.vendorName} bName={b.businessName} date={b.dateRegistered} status={b.subscriptionStatus} id={b.vendorID} />)}>Approve vendor</li>
+                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/servicesBookings/orderHistory?id=${b.serviceID}`)}>View booking history</li>
+                      <li className={styles.dropdownItem} onClick={() => openModal(<DeactivateListings id={b.serviceID} />)}>View conversations</li>
+                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/servicesBookings/orderHistory?id=${b.serviceID}`)}>Export vendor report (.pdf)</li>
+                      <li className={styles.dropdownItem} onClick={() => openModal(<SuspendVendor id={b.vendorID} />)}>Suspend vendor</li>
+                      <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => openModal(<DeleteVendor id={b.vendorID} />)}>Delete vendor</li>
                     </div>
                   )}
                 </td>

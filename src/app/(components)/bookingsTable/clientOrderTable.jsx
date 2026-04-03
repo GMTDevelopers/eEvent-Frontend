@@ -5,7 +5,7 @@ import styles from "./BookingsTable.module.css";
 
 
 
-export default function VendorOrderTable({ bookings = [] }) {
+export default function ClientOrderTable({ bookings = [] }) {
   const data = bookings||[]
   console.log ('order table', data)
 
@@ -18,7 +18,7 @@ export default function VendorOrderTable({ bookings = [] }) {
           <thead>
             <tr>
               <th>Booking ID</th>
-              <th>Client name</th>
+              <th>Vendor name</th>
               <th>Service booked</th>
               <th>Date booked</th>
               <th>Amount paid</th>
@@ -29,7 +29,7 @@ export default function VendorOrderTable({ bookings = [] }) {
             {data?.length !==0 && data?.map((b,index) => (
               <tr className={styles.dataRow} key={index} >
                 <td>{b.bookingId || b.bookingID}</td>
-                <td>{b.clientName}</td>
+                <td>{b.vendorName}</td>
                 <td>{b.serviceBooked}</td>
                 <td>{new Date(b.dateBooked).toDateString() === 'Invalid Date' ? b.dateBooked: new Date(b.dateBooked).toDateString()}</td>
                 <td className={styles.amount}>₦{b.amountPaid.toLocaleString()}</td>

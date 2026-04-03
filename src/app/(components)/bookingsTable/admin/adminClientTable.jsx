@@ -2,22 +2,25 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./BookingsTable.module.css";
+import styles from "../BookingsTable.module.css";
 import { useRouter } from "next/navigation";
-import { useModal } from "../ModalProvider/ModalProvider";
-import ApproveListings from "../adminServiceListing/approve";
-import AdminVendorMessage from "../message/adminVendorMessage";
-import DeactivateListings from "../adminServiceListing/deactivate";
+import { useModal } from "../../ModalProvider/ModalProvider";
+import ApproveListings from "../../adminServiceListing/approve";
+import AdminVendorMessage from "../../message/adminVendorMessage";
+import DeactivateListings from "../../adminServiceListing/deactivate";
+import DeactivateClient from "../../adminDeactivateClient/deactivate";
+import DeleteClient from "../../adminDeleteClient/delete";
 
 
-export default function AdminServiceTable({ bookings = [] }) {
+
+export default function AdminClientTable({ bookings = [] }) {
   const router = useRouter();
   const [openMenuId, setOpenMenuId] = useState(null);
   const { openModal } = useModal();
   const toggleMenu = (id) => {
     setOpenMenuId(openMenuId === id ? null : id);
   };
-  const data = bookings.data.data||[]
+  const data = bookings.data||[]
   const closeMenu = () => setOpenMenuId(null);
 
   return (
@@ -27,41 +30,43 @@ export default function AdminServiceTable({ bookings = [] }) {
         <table style={{fontSize:"13px"}} className={styles.table}>
           <thead>
             <tr>
-              <th>Service ID</th>
-              <th>Vendor name</th>
-              <th>Service</th> 
-              <th>Category</th>
-              <th>Date added</th>
+              <th>Client ID</th>
+              <th>Client name</th>
+              <th>Phone number</th> 
+              <th>Date registered</th>
+              <th>Last order</th>
+              <th>Total payment</th>
               <th>Total orders</th>
-              <th>Status</th>      
+              <th>Account status</th>      
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {data?.length !==0 && data.map((b,index) => (
               <tr className={styles.dataRow} key={index} >
-                <td onClick={closeMenu}>{b.serviceID}</td>
-                <td onClick={closeMenu}>{b.vendorName}</td>
-                <td onClick={closeMenu}>{b.service}</td>
-                <td onClick={closeMenu}>{b.category}</td>
-                <td onClick={closeMenu}>{new Date(b.dateAdded).toLocaleDateString()}</td>
-                <td onClick={closeMenu} className={styles.amount}>{b.totalOrders}</td>
+                <td onClick={closeMenu}>{b?.clientID}</td>
+                <td onClick={closeMenu}>{b?.clientName}</td>
+                <td onClick={closeMenu}>{b?.phoneNumber}</td>
+                <td onClick={closeMenu}>{new Date(b?.dateRegistered).toLocaleDateString()}</td>
+                <td onClick={closeMenu}>{new Date(b?.lastOrder).toLocaleDateString()}</td>
+                <td onClick={closeMenu} className={styles.amount}>{b?.totalPayment}</td>
+                <td onClick={closeMenu}>{b?.totalOrders}</td>
                 <td onClick={closeMenu}> 
-                  <span className={`${styles.status} ${styles[b.status.toLowerCase()]}`}>
-                    {b.status.toLowerCase()}
+                  <span className={`${styles.status} ${styles[b?.accountStatus.toLowerCase()]}`}>
+                    {b?.accountStatus.toLowerCase()}
                   </span>
                 </td>
                 <td className={styles.actionCell}>
-                  <button onClick={() => toggleMenu(b.serviceID)} className={styles.dotsBtn}>
+                  <button onClick={() => toggleMenu(b.clientID)} className={styles.dotsBtn}>
                     ⋮
                   </button>
-                  {openMenuId === b.serviceID && (
+                  {openMenuId === b.clientID && (
                     <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
-                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/servicesBookings/serviceDetails/${b.serviceID}`)}>View service listing</li>
-                      <li className={styles.dropdownItem} style={{color:"#2ED074"}} onClick={() => openModal(<ApproveListings id={b.serviceID} />)}>Approve service listing</li>
-                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/servicesBookings/orderHistory?id=${b.serviceID}`)}>View booking history</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<AdminVendorMessage id={b.vendorId} />)}>Message vendor</li>
-                      <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => openModal(<DeactivateListings id={b.serviceID} />)} >Deactivate listing</li>
+                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/userManagement/clientDetails/${b.clientID}`)}>View client profile</li>
+                      <li className={styles.dropdownItem} style={{color:"#2ED074"}} onClick={() => openModal(<ApproveListings id={b.serviceID} />)}>Message client</li>
+                      <li className={styles.dropdownItem} onClick={() => router.push(`/admin/userManagement/clientDetails/${b.clientID}/orderHistory`)}>View order history</li>
+                      <li className={styles.dropdownItem} onClick={() => openModal(<DeactivateClient id={b.clientID} />)}>Deactivate client</li>
+                      <li className={styles.dropdownItem} onClick={() => openModal(<DeleteClient id={b.clientID} />)}>Delete client</li>
                     </div>
                   )}
                 </td>
