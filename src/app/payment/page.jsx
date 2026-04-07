@@ -7,7 +7,7 @@ export default function PaymentCallback() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    const [status, setStatus] = useState<'loading' | 'success' | 'failed'>('loading');
+    const [status, setStatus] = useState('loading');
     const [message, setMessage] = useState('');
 
     useEffect(() => {
