@@ -32,15 +32,12 @@ export default function PaymentCallback() {
                 return;
             }
 
-            const res = await fetch(`https://eevents-srvx.onrender.com/v1/payments/verify/${reference}`, {
+            const res = await fetch(`https://eevents-srvx.onrender.com/v1/payments/verify/${reference}?gateway=paystack`, {
                 method: "POST",                    // ← Use POST as per your API docs
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    gateway: "paystack"
-                }),
+                }
             });
 
             const result = await res.json();
