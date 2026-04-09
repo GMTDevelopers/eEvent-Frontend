@@ -159,9 +159,9 @@ const BookVendor = () => {
                             Authorization: `Bearer ${token}`
                         },
                         body: JSON.stringify({
-                           "paymentType": "BOOKING",
-                            "entityId": result.data.bookingId,
-                            "paymentOption": "FULL",
+                            paymentType: "BOOKING",
+                            entityId: result.data.bookingId,
+                            paymentOption: "FULL",
                             gateway: "paystack"
                         }),
                     });
@@ -173,11 +173,11 @@ const BookVendor = () => {
                         throw new Error(initResult.message || "Failed to initialize payment");
                         
                     }
-
+                    console.log("payment init", initResult )
                     // Paystack returns { status: true, data: { authorization_url, access_code, reference } }
-                    if (initResult.data?.authorization_url) {
+                    if (initResult.data?.url) {
                         // Redirect user to Paystack checkout
-                        window.location.href = initResult.data.authorization_url;
+                        window.location.href = initResult.data.url;
                     } else {
                         throw new Error("No authorization URL received");
                     }
