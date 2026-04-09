@@ -42,7 +42,7 @@ export default function PaymentCallback() {
 
             const result = await res.json();
             console.log("verify payment result", result)
-            if (res.ok && result.status === true && result.data?.status === "success") {
+            if (res.ok && result.status === "success" && result.data?.status === "success") {
                 setStatus('success');
                 setMessage("Payment successful! Your booking has been confirmed.");
 
