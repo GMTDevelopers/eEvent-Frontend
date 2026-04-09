@@ -21,6 +21,7 @@ export default function PaymentCallback() {
         console.log("payment refrence", reference)
         // Call your backend to verify the payment and complete the booking
         verifyPayment(reference);
+        getPayDet(reference)
     }, [searchParams]);
 
     const verifyPayment = async (reference) => {
@@ -32,8 +33,7 @@ export default function PaymentCallback() {
                 return;
             }
 
-            const res = await fetch(`https://eevents-srvx.onrender.com/v1/payments/verify/${reference}?gateway=paystack`, {
-                method: "POST",                    // ← Use POST as per your API docs
+            const res = await fetch(`https://eevents-srvx.onrender.com/v1/payments/verify/${reference}?gateway=paystack`, {                    // ← Use POST as per your API docs
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
@@ -49,7 +49,7 @@ export default function PaymentCallback() {
                 // Optional: redirect to success page after 2-3 seconds
                 setTimeout(() => {
                     router.back();   // or /dashboard, /my-bookings etc.
-                }, 2500);
+                }, 7500);
             } else {
                 setStatus('failed');
                 setMessage(result.message || "Payment verification failed.");
@@ -58,6 +58,31 @@ export default function PaymentCallback() {
             console.error(err);
             setStatus('failed');
             setMessage("Something went wrong while verifying your payment.");
+        }
+    };
+    const getPayDet = async (reference) => {
+        try {
+            const token = localStorage.getItem("access_token");
+            if (!token) {
+                setStatus('failed');
+                setMessage("You are not logged in.");
+                return;
+            }
+
+            const res = await fetch(`https://eevents-srvx.onrender.com/v1/payments/transactions/${reference}`, {                    // ← Use POST as per your API docs
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const result = await res.json();
+            console.log("payment details", result )
+
+        } catch (err) {
+            console.error(err);
+            setStatus('failed');
+            setMessage("could not get payment details.");
         }
     };
 
