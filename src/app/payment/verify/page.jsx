@@ -11,14 +11,14 @@ export default function PaymentCallback() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        const reference = searchParams.get('reference') || searchParams.get('trxref');
+        const reference = searchParams?.get('reference') || searchParams?.get('trxref');
 
         if (!reference) {
             setStatus('failed');
             setMessage('No payment reference found.');
             return;
         }
-
+        console.log("payment refrence", reference)
         // Call your backend to verify the payment and complete the booking
         verifyPayment(reference);
     }, [searchParams]);
@@ -38,6 +38,9 @@ export default function PaymentCallback() {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 },
+                body: JSON.stringify({
+                    gateway: "paystack"
+                }),
             });
 
             const result = await res.json();

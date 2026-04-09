@@ -174,7 +174,7 @@ const BookVendor = () => {
                         
                     }
                     console.log("payment init", initResult )
-                    // Paystack returns { status: true, data: { authorization_url, access_code, reference } }
+                    // Paystack returns { status: true, data: { url, access_code, reference } }
                     if (initResult.data?.url) {
                         // Redirect user to Paystack checkout
                         window.location.href = initResult.data.url;
