@@ -17,7 +17,10 @@ const VerificationStep = ({ formData, updateFormData, errors }) => {
             <div>
                 Means of identification
                 <select name="idType" value={formData.idType} onChange={handleChange}>
-                <option value="National ID">National ID</option>
+                    <option value=""> select means of identification</option>
+                    <option value="NATIONAL_ID">National ID</option>
+                    <option value="PASSPORT">Passport</option>
+                    <option value="DRIVER_LICENSE">Driver License</option>
                 {/* Add more options */}
                 </select>
                 {errors.idType && <p className={styles.error}>{errors.idType}</p>}

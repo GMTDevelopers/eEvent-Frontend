@@ -159,12 +159,9 @@ const BookVendor = () => {
                             Authorization: `Bearer ${token}`
                         },
                         body: JSON.stringify({
-                            email: "olamademuyiwa@gmail.com" ,           // logedInUser?.data?.email ← Get this from user profile / form
-                            amount: Math.round(total * 100),     // Paystack expects amount in kobo (smallest unit)
-                            callbackUrl: `${window.location.origin}/payment`,  // Important: must be publicly accessible
-                            metadata: {
-                                bookingId: result.data.bookingId,        // Send full booking details here
-                            },
+                           "paymentType": "BOOKING",
+                            "entityId": result.data.bookingId,
+                            "paymentOption": "FULL",
                             gateway: "paystack"
                         }),
                     });

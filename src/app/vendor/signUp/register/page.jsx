@@ -43,7 +43,7 @@ const VendorRegistration = () => {
     address: '',
     country: 'Nigeria',
     states: [],
-    idType: 'National ID',
+    idType: '',
     idNumber: '',
     idFile: null,
     businessFile: null,
@@ -196,10 +196,10 @@ const VendorRegistration = () => {
       },
       verification: {
         type: formData.idType,
-        maskedNumber: formData.idNumber,
+        number: formData.idNumber,
         image: idUrl,
       },
-      subscriptionId: [formData.subscriptionPlan],
+      subscriptionId: formData.subscriptionPlan,
     };
 
     console.log("FINAL PAYLOAD:", payload);
@@ -207,9 +207,10 @@ const VendorRegistration = () => {
     const res = await fetch("https://eevents-srvx.onrender.com/v1/vendors", {
       method: "POST",
       headers: {
+        "Content-Type": "application/json" ,
         Authorization: `Bearer ${token}`,
       },
-      body: payload,
+      body: JSON.stringify(payload),
     });
 
     const result = await res.json();
