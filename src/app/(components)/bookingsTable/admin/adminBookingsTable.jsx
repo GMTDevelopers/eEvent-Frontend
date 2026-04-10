@@ -122,7 +122,7 @@ export default function AdminBookingsTable({ bookings = [] }) {
                       <li className={styles.dropdownItem} onClick={() => clientComplete(b.id)}>Request client to mark complete</li>
                       <li className={styles.dropdownItem} onClick={() => vendorComplete(b.id)}>Request vendor to mark complete</li>
                       <li className={styles.dropdownItem} style={ {color: b.rescheduleReason==="N/A" ? "" : "#82027D"}} onClick={() => openModal(<ManageReschedule rescheduleReason={b.rescheduleReason} id={b.id} cStatus={b.clientStatus} vStatus={b.vendorStatus}/>)}>Manage reschedule request </li>
-                      <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => openModal(<ManageCancle rescheduleReason={b.rescheduleReason} id={b.id} cStatus={b.clientStatus} vStatus={b.vendorStatus}/>)} >Manage cancel request</li>
+                      <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => openModal(<ManageCancle rescheduleReason={b.rescheduleReason} bookingId={b.bookingId} id={b.id} cStatus={b.clientStatus} vStatus={b.vendorStatus}/>)} >Manage cancel request</li>
                     </div>
                   )}
                 </td>

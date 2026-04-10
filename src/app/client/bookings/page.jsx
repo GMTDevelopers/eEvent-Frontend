@@ -18,7 +18,7 @@ const Bookings = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(null);
     const [totalPages, setTotalPages] = useState(0);
-    const ITEMS_PER_PAGE = 15;
+    const TAKE = 10;
 
   // Load data once
     useEffect(() => {
@@ -28,16 +28,22 @@ const Bookings = () => {
             openModal(<SignIn />)
             return;
         }
-        const getBookings = () => {
-        
-            fetch("https://eevents-srvx.onrender.com/v1/client/bookings?skip=0&take=10",{
+        const getBookings = (page = 1) => {
+            const skip = (page - 1) * TAKE;
+            const query = new URLSearchParams({
+                skip,
+                take: TAKE,
+            });
+            fetch(`https://eevents-srvx.onrender.com/v1/client/bookings?${query.toString()}`,{
                 headers:{
                     authorization: `Bearer ${token}`,
                 },
             })
             .then((res) => res.json())
             .then((data) => {
-                setAllData(data);
+                setAllData(data || []);
+                const { total, take } = data.data.meta || {};
+                setTotalPages(total/take || 0);
             }) 
 
             .catch((error) => console.error("Error fetching data:", error));
@@ -58,10 +64,17 @@ const Bookings = () => {
             .catch((error) => console.error("Error fetching data:", error));
         }
         getStats()
-        getBookings()
+        getBookings(currentPage)
         setLoading(false);
 
-    }, []);
+    }, [currentPage]);
+
+    const handlePageChange = (page) => {
+        if (page !== currentPage) {
+            setCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
 
     const visibleData = allData.data;
 
@@ -84,10 +97,10 @@ const Bookings = () => {
             <div className="table">
                 <BookingsTable bookings={visibleData}/> 
                 <Pagination
-                    currentPage={currentPage}
+                    currentPage={currentPage} 
                     totalPages={totalPages}
-                    onPageChange={(page) => setCurrentPage(page)}
-                />             
+                    onPageChange={!loading ? handlePageChange : () => {}}
+                />        
             </div>
             
         </div>

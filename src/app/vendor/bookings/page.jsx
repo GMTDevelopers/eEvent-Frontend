@@ -7,16 +7,18 @@ import { CheckCheck, Loader, Minimize2, X } from 'lucide-react';
 import Pagination from '@/app/(components)/pagination/page';
 import { useEffect, useState } from 'react';
 import VendorBookingsTable from '@/app/(components)/bookingsTable/vendor/vendorBookingsTable';
+import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
+import SignIn from '@/app/navbar/(signIn)/signIn';
 
 
 
 const Bookings = () => {
-        
+    const { openModal } = useModal();
     const [allData, setAllData] = useState([]);        // ← Full dataset
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(null);
-    const ITEMS_PER_PAGE = 6;
+    const ITEMS_PER_PAGE = 15;
     
 
   // Load data once

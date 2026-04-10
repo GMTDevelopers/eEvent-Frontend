@@ -9,6 +9,7 @@ import Loading from '@/app/(components)/loading/loading';
 import SignIn from '@/app/navbar/(signIn)/signIn';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import { useAuth } from '@/app/contexts/AuthContext';
+import { ChevronLeft } from 'lucide-react';
 
 const BookVendor = () => {
     const [prod, setProd] = useState([]);  
@@ -195,78 +196,6 @@ const BookVendor = () => {
             throw err;
         }
     }
-/* 
-    async function handleSubmit(formData){
-        const data = {
-            vendorId: prod.vendorId,
-            serviceId: prod.serviceId,
-            eventType: formData.get('eventType'),
-            eventTitle: formData.get('eventTitle'),
-            eventDate: toBackendISO(formData.get('eventDate')),
-            eventTime: formData.get('eventTime'),
-            eventDuration: Number(formData.get('eventDuration') || 1),
-            eventLocation: formData.get('eventLocation'),
-          serviceType: formData.get('serviceType'), 
-            unitPrice: servicePrice,
-            unitsNeeded: Number(formData.get('unitsNeeded') || 1),
-            additionalServices:[{
-                name: formData.get('additionalService'),
-                quantity: Number(formData.get('addQuantity') || 0)
-            }],
-            preferredSetupDate: toBackendISO(formData.get('preferredSetupDate')),
-            preferredSetupTime: formData.get('preferredSetupTime'),
-            specialInstructions: formData.get('specialInstructions'),
-            contactPersonName: formData.get('contactPersonName'),
-            contactPersonPhone: formData.get('ContactPersonPhone'),
-           AltContactPersonPhone: formData.get('AltContactPersonPhone'),
-
-            totalCost: total
-        };
-        console.log(data)
-        try {
-            const token = localStorage.getItem("access_token");
-            if (!token) {
-                // storing form data in session before asking for signIn
-                const entries = Object.fromEntries(formData.entries());
-                sessionStorage.setItem("pendingBookingForm", JSON.stringify(entries));
-                // signIn
-                openModal(<SignIn />)
-                return;
-            }
-           
-            const bookingRes = await fetch("https://eevents-srvx.onrender.com/v1/bookings", {
-                method: "POST",
-                headers: { 
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify(data),
-            });
-
-           const result = await bookingRes.json();
-
-            if (!bookingRes.ok) {
-                throw {
-                    status: result.status,
-                    code: result.code ?? bookingRes.status,
-                    message: result.message,
-                    details: result.data ?? null,
-                };
-            }
-
-            // ✅ success handling (minimal, safe)
-            sessionStorage.removeItem("pendingBookingForm");
-            console.log("Booking successful:", result);
-            router.back(); 
-            return result;   
-                          
-
-        } catch (err) {
-            console.log(err)
-            throw err
-        }
-
-    } */
 
     if (loading) return <Loading text="Fetching service..." />
       
@@ -307,6 +236,7 @@ const BookVendor = () => {
                 </aside>
 
                 <section className={styles.mainSection}>
+                    <button onClick={() => router.back()} className="backBtn"><ChevronLeft /> go back </button>
                     <h2>Book Vendor- {prod.serviceName}</h2>
                     <form action={handleSubmit} className={bStyles.bookVendorForm}>
                         <select onChange={(e) => setEventType(e.target.value)} required name="eventType">

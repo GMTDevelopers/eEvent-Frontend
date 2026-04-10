@@ -15,7 +15,7 @@ const Contact = () => {
         const priority = formData.get("priority");
         try{
             const token = localStorage.getItem("access_token");
-            const contactRes = await fetch(`https://eevents-srvx.onrender.com/v1/client/support`, {
+            const contactRes = await fetch(`https://eevents-srvx.onrender.com/v1/vendors/support`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json" ,
@@ -50,7 +50,7 @@ const Contact = () => {
             <form className={styles.signInForm}>
                 <input style={{outline:"1px solid #636363"}} placeholder='subject' type='text' name='subject'/>
                 <textarea className={styles.contactTxt} placeholder='Type message here' name="contact" id="" />
-                <select style={{outline:"1px solid #636363"}} onChange={(e) => setPriority(e.target.value)} required name="eventType">
+                <select style={{outline:"1px solid #636363"}} onChange={(e) => setPriority(e.target.value)} required name="priority">
                     <option value="" selected hidden disabled>Priority</option>
                     <option value="LOW">LOW</option>
                     <option value="MEDIUM">MEDIUM</option>

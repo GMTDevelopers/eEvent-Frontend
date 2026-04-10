@@ -172,11 +172,13 @@ const UserManagement = () => {
     const handleVendorPageChange = (page) => {
         if (page !== vendorCurrentPage) {
             setVendorCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
     const handleClientPageChange = (page) => {
         if (page !== clientCurrentPage) {
             setClientCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 

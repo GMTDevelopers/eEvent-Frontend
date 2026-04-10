@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import styles from '../../navbar/(signIn)/signIn.module.css';
 import Styles from '../vendorReschedule/reschedule.module.css';
-const MarkComplete = () => {
+
+const MarkComplete = ({id}) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const handleSubmit = async (e) => {
+
+    const handleCompleteSubmit = async (e) => {
         console.log(id)
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -13,13 +15,13 @@ const MarkComplete = () => {
         try{
             const token = localStorage.getItem("access_token");
             if (complete === "COMPLETE"){
-                const completeRes = await fetch(`https://eevents-srvx.onrender.com/v1/vendors/bookings/${id}/request-completion`, {
-                    method: "PATCH",
+                const completeRes = await fetch(`https://eevents-srvx.onrender.com/v1/vendors/bookings/${id}/complete`, {
+                    method: "POST",
                     headers: { 
                         "Content-Type": "application/json" ,
                         authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify({id}),
+                 /*    body: JSON.stringify({id}), */
                 });
 
                 const Data  = await completeRes.json();
@@ -30,7 +32,13 @@ const MarkComplete = () => {
                         message: Data.message,
                     }
                 }
-                setSuccess(Data.message)
+                 if (Data.status === "success"){
+                    setSuccess(Data.message)
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 2500);
+                }
+                
                 console.log(Data)
             } else (
                 setError("Please type COMPLETE exactly to confirm.")
@@ -62,7 +70,7 @@ const MarkComplete = () => {
                     <p>Full Photography Coverage</p>
                 </li>
             </div>
-            <form onSubmit={handleSubmit} className={styles.signInForm}>
+            <form onSubmit={handleCompleteSubmit} className={styles.signInForm}>
                 <input placeholder='Type [COMPLETE]' type='text' name='typeComplete' />
                 {success && <p style={{color:"#2d9f35"}}>{success}</p>}
                 <button style={{backgroundColor:'#2ED074'}} type="submit">

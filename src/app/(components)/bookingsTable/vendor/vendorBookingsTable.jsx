@@ -51,12 +51,12 @@ export default function VendorBookingsTable({ bookings = [] }) {
                 <td onClick={closeMenu} className={styles.amount}>₦{b.amount.toLocaleString()}</td>
                 <td onClick={closeMenu}> 
                   <span className={`${styles.status} ${styles[b.paymentStatus.toLowerCase()]}`}>
-                    {b.paymentStatus}
+                    {b.paymentStatus.toLowerCase()}
                   </span>
                 </td>
                 <td onClick={closeMenu}> 
                   <span className={`${styles.status} ${styles[b.eventStatus.toLowerCase()]}`}>
-                    {b.eventStatus}
+                    {b.eventStatus.toLowerCase()}
                   </span>
                 </td>
                 <td className={styles.actionCell}>

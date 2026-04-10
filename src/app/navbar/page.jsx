@@ -49,7 +49,7 @@ const Navbar = () => {
                     <p className={Styles.welcome}>Welcome, {logedInUser.data.firstName}</p>    
                     <div className={Styles.userNavMenu}>
                         <ul>
-                           <Link href='/find-service' > <li onClick={() => setActiveTab('Favourites')} className={activeTab === "Favourites" ? Styles.active : ''} > <Heart className={Styles.icons}/> Favourites</li></Link>
+                           <Link href='/client/favourite' > <li onClick={() => setActiveTab('Favourites')} className={activeTab === "Favourites" ? Styles.active : ''} > <Heart className={Styles.icons}/> Favourites</li></Link>
                            <Link href='/client/bookings' > <li onClick={() => setActiveTab('Bookings')} className={activeTab === "Bookings" ? Styles.active : ''}><Check className={Styles.icons} /> My Bookings</li></Link>
                             <Link href='/client/message' > <li onClick={() => setActiveTab('Messages')} className={activeTab === "Messages" ? Styles.active : ''}><MessageCircleMore className={Styles.icons} /> Messages</li></Link>
                            <Link href='/client/settings' > <li onClick={() => setActiveTab('Account')} className={activeTab === "Account" ? Styles.active: ''}><Settings className={Styles.icons} />My Account</li></Link>

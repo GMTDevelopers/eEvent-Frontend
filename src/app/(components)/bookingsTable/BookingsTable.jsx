@@ -9,16 +9,57 @@ import Reschedule from "../reschedule/page";
 import Contact from "../Contact/pages";
 import Cancle from "../cancle/cancle";
 import Message from "../message/pages";
+import ActionComplete from "../requestSent/actionComplete";
+import ActionError from "../requestSent/actionError";
+import Loading from "../loading/loading";
 
 export default function BookingsTable({ bookings = {} }) {
   const router = useRouter();
   const [openMenuId, setOpenMenuId] = useState(null);
-  const { openModal } = useModal();
+  const [loading, setLoading] = useState(false)
+  const { openModal, closeModal } = useModal();
   const toggleMenu = (id) => {
     setOpenMenuId(openMenuId === id ? null : id);
   };
   const data = bookings.data||[]
   const closeMenu = () => setOpenMenuId(null);
+
+  const handleMarkComplete = (id) => {  
+    setLoading(true)
+    const requestBody = {
+      
+        status: "COMPLETED",
+        reason: "Vendor work finished",      
+    }
+    console.log(id) 
+    const token = localStorage.getItem("access_token");  
+    fetch(`https://eevents-srvx.onrender.com/v1/bookings/${id}/status`,{
+      method: "PATCH",
+      headers:{
+        "Content-Type": "application/json" ,
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(requestBody)
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      setLoading(false)
+      if(data.status === "success"){
+        openModal(<ActionComplete />)
+        setTimeout(() => {
+          closeModal()
+          window.location.reload()
+        }, 2500);
+      }
+      if(data.status !== "success"){
+        openModal(<ActionError />)
+        setTimeout(() => {
+          closeModal()
+        }, 1500);
+      }
+      console.log("stats data", data)
+    }) 
+  }
 
   console.log("this is data",data)
   return (
@@ -60,9 +101,13 @@ export default function BookingsTable({ bookings = {} }) {
                       ⋮
                     </button>
                     {openMenuId === b.bookingId && (
+                      loading ?
+                        <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
+                          <Loading />
+                        </div>  :
                       <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
                         <li className={styles.dropdownItem} onClick={() => router.push(`/client/bookings/${b.bookingId}`)}>View</li>
-                        <li style={{color:"#09A14A"}} className={styles.dropdownItem}>Mark completed</li>
+                        <li style={{color:"#09A14A"}} onClick={() => handleMarkComplete(b.bookingId)} className={styles.dropdownItem}>Mark completed</li>
                         <li className={styles.dropdownItem} onClick={() => openModal(<Message bookingId={b.bookingId} receiverId={b.vendorUserId} />)}>Message vendor</li>
                         <li className={styles.dropdownItem} onClick={() => openModal(<Reschedule id={b.bookingId} initDate={new Date(b.eventDate).toLocaleDateString()} />)}>Reschedule booking</li>
                         <li className={styles.dropdownItem} onClick={() => openModal(<Contact />)} >Contact support</li>

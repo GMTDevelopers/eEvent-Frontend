@@ -50,7 +50,7 @@ const BookingItem = /* async */ ({params}) => {
                         <aside className="aside">
                             <div className="vendor">
                                 <div className="vendorImgPack">
-                                    <img className="vendorImg" src={isData.vendorProfileImage} alt="vendor" />
+                                    <img className="vendorImg" src={isData.vendorProfileImage || "/images/defaultDP.jpg"} alt="vendor" />
                                 </div>
                                 
                                 <div className="vendorDetails">
@@ -81,7 +81,7 @@ const BookingItem = /* async */ ({params}) => {
                         </aside>
                         <section className="mainSection">
                             <h2>VENDOR BOOKING DETAILS </h2>
-                            <div style={{border:"1px solid #CFCFCF"}} className="descPack">
+                            <div className="descPack">
                                 <li className='vendorItem'>
                                     <p>Client Name</p>
                                     <p style={{color:"#222222", fontWeight:700}}>{isData.clientName}</p>
@@ -151,7 +151,7 @@ const BookingItem = /* async */ ({params}) => {
                                     <p style={{color:"#222222", fontWeight:700}}>{isData.bookingStatus}</p>
                                 </li>
                             </div>
-                            <div style={{border:"1px solid #CFCFCF"}} className="descPack">
+                            <div className="descPack">
                                 <p style={{color:"#222222", fontWeight:700}}>SERVICE ORDERED</p>
                                 
                                 <li className='vendorItem'>
@@ -167,14 +167,14 @@ const BookingItem = /* async */ ({params}) => {
                                 <br />
                                 <br />
                                 <p style={{color:"#222222", fontWeight:700}}>Additional Services</p>
-                                {isData?.AdditionalServices?.map((add)=>(
-                                    <li key={add.serviceName} className='vendorItem'>
-                                        <p>{add.serviceName}</p>
-                                        <p style={{color:"#222222", fontWeight:700}}>₦{add.serviceCost}</p>
+                                {isData?.additionalServices?.map((add)=>(
+                                    <li key={add.name} className='vendorItem'>
+                                        <p>{add.name}</p>
+                                        <p style={{color:"#222222", fontWeight:700}}>₦{add.price}</p>
                                     </li>
                                 ))}
                             </div>
-                            <div style={{border:"1px solid #CFCFCF"}} className="descPack">
+                            <div className="descPack">
                                 <li className='vendorItem'>
                                     <p style={{color:"#222222", fontWeight:700}}>Total Cost:</p>
                                     <p style={{color:"#222222", fontWeight:700}}>₦{isData.totalCost}</p>

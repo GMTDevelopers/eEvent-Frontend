@@ -119,11 +119,13 @@ const Overview = () => {
                         <div key={index} className={styles.activityItem}>
                             <div className={styles.name}>
                                 {act.type==="booking" && <div className={`${styles.icon} ${styles.purple}`}><Minimize2 /></div>}
+                                {act.type==="payment_notification" && <div className={`${styles.icon} ${styles.purple}`}><Minimize2 /></div>}
+                                {act.type==="completion_request" && <div className={`${styles.icon} ${styles.purple}`}><Minimize2 /></div>}
                                 {act.type==="confirmation" && <div className={`${styles.icon} ${styles.yellow}`}><Check /></div>}
                                 {act.type==="payment" && <div className={`${styles.icon} ${styles.green}`}><Banknote /></div>}
                                 {act.type==="completed" && <div className={`${styles.icon} ${styles.green}`}><Check /></div>}
                                 {act.type==="Subscription renewed successfully" && <div className={`${styles.icon} ${styles.green}`}><Loader/></div>}
-                                {act.type==="Booking Cancellation Request" && <div className={`${styles.icon} ${styles.red}`}><X /></div>}
+                                {act.type==="Booking Cancellation Request" || act.type=== "booking_rejected"  && <div className={`${styles.icon} ${styles.red}`}><X /></div>}
                                 <div>
                                     <p style={{fontWeight:700, color:"#222222"}}>{act.type}</p>
                                     <p style={{fontWeight:500, color:"#636363"}}>{act.description}</p>

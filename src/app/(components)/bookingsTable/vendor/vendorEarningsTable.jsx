@@ -5,20 +5,79 @@ import { useState } from "react";
 import styles from "../BookingsTable.module.css";
 import { useRouter } from "next/navigation";
 import { useModal } from "../../ModalProvider/ModalProvider";
-import Message from "../../message/pages";
-import Accept from "../../vendorReschedule/accept";
-import Reject from "../../vendorReschedule/reject";
+import ActionComplete from "../../requestSent/actionComplete";
+import ActionError from "../../requestSent/actionError";
+import Loading from "../../loading/loading";
+import Contact from "../../Contact/pages";
 
 export default function VendorEarningsTable({ bookings = [] }) {
   const router = useRouter();
   const [openMenuId, setOpenMenuId] = useState(null);
-  const { openModal } = useModal();
+  const [loading, setLoading] = useState(false)
+  const { openModal, closeModal } = useModal();
   const toggleMenu = (id) => {
     setOpenMenuId(openMenuId === id ? null : id);
   };
   const data = bookings||[]
   const closeMenu = () => setOpenMenuId(null);
 
+  const handleRequestComplete = (id) => {
+    setLoading(true)
+    const token = localStorage.getItem("access_token");  
+    fetch(`https://eevents-srvx.onrender.com/v1/vendors/bookings/${id}/request-completion`,{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json" ,
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      setLoading(false)
+      if(data.status === "success"){
+        openModal(<ActionComplete />)
+        setTimeout(() => {
+          closeModal()
+        }, 2500);
+      }
+      if(data.status !== "success"){
+        openModal(<ActionError />)
+        setTimeout(() => {
+          closeModal()
+        }, 1500);
+      }
+      console.log("request completion data", data)
+    }) 
+  }
+
+  const handleNotify = (id) => {
+    setLoading(true)
+    const token = localStorage.getItem("access_token");  
+    fetch(`https://eevents-srvx.onrender.com/v1/vendors/bookings/${id}/notify-admin-payment`,{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json" ,
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      setLoading(false)
+      if(data.status === "success"){
+        openModal(<ActionComplete />)
+        setTimeout(() => {
+          closeModal()
+        }, 2500);
+      }
+      if(data.status !== "success"){
+        openModal(<ActionError />)
+        setTimeout(() => {
+          closeModal()
+        }, 1500);
+      }
+      console.log("request completion data", data)
+    }) 
+  }
 
   return (
     <>
@@ -59,12 +118,16 @@ export default function VendorEarningsTable({ bookings = [] }) {
                     ⋮
                   </button>
                   {openMenuId === b.bookingID && (
-                    <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
-                      <li className={styles.dropdownItem} onClick={() => router.push(`/vendor/bookings/${b.bookingId}`)}>View</li>
-                      <li className={styles.dropdownItem} style={{color:"#2d9f35"}} onClick={() => openModal(<Accept id={b.bookingId}/>)}>Request client to mark complete</li>
-                      <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => openModal(<Reject id={b.bookingId} />)}>Notify admin for pending payment</li>
-                      <li className={styles.dropdownItem} onClick={() => openModal(<Message />)} >Contact support</li>
-                    </div>
+                     loading ?
+                        <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
+                          <Loading />
+                        </div>  :
+                      <div className={styles.dropdown} onClick={(e) => e.stopPropagation()}>
+                        <li className={styles.dropdownItem} onClick={() => router.push(`/vendor/bookings/${b.bookingID}`)}>View</li>
+                        <li className={styles.dropdownItem} style={{color:"#2d9f35"}} onClick={() => handleRequestComplete(b.bookingID) }>Request client to mark complete</li>
+                        <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => handleNotify(b.bookingID)}>Notify admin for pending payment</li>
+                        <li className={styles.dropdownItem} onClick={() => openModal(<Contact />)} >Contact support</li>
+                      </div>
                   )}
                 </td>
               </tr>

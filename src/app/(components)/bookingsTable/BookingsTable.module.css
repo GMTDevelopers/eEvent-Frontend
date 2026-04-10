@@ -106,6 +106,7 @@
 .pending    {color: #F0B502; }
 .upcoming   { color: #636363; }
 .completed  {color: #2ED074; }
+.fully_paid  {color: #2ED074; }
 .active  {color: #2ED074; }
 .amount { color: #636363; }
 .reshedule { color: #82027D; }

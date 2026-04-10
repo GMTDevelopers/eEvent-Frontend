@@ -186,11 +186,13 @@ const Payment = () => {
     const handleVendorPageChange = (page) => {
         if (page !== paymentCurrentPage) {
             setpaymentCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
     const handleClientPageChange = (page) => {
         if (page !== subCurrentPage) {
             setsubCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 

@@ -3,7 +3,7 @@ import styles from '../adminUpdateStatus/updatePayStatus.module.css';
 import Styles from '../vendorReschedule/reschedule.module.css';
 import SignIn from '@/app/navbar/(signIn)/signIn';
 import { useModal } from '../ModalProvider/ModalProvider';
-const ManageCancle = ({id, cStatus, vStatus, rescheduleReason}) => {
+const ManageCancle = ({id, bookingId, cStatus, vStatus, rescheduleReason}) => {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState('');
     const [success, setSuccess] = useState('');
@@ -48,13 +48,13 @@ const ManageCancle = ({id, cStatus, vStatus, rescheduleReason}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const action = formData.get("rescheduleRequest");
+        const action = formData.get("cancleRequest");
 
         console.log(action)
         try{
             const token = localStorage.getItem("access_token");
 
-                const Res = await fetch(`https://eevents-srvx.onrender.com/v1/admin/bookings/${id}/manage-reschedule`, {
+                const Res = await fetch(`https://eevents-srvx.onrender.com/v1/admin/bookings/${bookingId}/manage-cancel`, {
                     method: "PATCH",
                     headers: { 
                         "Content-Type": "application/json" ,
@@ -66,8 +66,11 @@ const ManageCancle = ({id, cStatus, vStatus, rescheduleReason}) => {
                 const Data  = await Res.json();
                 setSuccess(Data.message)
                 if (Res.ok){
-                    closeModal(); 
-                    router.refresh();
+                    setTimeout(() => {
+                        closeModal()
+                        window.location.reload()
+                    }, 5500);
+                
                 }
                 
                 
@@ -123,6 +126,7 @@ const ManageCancle = ({id, cStatus, vStatus, rescheduleReason}) => {
                              
                 </select>
                  {success && <p style={{color:"#2d9f35"}}>{success}</p>}
+                 {error && <p style={{color:"#2d9f35"}}>{error}</p>}
                 <button type="submit"> Update status </button>
             </form>
             

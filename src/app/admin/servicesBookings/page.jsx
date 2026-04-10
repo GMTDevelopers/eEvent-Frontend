@@ -194,11 +194,13 @@ const ServiceBooking = () => {
     const handleServicePageChange = (page) => {
         if (page !== serviceCurrentPage) {
             setServiceCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
     const handleTicketPageChange = (page) => {
         if (page !== ticketCurrentPage) {
             setTicketCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
     console.log(activeTab,serviceCurrentPage)

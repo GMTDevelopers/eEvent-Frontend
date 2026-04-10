@@ -9,6 +9,8 @@ import Message from '@/app/(components)/message/pages';
 import Contact from '@/app/(components)/Contact/pages';
 import Loading from '@/app/(components)/loading/loading';
 import { useAuth } from '@/app/contexts/AuthContext';
+import VendorReject from '@/app/(components)/VendorRejectBooking/page';
+import SignIn from '@/app/navbar/(signIn)/signIn';
 /* import VendorReject from '@/app/(components)/vendorRejectBooking/page'; */
 const BookingItem = /* async */ ({params}) => {
     const router = useRouter();
@@ -235,11 +237,11 @@ const BookingItem = /* async */ ({params}) => {
                             </div>
                             {/* When the Job has not been accepted yet? */}
                             <div className={styles.action}>
-                                <p style={{color:"#E50909", fontWeight:600}} /* onClick={() => openModal(<VendorReject />)} */>Reject  booking</p>
-                                <p style={{color:"#2ED074", fontWeight:600}} onClick={() => openModal(<Accept />)}>Accept booking</p>
+                                <p style={{color:"#E50909", fontWeight:600}} onClick={() => openModal(<VendorReject id={isData.bookingId} />)}>Reject  booking</p>
+                                <p style={{color:"#2ED074", fontWeight:600}} onClick={() => openModal(<Accept id={isData.bookingId} />)}>Accept booking</p>
                             </div>
                             
-                            {/*After the job has been accepted */}
+                           {/*  
                             <div className={styles.CTABtn}>
                                 <p><Download /> Export PDF</p>
                                 <div>
@@ -247,7 +249,7 @@ const BookingItem = /* async */ ({params}) => {
                                     <p>Mark completed</p>
                                     <p onClick={() => openModal(<Contact />)}>Contact support</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </section>
                     </div>
                     
