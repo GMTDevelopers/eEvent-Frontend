@@ -1,3 +1,4 @@
+'use client'
 import styles from '../../navbar/(signIn)/signIn.module.css';
 import { useState } from 'react';
 
