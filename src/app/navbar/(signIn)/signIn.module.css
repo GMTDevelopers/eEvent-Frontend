@@ -37,6 +37,16 @@
     border: 1px solid #ddd;
     outline: none;
 }
+.select{
+    width: 100%;
+    height: 56px;
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: 1px solid #CFCFCF;
+    outline: none;
+    color:#6d6c6c;
+}
+
 .forgotPassword{
     text-align: right;
     color:#636363c4;

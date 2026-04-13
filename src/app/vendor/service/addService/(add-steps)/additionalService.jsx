@@ -1,128 +1,203 @@
-"use client";
+'use client';
 import { Minus, Plus } from 'lucide-react';
 import styles from './steps.module.css';
 import xStyles from '@/app/vendor/service/addService/addService.module.css';
-/* import xStyles from './addService.module.css' */
-import { useState } from "react";
 
 const AdditionalService = ({ formData, updateFormData, errors }) => {
 
-    const [features, setFeatures] = useState([
-        { title: "", description: "", price: "" },
-    ]);
+    // Ensure additionalService object exists with default structure
+    const additionalServiceData = formData.additionalService || {
+        additionalService: true,
+        services: []
+    };
 
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-
-    // ADD FEATURE
+    // Add new additional service
     const addServiceFeature = () => {
-        setFeatures([...features, { title: "", description: "", price: "" }]);
+        const currentServices = additionalServiceData.services || [];
+        
+        updateFormData({
+            additionalService: {
+                ...additionalServiceData,
+                services: [
+                    ...currentServices,
+                    { title: '', description: '', unitPrice: '' }
+                ]
+            }
+        });
     };
 
-    // REMOVE FEATURE
+    // Remove additional service
     const removeServiceFeature = (index) => {
-        const updatedFeatures = features.filter((_, i) => i !== index);
-        setFeatures(updatedFeatures);
+        const currentServices = additionalServiceData.services || [];
+        const updatedServices = currentServices.filter((_, i) => i !== index);
+
+        updateFormData({
+            additionalService: {
+                ...additionalServiceData,
+                services: updatedServices
+            }
+        });
     };
 
-    // HANDLE INPUT CHANGE
+    // Handle input changes for title, description, unitPrice
     const handleChange = (index, field, value) => {
-        const updatedFeatures = [...features];
-        updatedFeatures[index][field] = value;
-        setFeatures(updatedFeatures);
+        const currentServices = additionalServiceData.services || [];
+        const updatedServices = [...currentServices];
+        updatedServices[index][field] = value;
+
+        updateFormData({
+            additionalService: {
+                ...additionalServiceData,
+                services: updatedServices
+            }
+        });
     };
 
-    // VALIDATION
-    const validateFeatures = () => {
-        for (let i = 0; i < features.length; i++) {
-            if (!features[i].title.trim()) {
-                return `Feature ${i + 1} title is required`;
+    // Handle Yes/No select (boolean)
+    const handleAdditionalServiceToggle = (e) => {
+        const isEnabled = e.target.value === "Yes";   // "Yes" → true, "No" → false
+
+        updateFormData({
+            additionalService: {
+                additionalService: isEnabled,
+                services: additionalServiceData.services || []
             }
-            if (!features[i].description.trim()) {
-                return `Feature ${i + 1} description is required`;
-            }
-            if (!features[i].price.trim()) {
-                return `Feature ${i + 1} unit price is required`;
-            }
-        }
-        return null;
+        });
     };
 
-    // SUBMIT TO API
-    const submitFeatures = async () => {
-        setError("");
-        const validationError = validateFeatures();
-        if (validationError) {
-            setError(validationError);
-            return;
-        }
-
-        setLoading(true);
-
-        try {
-            const res = await fetch("https://your-backend-api.com/service-features", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    features, // send array directly
-                }),
-            });
-
-            if (!res.ok) {
-                throw new Error("Failed to submit service features");
-            }
-
-            // OPTIONAL: clear form after success
-            setFeatures([{ title: "", description: "", price: "" }]);
-
-        } catch (err) {
-            setError(err.message || "Something went wrong");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-
-    return ( 
+    return (
         <div>
+            <div className={styles.formDescription}>
+                <p style={{fontWeight:700}}>ADDITIONAL SERVICES</p>
+                <p>PLEASE NOTE: This section is where you can indicate any extra or complementary services you offer alongside your main service...</p>
+            </div>
+
+            <div>
+                <div className={xStyles.addForm}>
+                    
+                    {/* Yes / No Select */}
+                    <select 
+                        value={additionalServiceData.additionalService ? "Yes" : "No"}
+                        onChange={handleAdditionalServiceToggle}
+                        required
+                    >
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+
+                    {/* Dynamic Additional Services List */}
+                    {additionalServiceData.services.map((feature, index) => (
+                        <div className={styles.stepsFormPack} key={index}>
+                            <div className={styles.addServiceHeader}>
+                                <h4>ADDITIONAL SERVICE {index + 1}</h4>
+                                {additionalServiceData.services.length > 1 && (
+                                    <div className='icon' onClick={() => removeServiceFeature(index)}>
+                                        <Minus className='icon' />
+                                    </div>
+                                )}
+                            </div>
+
+                            <input 
+                                type="text" 
+                                placeholder="Service title" 
+                                value={feature.title || ''} 
+                                onChange={(e) => handleChange(index, "title", e.target.value)} 
+                            />
+
+                            <textarea 
+                                placeholder="Service description" 
+                                value={feature.description || ''} 
+                                onChange={(e) => handleChange(index, "description", e.target.value)} 
+                            />
+
+                            <input 
+                                type="text" 
+                                placeholder="Unit price" 
+                                value={feature.unitPrice || ''} 
+                                onChange={(e) => handleChange(index, "unitPrice", e.target.value)} 
+                            />
+                        </div>
+                    ))}
+
+                    <div 
+                        className={`btnCapsule ${styles.addServiceBtn}`} 
+                        onClick={addServiceFeature}
+                    >
+                        <Plus /> Add another service
+                    </div>
+                </div>
+            </div>
+
+            {errors?.additionalService && <p>{errors.additionalService}</p>}
+        </div>
+    );
+};
+
+export default AdditionalService;
+
+/* 'use client';
+import { Minus, Plus } from 'lucide-react';
+import styles from './steps.module.css';
+import xStyles from '@/app/vendor/service/addService/addService.module.css';
+
+const AdditionalService = ({ formData, updateFormData, errors }) => {
+        console.log(errors)
+    const addServiceFeature = () => {
+        updateFormData({
+            additionalService: {
+                services: [
+                    
+                    { title: '', description: '', unitPrice: '' }
+                ]
+            }
+        });
+    };
+
+    const removeServiceFeature = (index) => {
+        const updated = formData.additionalService.services.filter((_, i) => i !== index);
+        updateFormData({ additionalService:{services: updated}  });
+    };
+
+    const handleChange = (index, field, value) => {
+        const updated = [...formData.additionalService.services];
+        updated[index][field] = value;
+        updateFormData({ additionalService:{services: updated}  });
+    };
+
+    return (
+       <div>
             <div className={styles.formDescription}>
                 <p style={{fontWeight:700}}>ADDITIONAL SERVICES</p>
                 <p >PLEASE NOTE: This section is where you can indicate any extra or complementary services you offer alongside your main service. These could include related add-ons that enhance the client’s overall event experience. Listing additional services helps clients see the full scope of what you offer and increases your chances of getting booked for multiple services at once.</p>
             </div>
             <div >
                 <div className={xStyles.addForm}>
-                    <select /* value={eventDuration}  onChange={(e) => setEventDuration(e.target.value)} */ required name="eventDuration">
+                    <select required name="eventDuration">
                         <option className={xStyles.option} value="" selected>Yes</option>
                         <option className={xStyles.option} value="1-3">No</option>
                     </select>
-                    {features.map((feature, index) => (
+                    {formData.additionalService.services.map((feature, index) => (
                         <div className={styles.stepsFormPack} key={index}>
                             <div className={styles.addServiceHeader}>
                                 <h4>ADDITIONAL SERVICE  {index + 1}</h4>
-                                {features.length > 1 && (
+                                {formData.additionalService.services.length > 1 && (
                                     <div className='icon' onClick={() => removeServiceFeature(index)}> <Minus className='icon' /> </div>
                                 )}
                             </div>                        
                             <input name='ServiceTitle' type="text" placeholder="Service title" value={feature.title} onChange={(e) => handleChange(index, "title", e.target.value)} />
                             <textarea name='ServiceDescription' placeholder="Service description" value={feature.description} onChange={(e) => handleChange(index, "description", e.target.value)} />
-                            <input name='ServicePrice' type="text" placeholder="Unit price" value={feature.price} onChange={(e) => handleChange(index, "price", e.target.value)} />
+                            <input name='ServicePrice' type="text" placeholder="Unit price" value={feature.unitPrice} onChange={(e) => handleChange(index, "unitPrice", e.target.value)} />
                             
                         </div>
                     ))}
 
-                    {error && <p>{error}</p>}
-
                     <div className={`btnCapsule ${styles.addServiceBtn}`} onClick={addServiceFeature}> <Plus />  Add another service </div>
+                        
                 </div>
-                {/* <button onClick={submitFeatures} disabled={loading}>
-                    {loading ? "Submitting..." : "Submit"}
-                </button> */}
             </div>
-
+                
         </div>
     );
 }
- 
-export default AdditionalService;
+
+export default AdditionalService; */

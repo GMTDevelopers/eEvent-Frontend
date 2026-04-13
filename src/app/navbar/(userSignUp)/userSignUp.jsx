@@ -22,12 +22,13 @@ const UserSignUp = () => {
         const lastName = formData.get("lastName");
         const firstName = formData.get("firstName");
         const middleName = formData.get("middleName");
+        const role = [formData.get("roles")];
         const email = formData.get("email");
         const phone = formData.get("phone");
         const password = formData.get("password");
         setLoading(true)
         try{
-            const result = await signUp(username, password, phone, email, middleName, firstName, lastName); 
+            const result = await signUp(username, password, phone, email, middleName, firstName, lastName, role); 
             if (result.status==='success') {
                 openModal(<Confirmation />)
             }
@@ -62,8 +63,13 @@ const UserSignUp = () => {
                 <input placeholder="First name" name='firstName' type="text" />
                 <input placeholder="Other name" name='middleName' type="text" />
                 <input placeholder="Email address" name='email' type='email' />
+                <select className={styles.select} name="roles" >
+                    <option value="" disabled selected> User Role</option>
+                    <option value="CLIENT">Client</option>
+                    <option value="VENDOR">Vendor</option>
+                </select>
                 <input placeholder="Phone number" name='phone' type="tel" />
-                <input placeholder="Password" name='password' type="password" />
+                <input placeholder="Password" name='password' type="password" />                        
                 {/* <input placeholder="Confirm password" name='confirmPassword' type="password" /> */}
                 <p className='error'>{formError}</p>
                 <p className={styles.forgotPassword}>Forgot password?</p>

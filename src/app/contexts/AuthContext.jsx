@@ -158,13 +158,13 @@ export function AuthProvider({ children }) {
   };
 
 
-  const signUp = async (username, password, phone, email, middleName, firstName, lastName) => {
+  const signUp = async (username, password, phone, email, middleName, firstName, lastName, role) => {
 
     try {
       const signUpRes = await fetch("https://eevents-srvx.onrender.com/v1/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, phone, email, middleName, firstName, lastName}),
+        body: JSON.stringify({ username, password, phone, role, email, middleName, firstName, lastName}),
       });
 
       const data = await signUpRes.json();      
