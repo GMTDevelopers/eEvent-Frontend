@@ -1,9 +1,7 @@
-'use client'
-import { useEffect } from "react";
 
 const VerifyEmail = () => {
 
-    useEffect(() => {
+/*     useEffect(() => {
 
         const verifyMail = async () => {
             const query = new URLSearchParams({
@@ -29,7 +27,7 @@ const VerifyEmail = () => {
         };
 
         verifyMail();
-    }, []);
+    }, []); */
 
     return ( 
         <div>
