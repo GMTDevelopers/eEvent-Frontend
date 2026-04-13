@@ -1,11 +1,8 @@
+import { useEffect } from "react";
+
 const VerifyEmail = () => {
 
     useEffect(() => {
-        const token = localStorage.getItem("access_token");
-        if (!token) {
-            openModal(<SignIn />);
-            return;
-        }
 
         const verifyMail = async () => {
             const query = new URLSearchParams({
@@ -15,9 +12,6 @@ const VerifyEmail = () => {
             try {
                 setVendorLoading(true);
                 const response = await fetch(`https://eevents-srvx.onrender.com/v1/auth/verify?${query.toString()}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
                 });
 
                 if (response.ok) {
@@ -38,7 +32,7 @@ const VerifyEmail = () => {
 
     return ( 
         <div>
-
+            <h2>This is the email verification page</h2>
         </div>
     );
 }
