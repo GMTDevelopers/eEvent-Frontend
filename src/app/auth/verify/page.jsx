@@ -1,21 +1,22 @@
+'use client'
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const VerifyEmail = () => {
+    const searchParams = useSearchParams();
+    const verifyToken = searchParams.get('token'); 
 
-/*     useEffect(() => {
+    useEffect(() => {
 
         const verifyMail = async () => {
-            const query = new URLSearchParams({
-                skip,
-                take: TAKE,
-            });
             try {
                 setVendorLoading(true);
-                const response = await fetch(`https://eevents-srvx.onrender.com/v1/auth/verify?${query.toString()}`, {
+                const response = await fetch(`https://eevents-srvx.onrender.com/v1/auth/verify?${verifyToken.toString()}`, {
                 });
 
                 if (response.ok) {
                     const res = await response.json();
-                    setVendorData(res.data.business);
+                    console.log(res)
                 } else if (response.status === 401) {
                     refreshAccessToken();
                 }
@@ -27,7 +28,7 @@ const VerifyEmail = () => {
         };
 
         verifyMail();
-    }, []); */
+    }, []);
 
     return ( 
         <div>
