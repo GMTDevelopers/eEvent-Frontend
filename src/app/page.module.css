@@ -235,3 +235,30 @@
 .footer{
   margin-top: 107px;
 }
+
+@media (max-width: 1280px) {
+
+}
+@media (max-width: 768px) {
+  .featured{
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .header{
+    padding-left: 0%;
+    margin-bottom: 56px;
+  }
+  .headerTxt{
+    width: 90%;
+    height: 78%;
+    margin: auto auto;
+  }
+  .headerTxt p:first-child{
+    line-height: 55px;
+  }
+  .featured{
+    margin-top: 20px;
+  }
+}

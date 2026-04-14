@@ -38,14 +38,14 @@
    color: #82027D;
 }
 .prodImg{
-    width: 392px;
+    width: 100%;
+/*     width: 392px; */
     height: 205px;
     margin: auto auto;
     object-fit: cover;
 }
 .prodTitle{
     margin-top: 16px;
-
 }
 .star{
     width: 17px;
@@ -81,4 +81,32 @@
 }
 .prodPrice div{
     margin-top: 2px;
+    display: flex;
+    align-items: center;
+}
+
+
+@media (max-width: 1280px) {
+    .prodCard{
+        width: 376px;
+    }
+}
+@media (max-width: 1240px) {
+    .prodCard{
+        width: 100%;
+    }
+}
+@media (max-width: 1024px) {
+    .prodCard{
+        width: 100%;
+    }
+    .prodImg{
+        width: 100%;
+    }
+    .prodTitle{
+        height: 50px;
+    }
+    .rating{
+        font-size: 12px;
+    }
 }

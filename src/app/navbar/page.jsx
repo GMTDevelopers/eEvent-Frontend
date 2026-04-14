@@ -7,9 +7,10 @@ import { useState } from 'react';
 import SignIn from './(signIn)/signIn';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
-import { Banknote, Check, Heart, MessageCircleMore, Settings, SquareChartGantt, UserRoundCog } from 'lucide-react';
+import { Banknote, Check, Heart, Menu, MessageCircleMore, Settings, SquareChartGantt, UserRoundCog, X } from 'lucide-react';
 const Navbar = () => {
     const { openModal } = useModal();
+    const [menuOpen, setMenuOpen] = useState(false);
     const {logedInUser, logout, userType, admin} = useAuth()
     const [activeTab, setActiveTab] = useState()
     const router = useRouter()
@@ -20,23 +21,30 @@ const Navbar = () => {
         <>
             <div className={Styles.navbar}>
                 <Image className={Styles.navbarLogo} alt='nav logo' src="/images/logo.webp" width={114} height={29} />
-                <div className={Styles.navLinks}>
+                <div className={`${Styles.navLinks} ${menuOpen ? '' : Styles.showMenu}`}>
                     <ul>
                         <Link href='/'><li onClick={() => setActiveTab('Home')} className={activeTab === "Home" ? Styles.active : ''}>Home</li></Link> 
                         <Link href='/find-service'><li onClick={() => setActiveTab('findService')} className={activeTab === "findService" ? Styles.active : ''}>Find services</li></Link>
                         <li onClick={() => setActiveTab('HitWorks')} className={activeTab === "HitWorks" ? Styles.active : ''}>How it Works</li>
                         <Link href='/buy-tickets'><li onClick={() => setActiveTab('buyTickets')} className={activeTab === "buyTickets" ? Styles.active : ''}>Buy Tickets</li></Link>
                         <Link href='/terms-of-use'><li onClick={() => setActiveTab('ToUse')} className={activeTab === "ToUse" ? Styles.active : ''}>Terms of Use</li></Link>
-                    </ul>
+                    </ul>                    
                 </div>
+                
                 {
                     logedInUser ? 
                         <div className={Styles.navCta}>
+                            <div className={Styles.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
+                                {menuOpen ? <X /> : <Menu />}
+                            </div>
                             <div className="btnNoCapsule"><Link href='/vendor/signUp'>Become a Vendor</Link></div>
                             <p style={{cursor:"pointer"}} onClick={()=> {logout(); router.push('/')}}>logout</p>
                         </div>
                         :
                         <div className={Styles.navCta}>
+                            <div className={Styles.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
+                                {menuOpen ? <X /> : <Menu />}
+                            </div>
                             <div className="btnNoCapsule"><Link href='/vendor/signUp'>Become a Vendor</Link></div>
                             <div className="btnCapsule" onClick={() => openModal(<SignIn />)}> <span>Sign In</span></div>
                         </div>

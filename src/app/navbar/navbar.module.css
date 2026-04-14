@@ -3,10 +3,9 @@
     width: 95%;
     height: 106px;
     margin: auto auto;
-/*     border: 1px solid black; */
     justify-content: space-between;
     align-items: center;
-
+    position: relative;
 }
 .navbarLogo{
     width: 114px;
@@ -24,7 +23,7 @@
     color: #222222;
 }
 .navCta{
-    width: 20%;
+    width: 23%;
     display: flex;
     justify-content: space-between;
 }
@@ -75,4 +74,74 @@
 }
 .active{
     color: #82027D;
+}
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .navLinks{
+        width: 52%;
+    }
+    .navCta{
+        width: 25%;
+    }
+    .navCta div:last-child{
+        padding: 8px 16px;
+    }
+}
+@media (max-width: 875px) {
+    .navbar{
+        width: 95%;
+        height: 106px;
+        margin: auto auto;
+        align-items: center;
+        position: relative;
+    }
+    .navLinks{
+        position: absolute;
+        margin-left: 0px;
+        width: 40%;
+        padding: 10px 50px;
+        height: auto;
+        background: #fafafa;
+        display: flex;
+        justify-content: none;
+        transform: translate(0%, -20%);
+        top: 150;
+        right: 0%;
+        justify-content: right;
+        align-items: end;
+    }
+    .navLinks ul{
+        display: flex;
+        list-style-type: none;
+        font-size: 18px;
+        font-weight: 500;
+        color: #222222;
+        flex-direction: column;
+        padding-right: 0;
+        gap: 30px;
+        
+    }
+    .hamburger {
+        display: flex;
+        justify-content: right;
+        color: #82027d;
+    }
+    .showMenu{
+        display: none;
+    }
+    .navCta{
+        width: 45%;
+        align-items: center;
+    }
+}
+
+@media (max-width: 630px) {
+
+    .navCta{
+        width: 60%;
+    }
 }

@@ -25,3 +25,39 @@
     font-weight: 700;
     margin-top: 12px;
 }
+
+
+@media (max-width: 1280px) {
+    .categories{
+        overflow-x: auto;
+        gap: 1%;
+        scrollbar-width: none;       /* Firefox */
+        -ms-overflow-style: none; 
+    }
+    .cardImg{
+        width: 140px;
+        height: 140px;
+    }
+    .cardImg img{
+        width: 90%;
+        height: auto;
+    }
+    .categoriesCard{
+        width: 169px;
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .categories{
+        gap: 2%;
+    }
+    .cardImg{
+        width: 110px;
+        height: 110px;
+    }
+    .cardImg img{
+        width: 70%;
+        height: auto;
+    }
+}
