@@ -105,7 +105,8 @@
         width: 40%;
         padding: 10px 50px;
         height: auto;
-        background: #fafafa;
+        background: #bd47b9;
+/*         background: #fafafa; */
         display: flex;
         justify-content: none;
         transform: translate(0%, -20%);
@@ -113,13 +114,15 @@
         right: 0%;
         justify-content: right;
         align-items: end;
+        z-index: 5;
     }
     .navLinks ul{
         display: flex;
         list-style-type: none;
 /*         font-size: 18px; */
         font-weight: 500;
-        color: #222222;
+        color: #fafafa;
+        /* color: #222222; */
         flex-direction: column;
         padding-right: 0;
         gap: 30px;

@@ -26,6 +26,7 @@
     border: none;
     border-radius: 50px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 
@@ -58,7 +59,7 @@
     row-gap:16px;
 }
 .ticketCard{
-    width: 416px;
+    width: 100%;
     height: auto;
     opacity: 1;
     border-radius: 24px;
@@ -95,7 +96,7 @@
    color: #82027D;
 }
 .prodImg{
-    width: 392px;
+    width: 100%;
     height: 205px;
     margin: auto auto;
     object-fit: cover;
@@ -104,6 +105,7 @@
 .prodTitle{
     margin-top: 16px;
     margin-bottom: 7px;
+    height: 50px;
 }
 
 .ticketDetails{
@@ -133,4 +135,37 @@
 
 .prodPrice{
     margin-top: 26px;
+}
+
+@media (max-width: 1024px) {
+    .searchPills{
+        gap: 5px;
+        overflow-x: auto;
+        scrollbar-width: none;       /* Firefox */
+        -ms-overflow-style: none; 
+    }
+    .searchPill{
+        padding: 6px 18px;
+        white-space: nowrap;
+
+    }
+}
+@media (max-width: 768px) {
+    .searchPillsPack{
+        flex-direction: column;
+        gap: 12px;
+    }
+    .ticketDisplay{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap:16px;
+    }
+}
+
+@media (max-width: 640px) {
+  
+
+}
+@media (max-width: 580px) {
+
 }
