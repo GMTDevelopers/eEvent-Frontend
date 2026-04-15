@@ -30,3 +30,9 @@
 .searchContainer{
   margin: 34px 0;
 }
+
+@media (max-width: 580px) {
+  .searchContainer{
+    margin: 5px 0 30px 0;
+  }
+}

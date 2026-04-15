@@ -47,6 +47,10 @@
 .bar2{
   display: flex;
   justify-content: space-between;
+  overflow-x: auto;
+  gap: 1%;
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none; 
 }
 .searchBtn2{
   width: fit-content;
@@ -59,6 +63,20 @@
   cursor: pointer;
   margin-top: 27px;
 }
+.searchBtn2 p{
+  white-space: nowrap;
+}
 .hidden{
   display: none;
+}
+
+
+@media (max-width: 1024px) {
+  .searchBtn2{
+    padding: 6px 18px;
+    margin-top: 20px;
+  }
+  .searchBtn2 p{
+    font-size: 14px;
+  }
 }

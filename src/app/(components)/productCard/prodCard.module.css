@@ -129,4 +129,15 @@
     .rating{
         font-size: 10px;
     }
+    .catPill{
+        padding: 8px 20px;
+        left: 5;
+    }
+    .catPill li{
+        font-size: 10px;
+        font-weight: 600;
+    }
+    .catPill li::marker{
+        display: none;
+    }
 }
