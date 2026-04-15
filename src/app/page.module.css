@@ -33,10 +33,11 @@
 /* Header */
 .header{
   width: 100%;
-  height: 567px;
+    aspect-ratio: 1280 / 567; 
+ /*  height: 567px; */
   background-image: url('/images/banner.png');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   display: flex;
   align-items: center;
   padding-left: 72px;
@@ -236,16 +237,75 @@
   margin-top: 107px;
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1024px) {
+  .cardChooseImg{
+    width: 427px;
+    height: 567px;
+  }
 
+  .cCardHeader li{
+    font-size: 20px;
+  }
+  .chooseCardTxt{
+    width: 100%;
+    height: max-content;
+  }
 }
 @media (max-width: 768px) {
+  .header{
+    width: 100%;
+    height: 567px;
+    background-size: cover;
+  }
+  .hiWorks{
+    margin-top: 60px;
+  }
+  .whyChoose{
+    margin-top: 100px;
+  }
+  .worksCardPack{
+    margin-top: 24px;
+    flex-direction: column;
+    gap: 42px;
+    align-items: center;
+  }
+  .pinkLine {
+    display: none;
+  }
   .featured{
     margin-top: 40px;
+  }
+  .chooseContainer{
+    width: 87%;
+  }
+  .cardChoose{
+    gap: 3%;
+  }
+  .cardChooseImg{
+    width: 373px;
+    height: 517px;
+  }
+  .chooseList{
+    margin-top: 30px;
+  }
+
+  .cCardHeader li{
+    font-size: 17px;
+  }
+  .cardChooseCheck{
+    width: 20px;
+    height: 12px;
+  }
+  .chooseListTxt{
+    gap: 7px;
+
   }
 }
 
 @media (max-width: 640px) {
+  .headerTxtBtns div{
+    padding: 12px 16px;
+  }
   .header{
     padding-left: 0%;
     margin-bottom: 56px;
@@ -256,9 +316,37 @@
     margin: auto auto;
   }
   .headerTxt p:first-child{
-    line-height: 55px;
+    line-height: 48px;
   }
   .featured{
     margin-top: 20px;
+  }
+  .chooseContainer{
+    width: 92%;
+    margin-top: 50px;
+  }
+  .cardChoose{
+    gap: 2%;
+  }
+  .cardChooseImg{
+    width: 303px;
+    height: 447px;
+  }
+  .cCardHeader li{
+    font-size: 15px;
+  }
+  .cCardHeader{
+    width: auto;
+  }
+
+}
+@media (max-width: 580px) {
+  .cardChoose{
+    flex-direction: column;
+    gap: 50px;
+  }
+  .cardChooseImg{
+    width: 100%;
+    height: auto;
   }
 }

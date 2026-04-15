@@ -91,11 +91,7 @@
         width: 376px;
     }
 }
-@media (max-width: 1240px) {
-    .prodCard{
-        width: 100%;
-    }
-}
+
 @media (max-width: 1024px) {
     .prodCard{
         width: 100%;
@@ -108,5 +104,29 @@
     }
     .rating{
         font-size: 12px;
+    }
+    .vendorImg{
+        width: 22px;
+        height: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .prodCard{
+        height: auto;
+        padding: 5px 5px;
+    }
+    .prodImg{
+        height: 155px;
+    }
+    .prodDisc{
+        -webkit-line-clamp: 3; /* number of lines you want */
+        height: 78px;
+    }
+    .prodPrice h3{
+        font-size: 16px;
+    }
+    .rating{
+        font-size: 10px;
     }
 }

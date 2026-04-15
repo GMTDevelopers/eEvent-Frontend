@@ -117,7 +117,7 @@
     .navLinks ul{
         display: flex;
         list-style-type: none;
-        font-size: 18px;
+/*         font-size: 18px; */
         font-weight: 500;
         color: #222222;
         flex-direction: column;
@@ -144,4 +144,18 @@
     .navCta{
         width: 60%;
     }
+    .navLinks{
+        width: 100%;
+        padding: 10px 20px 25px 20px;
+    }
+    .navLinks ul{
+        width: 100%; 
+    }
+    .navCta div:last-child span{
+        text-align: center;
+    }
+}
+@media (max-width: 420px) {
+
+
 }
