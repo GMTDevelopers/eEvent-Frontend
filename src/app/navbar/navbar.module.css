@@ -50,16 +50,17 @@
     font-weight: 700;
     font-style: Bold;
     font-size: 1.5rem;
-
+    white-space: nowrap;
 }
 .userNavMenu{
-    width: max-content;
+    width: 100%;
 
 }
 .userNavMenu ul{
-    width: max-content;
+    width: 100%;
     display: flex;
-    gap: 48px;
+    gap: 5%;
+/*     gap: 48px; */
     list-style-type: none;
     align-items: center;
 }
@@ -67,6 +68,7 @@
     display: flex;
     gap: 8px;
     align-items: center;
+    flex-wrap: nowrap;
 }
 .userNavMenu ul .icons{
     width: 21px;
@@ -89,6 +91,19 @@
     }
     .navCta div:last-child{
         padding: 8px 16px;
+    }
+    .welcome{
+        font-size: 20px;
+    }
+    .userNav{
+        display: flex;
+        width: 98%;
+        padding: 0 12px 0 12px;
+        gap: 5%;
+        background: #FFEAC4CC;
+    }
+    .userNavMenu ul{
+        font-size: 14px;
     }
 }
 @media (max-width: 875px) {
@@ -140,6 +155,17 @@
         width: 45%;
         align-items: center;
     }
+    .userNavMenu ul{
+        font-size: 12px;
+        gap: 0px;
+        justify-content: space-between;
+    }
+    .userNav{
+        gap: 1%;
+    }
+    .welcome{
+        font-size: 18px;
+    }
 }
 
 @media (max-width: 630px) {
@@ -157,8 +183,34 @@
     .navCta div:last-child span{
         text-align: center;
     }
+    .welcome{
+        font-size: 16px;
+        white-space: wrap;
+    }
+    .userNavMenu ul .icons{
+        width: 19px;
+        height: 16px;
+    }
 }
-@media (max-width: 420px) {
-
-
+@media (max-width: 580px) {
+    .userNavMenu ul{
+        gap: 8px;
+    }
+    .userNavMenu ul li{
+        gap: 4px;
+        white-space: wrap;
+    }
+    .userNavMenu ul .icons{
+        display: none;
+    }
+    .welcome{
+        font-weight: 600;
+        font-size: 14px;
+        white-space: wrap;
+    }
+}
+@media (max-width: 480px) {
+    .welcome{
+        font-size: 12px;
+    }
 }

@@ -17,3 +17,26 @@
     height: 28px;
     color: #82027D;
 }
+
+@media (max-width: 1024px) {
+    .cardTitle{
+        font-weight: 600;
+    }
+    .card{
+        padding: 16px 16px 16px 12px;
+    }
+}
+@media (max-width: 768px) {
+  
+}
+
+@media (max-width: 640px) {
+  
+
+}
+@media (max-width: 580px) {
+  
+}
+@media (max-width: 420px) {
+
+}

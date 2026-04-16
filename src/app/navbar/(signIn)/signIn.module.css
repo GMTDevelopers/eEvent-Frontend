@@ -24,6 +24,7 @@
     width: auto;
     margin-top: 28px;
     margin-bottom: 10px;
+    height: fit-content;
     /* height: 288px; */
     display: flex;
     flex-direction: column;
@@ -108,4 +109,42 @@
     width: 100%;
     border-radius: 12px;
     height: 216px;
+}
+
+
+@media (max-width: 1024px) {
+    .signInForm{
+        margin-top: 20px;
+        margin-bottom: 10px;
+        gap: 12px;
+    }
+}
+@media (max-width: 768px) {
+    .signInForm{
+        margin-top: 0px;
+        margin-bottom: 0px;
+        gap: 10px;
+    }
+    .termsCond{
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 640px) {
+    .signContainer{
+        width: 100%;
+
+    }
+    .signInForm{
+        gap: 6px;
+    }
+    .termsCond{
+        font-size: 10px;
+    }
+    .signInForm button{
+        padding: 0.8rem;
+    }
+}
+@media (max-width: 580px) {
+
 }

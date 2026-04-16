@@ -478,6 +478,9 @@ select{
   p {
     font-size: 11px;
   }
+  .statsPack{
+    gap: 10px;
+  }
 }
 @media (max-width: 420px) {
   h2 {
@@ -510,5 +513,9 @@ select{
   }
   input{
     font-size: 8px;
+  }
+  .statsPack{
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 }
