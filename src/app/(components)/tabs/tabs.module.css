@@ -10,7 +10,7 @@
   gap: 12px;
   margin-bottom: 4px;
   border-bottom: 1px solid #e5e7eb;
-
+  
 }
 .doubleTabBar{
     justify-content: space-between;
@@ -25,6 +25,7 @@
   font-size: 16px;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .tab:hover {
@@ -50,12 +51,15 @@
 /* features */
 .featuresList{
   margin-top: 50px;
+  width: 100%;
+
 }
 .featuresListTxt{
   margin-top: 20px;
   display: flex;
   gap: 16px;
-
+  text-align: center;
+  width: 100%;
 }
 .featuresListTxt div{
   display: flex;
@@ -77,12 +81,14 @@
   gap: 24px;  
 }
 .serviceCard {
+  width: 100%;
   background: #f9fafb;
   padding: 16px 32px;
   border-radius: 12px;
   border: 1px solid #CFCFCF;
 }
 .serviceHeaderPack{
+  width: 100%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
@@ -144,4 +150,60 @@
   color: #6b7280;
   font-style: italic;
   padding: 40px 0;
+}
+
+
+@media (max-width: 1024px) {
+  .container {
+    width: 100%;
+  }
+  .tabBar {
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none; 
+  
+  }
+  .serviceCard {
+    padding: 16px 32px;
+  }
+}
+@media (max-width: 768px) {
+  .serviceCard {
+    padding: 16px 32px;
+  }
+  .tab {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .tab {
+    font-size: 12px;
+    padding: 8px 20px;
+  }
+  .tabBar {
+    gap: 6px;
+  
+  }
+  .cardFeaturesCheck{
+    width: 20px;
+    height: 13px;
+  }
+}
+@media (max-width: 580px) {
+  .featuresListTxt{
+    gap: 10px;
+    text-align: left;
+    width: 95%;
+  }
+  .cardFeaturesCheck{
+    width: 17px;
+    height: 10px;
+  }
+  .serviceCard {
+    width: 95%;
+    padding: 16px 32px;
+  }
 }

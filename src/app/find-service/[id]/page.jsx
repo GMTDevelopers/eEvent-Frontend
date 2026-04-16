@@ -52,14 +52,17 @@ const ProductCard = ({params}) => {
 
                                 <div className="ratingPack">
                                     <p className="rating">RATING</p>
-                                    <Rating
-                                        readonly
-                                        initialValue={prod.vendorRatings.rating}
-                                        allowFraction
-                                        size={34}
-                                        fillColor="#fbbf24"
-                                        emptyColor="#e5e7eb"
+                                    <div className="starsPack">
+                                        <Rating
+                                            readonly
+                                            initialValue={prod.vendorRatings.rating}
+                                            allowFraction
+                                            size={34}
+                                            fillColor="#fbbf24"
+                                            emptyColor="#e5e7eb"
                                     />  
+                                    </div>
+                                    
                                     <p style={{fontWeight:700}}>{prod.vendorRatings.rating.toFixed(1)} Stars  | {prod.vendorRatings.numberOfReviews} Reviews</p>
                                 </div>
                             </div>

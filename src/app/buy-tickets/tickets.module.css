@@ -151,6 +151,10 @@
     }
 }
 @media (max-width: 768px) {
+    .searchForm{
+        width: 85%;
+       
+    }
     .searchPillsPack{
         flex-direction: column;
         gap: 12px;
@@ -160,12 +164,43 @@
         grid-template-columns: 1fr 1fr;
         row-gap:16px;
     }
+    .ticketCard{
+        padding: 5px 5px;
+    }
+    .prodImg{
+        height: 155px;
+    }
+    .row1 div{
+        font-size: 12px;
+    }
+    .catPill{
+        padding: 8px 20px;
+        left: 5;
+    }
+    .catPill li{
+        font-size: 10px;
+        font-weight: 600;
+    }
+    .catPill li::marker{
+        display: none;
+    }
 }
 
 @media (max-width: 640px) {
-  
+    .searchForm{
+        width: 90%;
+         margin: 0px auto 35px auto;
+    }
+    .row1 div{
+        font-size: 11px;
+    }
 
 }
 @media (max-width: 580px) {
-
+    .searchForm{
+        width: 92%;
+    }
+    .searchPills{
+        width: 100%;
+    }
 }

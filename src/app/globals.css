@@ -139,7 +139,6 @@ a {
 
 /* Double*/
 .mainContent{
- /*  border: 1px solid black; */
   display: flex;
   gap: 24px;
   width: 100%;
@@ -148,14 +147,12 @@ a {
   margin-top: 18px;
 }
 .aside{
- /*  border: 1px solid rgb(129, 72, 72); */
   width: 35%;
 }
 .bookingTitle{
   font-weight: 700;
   font-size: 20px;
   text-align: center;
-
 }
 .bookingPricing{
   border-radius: 16px;
@@ -180,6 +177,7 @@ a {
   color: white;
   border-radius: 24px;
   cursor: pointer;
+  white-space: nowrap;
 }
 .vendor{
   background: #FFEAC466;
@@ -235,10 +233,15 @@ a {
 .ratingStars{
   margin: 15px 0 12px 0;
 }
+.starsPack{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 
 .mainSection{
   width: 73%;
-/*   border: 1px solid red; */
 }
 .mainSection h2{
   margin-top: 26px;
@@ -248,7 +251,6 @@ a {
   height: auto;
   color: #636363;
   margin: 0px 0px 0px 0;
-/*   border: 1px solid #CFCFCF; */
   border-radius: 12px;
   padding: 16px 0px;
 }
@@ -277,7 +279,6 @@ input{
 }
 select{
   width:  auto;
-/*   width:  869px; */
   max-width: 869px;
   min-width: 0;
   box-sizing: border-box;
@@ -311,7 +312,6 @@ select{
 @media (max-width: 1024px) {
   h1 {
     font-size: 40px;
-/*     line-height: 36px; */
   }
   h2 {
     font-size: 32px;
@@ -327,12 +327,26 @@ select{
     grid-template-columns: 1fr 1fr;
     gap: 16px 16px;
   } 
+  .header{
+    height: 304px;
+  }
+  .vendor{
+    background: #FFEAC466;
+    height: fit-content;
+    padding: 35px 0;
+    border-radius: 16px;
+  }
+  .mainContent{
+    gap: 12px;
+  }
+  .mainSection{
+    padding: 0 2% 0 0;
+  }
 }
 
 @media (max-width: 768px) {
   h1 {
     font-size: 32px;
-/*     line-height: 32px; */
   }
   h2 {
     font-size: 26px;
@@ -348,6 +362,12 @@ select{
   }
   .btnCapsule{
     font-weight: 600;
+    font-size: 14px;
+  }
+  input::placeholder{
+    font-size: 14px;
+  }
+  input{
     font-size: 14px;
   }
   .btnNoCapsule{
@@ -367,14 +387,61 @@ select{
     font-size: 10px;
     font-weight: 600;
   }
+  .header{
+    height: 285px;
+  }
+  .vendorImg{
+    width: 180px;
+    height: 180px;
+  }
+  .vendorName{
+    font-size: 21px;
+  }
+  .bookingTitle{
+    font-size: 17px;
+  }
+  .starsPack span svg{
+    width: 30px;
+    height: 30px;
+  }
 }
 @media (max-width: 640px) {
   h1 {
     font-size: 30px;
-/*     line-height: 32px; */
   }
   h2 {
     font-size: 24px;
+  }
+  .header{
+    height: 235px;
+  }
+  .vendorImg{
+    width: 150px;
+    height: 150px;
+  }
+  .vendorName{
+    font-size: 18px;
+  }
+  .mainContent{
+    gap: 10px;
+    padding: 0 0 0 0;
+  }
+  .bookingTitle{
+    font-size: 14px;
+  }
+  .bookVendor{
+    font-weight: 700;
+    font-size: 14px;
+    padding: 8px 20px;
+  }
+  .mainSection{
+    width: 70%;
+  }
+  input::placeholder{
+    font-size: 12px;
+  }
+  input{
+    font-size: 12px;
   }
 }
 @media (max-width: 580px) {
@@ -385,8 +452,37 @@ select{
   h2 {
     font-size: 21px;
   }
+  .header{
+    height: 200px;
+  }
+  .vendorName{
+    font-size: 16px;
+  }
+  .vendorImg{
+    width: 120px;
+    height: 120px;
+  }
+  .starsPack span svg{
+    width: 26px;
+    height: 26px;
+  }
+    .mainSection{
+    width: 68%;
+  }
+  input::placeholder{
+    font-size: 10px;
+  }
+  input{
+    font-size: 10px;
+  }
+  p {
+    font-size: 11px;
+  }
 }
 @media (max-width: 420px) {
+  h2 {
+    font-size: 17px;
+  }
   h3 {
     font-size: 19px;
   }
@@ -398,5 +494,21 @@ select{
     font-weight: 600;
     font-size: 12px;
     align-items: center;
+  }
+  .header{
+    height: 150px;
+  }
+  .vendorImg{
+    width: 100px;
+    height: 100px;
+  }
+  .vendorName{
+    font-size: 14px;
+  }
+  input::placeholder{
+    font-size: 8px;
+  }
+  input{
+    font-size: 8px;
   }
 }

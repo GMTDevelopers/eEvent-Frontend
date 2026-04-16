@@ -169,7 +169,7 @@ const BuyTicket = () => {
                                 <p className={styles.rating} style={{fontWeight:500, color:"#AAA6A6"}}>PRICING STARTS FROM</p>
                                 <div style={{marginBottom:"10px"}} className="sectionHeader">
                                     <h3 style={{color:"#222222"}}>₦ {ticket.leastPrice}</h3>
-                                    <div className="btnNoCapsule">More details<SlArrowRight /></div>
+                                     <Link href={`/buy-tickets/${ticket.id}`}><div className="btnNoCapsule">More details<SlArrowRight /></div></Link>
                                 </div>
                             </div>
                         </div>

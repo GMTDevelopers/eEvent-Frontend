@@ -95,3 +95,30 @@
     background: #636363;
     color: #fffdfd;
 }
+
+@media (max-width: 1024px) {
+
+}
+@media (max-width: 768px) {
+    .bookVendorForm input, .bookVendorForm select:invalid, .bookVendorForm select{
+        font-size: 14px;
+        padding: 10px 10px;
+    }
+}
+
+@media (max-width: 640px) {
+    .bookVendorForm input, .bookVendorForm select:invalid, .bookVendorForm select{
+        font-size: 12px;
+    }
+
+}
+@media (max-width: 580px) {
+    .bookVendorForm input, .bookVendorForm select:invalid, .bookVendorForm select{
+        font-size: 10px;
+    }
+}
+@media (max-width: 420px) {
+    .bookVendorForm input, .bookVendorForm select:invalid, .bookVendorForm select{
+        font-size: 8px;
+    }
+}

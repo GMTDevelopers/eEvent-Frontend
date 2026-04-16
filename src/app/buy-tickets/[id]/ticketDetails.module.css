@@ -58,7 +58,7 @@
 
 }
 .bookForm button{
-    width: 30% ;
+ /*    width: 30% ; */
     padding: 1rem;
     background: #82027D;
     cursor: pointer;
@@ -66,6 +66,7 @@
     border: none;
     border-radius:58px;
     font-weight: bold ;
+    white-space: nowrap;
 }
 .extraDetails{
     margin-top: 40px;
@@ -90,4 +91,39 @@
     object-position: cover;
     object-position: center;
     border-radius: 12px;
+}
+
+@media (max-width: 1024px) {
+
+}
+@media (max-width: 768px) {
+    .ticketSection{
+      width: 83%;
+    }
+}
+
+@media (max-width: 640px) {
+    .ticketSection{
+      width: 90%;
+    }
+    .BookTicket{
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .bookForm{
+        width: 100%;
+    }
+    .details {
+        width: 100%;
+    }
+
+}
+@media (max-width: 580px) {
+    .ticketSection{
+      width: 95%;
+    }
+    .BookTicket{
+        padding: 24px 13px 34px 13px;
+    }
 }

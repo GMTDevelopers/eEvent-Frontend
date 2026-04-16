@@ -37,6 +37,19 @@
 
 @media (max-width: 768px) {
   .gallery { grid-template-columns: 1fr; gap: 12px; }
+  .img {
+    width: 100%;
+    height: 254px;
+    object-position: center;
+  }
+
+}
+@media (max-width: 540px) {
+  .img {
+    width: 100%;
+    height: 185px;
+    object-position: center;
+  }
 
 }
 
