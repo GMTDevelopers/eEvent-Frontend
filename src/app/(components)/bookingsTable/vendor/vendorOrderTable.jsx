@@ -62,7 +62,7 @@ export default function VendorOrderTable({ bookings = [] }) {
 
             <div className={styles.cardRow}>
               <span>Event Date</span>
-              <strong>{b.dateBooked}</strong>
+              <strong>{new Date(b.dateBooked).toDateString() === 'Invalid Date' ? b.dateBooked: new Date(b.dateBooked).toDateString()}</strong>
             </div>
             <div className={styles.cardRow}>
               <span>Amount</span>

@@ -216,6 +216,7 @@ export function AuthProvider({ children }) {
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token")
       setLogedInUser(null);
+      router.push('/')
     }catch(err){
       console.error("Error during logout process:", err);
       localStorage.removeItem('access_token');

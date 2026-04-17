@@ -39,12 +39,12 @@ export default function ProductTabs({gallery, features, addService, reviews}) {
       case 'Features':
         return features?.length ? ( 
           <div className={styles.featuresList}>
-            {features.map((feature, i) => (
+            {features?.map((feature, i) => (
               <div key={i} className={styles.featuresListTxt}>
                 <Image className={styles.cardFeaturesCheck} src='/images/check.png' width={27} height={19} alt="check"/>
                 <div>
                   <p className="txtHeader">{feature}</p>
-                  <p style={{color:"#636363"}}>{feature.description}</p>
+                  {feature.description && <p style={{color:"#636363"}}>{feature.description}</p>}
                 </div>
               </div>
             ) )}

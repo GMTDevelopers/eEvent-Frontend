@@ -1,5 +1,6 @@
 "use client"
 import VendorEarningsTable from "@/app/(components)/bookingsTable/vendor/vendorEarningsTable";
+import Loading from "@/app/(components)/loading/loading";
 import { useModal } from "@/app/(components)/ModalProvider/ModalProvider";
 import Pagination from "@/app/(components)/pagination/page";
 import StatsCard from "@/app/(components)/statsCard/page";
@@ -40,10 +41,12 @@ const Earnings = () => {
             setEarnings(data.data.data);
             setCurrentPage(data.data.meta.page || 1);
             setTotalPages(data.data.meta.lastPage || 0);
-            setLoading(false);
+            
         }) 
-
         .catch((error) => console.error("Error fetching data:", error))
+        .finally(()=>{
+            setLoading(false);
+        })
     }, [currentPage])
 
     return ( 
@@ -55,6 +58,11 @@ const Earnings = () => {
                 <StatsCard title="COMPLETED PAYOUTS" data={6} icon={Minimize2} />
                 <StatsCard title="ACTIVE BOOKINGS" data={3} icon={Star} />
             </div>
+            {loading && (
+            <div>
+                <Loading />
+            </div>
+            )}
             <div className="table">
                 <VendorEarningsTable bookings={earnings}/> 
                  <Pagination

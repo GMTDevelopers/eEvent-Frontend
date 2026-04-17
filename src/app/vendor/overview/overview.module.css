@@ -37,7 +37,6 @@
     height: 100%;
     padding: 0;
     margin: 0;
-
 }
 .recentActivities{
     border: 1.5px solid #cfcfcf;
@@ -60,11 +59,14 @@
     justify-content: space-between;
     align-items: flex-end;
 }
+
 .name{
     width: 37%;
     display: flex;
     gap: 24px;
     align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
 }
 .icon{
     display: flex;
@@ -74,4 +76,58 @@
     height: 53px;
     border-radius: 999px;
     color: #ffffff;
+}
+
+
+@media (max-width: 1024px) {
+
+}
+@media (max-width: 824px) {
+    .icon{
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .vendorStatsPack{
+        width: 100%;
+    }
+    .vendorStats{
+        display: flex;
+        flex-direction: column;
+    }
+    .vendorGraph{
+        width: 100%;
+        padding: 0px;
+    }
+    .details{
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+
+
+}
+@media (max-width: 580px) {
+
+}
+@media (max-width: 420px) {
+    .itemsPack{
+        gap: 15px;
+    }
+    .name{
+        width: 100%;
+    }
+    .time{
+        width: 100%;
+        text-align: right;
+    }
+    .activityItem{
+        width: 100%;
+        display: flex;
+        gap: 4px;
+        justify-content: none;
+        align-items: start;
+        flex-direction: column;
+    }
 }

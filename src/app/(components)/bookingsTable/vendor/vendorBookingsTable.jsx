@@ -101,7 +101,7 @@ export default function VendorBookingsTable({ bookings = [] }) {
 
             <div className={styles.cardRow}>
               <span>Event Date</span>
-              <strong>{b.dateBooked}</strong>
+              <strong>{new Date(b.dateBooked).toDateString()}  </strong>
             </div>
             <div className={styles.cardRow}>
               <span>Amount</span>
@@ -111,11 +111,12 @@ export default function VendorBookingsTable({ bookings = [] }) {
             {/* Dropdown menu (same as desktop) */}
             {openMenuId === b.bookingId && (
               <div className={styles.mobileDropdown}>
-                <button className={styles.dropdownItem}>View</button>
-                <button className={styles.dropdownItem}>Accept booking</button>
-                <button className={styles.dropdownItem}>Message Client</button>
-                <button className={styles.dropdownItem}>Mark completedg</button>
-                <button className={styles.dropdownItem}>Contact support</button>
+                <li className={styles.dropdownItem} onClick={() => router.push(`/vendor/bookings/${b.bookingId}`)}>View</li>
+                <li className={styles.dropdownItem} style={{color:"#2d9f35"}} onClick={() => openModal(<Accept id={b.bookingId}/>)}>Accept reschedule</li>
+                <li className={styles.dropdownItem} style={{color:"#E50909"}} onClick={() => openModal(<Reject id={b.bookingId} />)}>Reject reschedule</li>
+                <li className={styles.dropdownItem} onClick={() => openModal(<Message bookingId={b.bookingId} receiverId={b.clientUserId}/>)} >Message client</li>
+                <li className={styles.dropdownItem} onClick={() => openModal(<MarkComplete id={b.bookingId} />)}>Mark completed</li>
+                <li className={styles.dropdownItem} onClick={() => openModal(<Contact />)} >Contact support</li>
               </div>
             )}
           </div>

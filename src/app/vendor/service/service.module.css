@@ -50,3 +50,24 @@
     margin-top: 12px;
     color: #636363;
 }
+
+@media (max-width: 1024px) {
+
+}
+@media (max-width: 768px) {
+  
+}
+
+@media (max-width: 640px) {
+  
+
+}
+@media (max-width: 580px) {
+    .vMainSection{
+        width: 100%;
+        padding-left: 2%;
+    }
+    .aside{
+        display: none;
+    }
+}

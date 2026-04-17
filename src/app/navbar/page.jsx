@@ -90,7 +90,7 @@ const Navbar = () => {
                             <Link href='/vendor/settings' > <li onClick={() => setActiveTab('Account')} className={activeTab === "Account" ? Styles.active: ''}><Settings className={Styles.icons} />My Account</li></Link>
                         </ul>
                     </div>
-                    <p style={{color:"#E83E1C"}}>Account status: <span style={{color:"#2ED074"}}>ACTIVE</span> </p>    
+                    <p className={Styles.accountStatus} style={{color:"#E83E1C"}}>Account status: <span style={{color:"#2ED074"}}>ACTIVE</span> </p>    
                 </div>
             )}
            { /* ADMIN USER */}

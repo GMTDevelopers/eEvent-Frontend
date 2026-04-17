@@ -46,6 +46,10 @@
 .vendorNav{
     justify-content: space-between;
 }
+.accountStatus{
+    white-space: nowrap;
+    flex-wrap: nowrap;
+}
 .welcome{
     font-weight: 700;
     font-style: Bold;
@@ -166,6 +170,9 @@
     .welcome{
         font-size: 18px;
     }
+    .accountStatus{
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 630px) {
@@ -190,6 +197,11 @@
     .userNavMenu ul .icons{
         width: 19px;
         height: 16px;
+    }
+    .vendorNav{
+        flex-direction: column-reverse;
+        justify-content: space-evenly;
+        align-items: end;
     }
 }
 @media (max-width: 580px) {

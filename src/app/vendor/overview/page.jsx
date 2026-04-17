@@ -134,7 +134,7 @@ const Overview = () => {
                             <div className="time">
                                 <p>{act.date}   |   {act.time}</p> 
                             </div>
-                            <div className='btnNoCapsule'>
+                            <div className={`${styles.details} btnNoCapsule`}>
                                 details
                                 <ChevronRight className='icon' />
                             </div>

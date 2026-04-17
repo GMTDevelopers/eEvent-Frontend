@@ -144,7 +144,7 @@ const VendorServices = /* async */ () => {
             
             <div className={styles.doubleContainer}>
                 <div className="mainContent">
-                    <aside className="aside">
+                    <aside className={` ${xStyles.aside} aside`}>
                         <div className={`vendor ${styles.vendor}`}>
                             <div className="vendorImgPack">
                                 <img className="vendorImg" src={vendorData?.logo || `/images/defaultDP.jpg` } alt="vendor" />
@@ -158,14 +158,14 @@ const VendorServices = /* async */ () => {
                                 </div>
                             </div>
 
-                            <div className="ratingPack">
+                      {/*       <div className="ratingPack">
                                 <p className="rating">RATING</p>
                                 <img className="ratingStars" src="/images/productPage/ratings.png" alt="ratings" />
                                 <p style={{fontWeight:700}}>4.7 Stars  |  32 Reviews</p>
-                            </div>
+                            </div> */}
                         </div>
                     </aside>
-                    <section className="mainSection">
+                    <section className={`${xStyles.vMainSection} mainSection`}>
                         <h3>ACTIVE SERVICES ({recentAct?.length}) </h3>
                         <div className={xStyles.activeService}>
                             {error && <p className="error">{error}</p>}

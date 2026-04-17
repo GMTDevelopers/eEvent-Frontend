@@ -41,8 +41,8 @@ const ProductCard = ({params, searchParams}) => {
                 });
                 if (activeRes.ok) {
                     const res = await activeRes.json();
-                    console.log("active service",res.data[index])
-                    setProd(res.data[index])
+                    console.log("active service",res?.data[index])
+                    setProd(res?.data[index])
                     setLoading(false)
                 }
             }catch(err){

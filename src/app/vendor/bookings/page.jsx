@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import VendorBookingsTable from '@/app/(components)/bookingsTable/vendor/vendorBookingsTable';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import SignIn from '@/app/navbar/(signIn)/signIn';
+import Loading from '@/app/(components)/loading/loading';
 
 
 
@@ -64,6 +65,12 @@ const Bookings = () => {
             <div className="stats">
                 <SearchFilter name="My Bookings"/>
             </div>
+            
+            {loading && (
+            <div>
+                <Loading />
+            </div>
+            )}
             <div className="table">
                <VendorBookingsTable bookings={allData}/>
 

@@ -84,12 +84,12 @@ const Settings = () => {
         <div>
             <div className="stats">
                 <SearchFilter name="My Account"/>
-                <div className="statsPack">
+                {/* <div className="statsPack">
                     <StatsCard title="ACTIVE BOOKINGS" data='5' icon={Minimize2} />
                     <StatsCard title="PAYMENT PENDING" data='2' icon={Loader} />
                     <StatsCard title="COMPLETED ORDERS" data='12' icon={CheckCheck} />
                     <StatsCard title="CANCELLED ORDERS" data='1' icon={X} />
-                </div>
+                </div> */}
             </div>
             <form onSubmit={handleSubmit} className={`${styles.mainContent} sectionHeaderCenter`}>
                 <aside className={`${styles.photoPack}`}>

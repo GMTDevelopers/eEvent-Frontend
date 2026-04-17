@@ -17,6 +17,8 @@ export default function BookingsTable({ bookings = {} }) {
   const router = useRouter();
   const [openMenuId, setOpenMenuId] = useState(null);
   const [loading, setLoading] = useState(false)
+
+
   const { openModal, closeModal } = useModal();
   const toggleMenu = (id) => {
     setOpenMenuId(openMenuId === id ? null : id);

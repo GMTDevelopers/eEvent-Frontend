@@ -168,3 +168,27 @@
 .cancel { color: #dc2626; font-weight: 600; }
 .inactive { color: #dc2626; font-weight: 600; }
 .cancel:hover { background: #fef2f2; }
+
+@media (max-width: 1024px) {
+  .table th { 
+    padding: 16px 5px; 
+    font-weight: 600; 
+  }
+  .status {
+    font-size: 12px;
+  }
+  .table { 
+    font-size: 12px; 
+  }
+}
+@media (max-width: 768px) {
+  
+}
+
+@media (max-width: 640px) {
+  
+
+}
+@media (max-width: 580px) {
+
+}

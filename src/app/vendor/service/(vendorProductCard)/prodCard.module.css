@@ -80,3 +80,60 @@
 .prodPrice div{
     margin-top: 2px;
 }
+
+
+@media (max-width: 1280px) {
+    .prodCard{
+        width: 376px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .prodCard{
+        width: 100%;
+      /*   padding: 5px 1px; */
+    }
+    .prodImg{
+        width: 100%;
+    }
+    .prodTitle{
+        height: 50px;
+    }
+    .rating{
+        font-size: 12px;
+    }
+    .vendorImg{
+        width: 22px;
+        height: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .prodCard{
+        height: auto;
+    }
+    .prodImg{
+        height: 155px;
+    }
+    .prodDisc{
+        -webkit-line-clamp: 3; /* number of lines you want */
+        height: 78px;
+    }
+    .prodPrice h3{
+        font-size: 16px;
+    }
+    .rating{
+        font-size: 10px;
+    }
+    .catPill{
+        padding: 8px 20px;
+        left: 5;
+    }
+    .catPill li{
+        font-size: 10px;
+        font-weight: 600;
+    }
+    .catPill li::marker{
+        display: none;
+    }
+}

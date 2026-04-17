@@ -10,3 +10,18 @@
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
+
+
+@media (max-width: 640px) {
+  
+
+}
+@media (max-width: 580px) {
+.statsContainer{
+    display: grid;
+    grid-template-columns: 1fr ;
+    gap: 10px;
+    margin-bottom: 70px;
+    margin-top: 50px;
+}
+}
