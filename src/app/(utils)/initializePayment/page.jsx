@@ -39,7 +39,7 @@ const InitPayment = async ({paymentType,entityId,paymentOption,token}) => {
 
     } catch (err) {
         console.error("Payment initialization error:", err);
-        alert(err.message || "Something went wrong. Please try again.");
+        window.alert(err.message || "Something went wrong. Please try again.");
         return { 
             success: false, 
             error: err.message || "Unknown error" 
