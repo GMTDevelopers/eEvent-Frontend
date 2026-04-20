@@ -112,10 +112,8 @@ const VendorRegistration = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     try {
-    
-      e.preventDefault();
       const token = localStorage.getItem("access_token");
 
       if (!token) {
