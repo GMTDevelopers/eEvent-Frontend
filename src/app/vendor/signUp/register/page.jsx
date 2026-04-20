@@ -254,8 +254,8 @@ const VendorRegistration = () => {
                         {/* <button type="button" className={styles.submitBtn} onClick={currentStep === 3 ? handleSubmit: handleNext }>
                               {currentStep === 3 ? 'Proceed to payment' : 'Proceed'}
                             </button> */}
-                            {currentStep <= 3 && ( <button type="button" className={styles.submitBtn} onClick={handleNext}> Proceed </button> )}
-                            {currentStep === 3 && ( <button type="button" className={styles.submitBtn} onClick={handleSubmit}> Proceed to payment </button> )}
+                            {currentStep <= 2 && ( <button type="button" className={styles.submitBtn} onClick={handleNext}> Proceed </button> )}
+                            {currentStep === 3 && ( <button type="button" className={styles.submitBtn} onClick={handleSubmit()}> Proceed to payment </button> )}
                         </div>
                     </div>
                 </section>
