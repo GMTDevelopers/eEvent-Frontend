@@ -97,7 +97,8 @@ export function AuthProvider({ children }) {
           }
         }
         
-        console.log(userData, userType)
+        console.log("this is the userData" , userData)
+        console.log("this is the userType" , userType)
       } else if (res.status === 401){
           const refreshToken = localStorage.getItem("refresh_token");
           if (refreshToken) {

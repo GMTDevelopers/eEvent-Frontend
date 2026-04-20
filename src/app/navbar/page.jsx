@@ -66,6 +66,17 @@ const Navbar = () => {
                 </div>
             )}
             {/* Verification Pending */}
+             { !userType && logedInUser?.data?.hasVendorAccount === false && (
+                <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
+                    <p style={{color:"#E83E1C"}} className={Styles.welcome}>REGISTRATION INCOMPLETE</p>    
+                    <div className={Styles.userNavMenu}>
+                        <ul>                
+                           <li>Complete vendor registration</li>
+                        </ul>
+                    </div>
+                </div>
+            )}
+            {/* Verification Pending */}
              { !userType && logedInUser?.data?.verification?.id==="" && (
                 <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
                     <p style={{color:"#E83E1C"}} className={Styles.welcome}>ACCOUNT PENDING</p>    
