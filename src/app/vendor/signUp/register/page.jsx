@@ -113,113 +113,117 @@ const VendorRegistration = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("access_token");
-
-    if (!token) {
-      openModal(<SignIn />);
-      return;
-    }
-
-    let certificateUrl = "";
-    let idUrl = "";
-    let passportUrl = "";
-    let logoUrl = "";
-
-    if (formData.certificate) {
-      const fd = new FormData();
-      fd.append("file", formData.certificate);
-
-      const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/certificate", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: fd,
-      });
-
-      const result = await res.json();
-      certificateUrl = result.data.url;
-    }
-
-    if (formData.idFile) {
-      const fd = new FormData();
-      fd.append("file", formData.idFile);
-
-      const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/id", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: fd,
-      });
-
-      const result = await res.json();
-      idUrl = result.data.url;
-    }
-
-    if (formData.passportFile) {
-      const fd = new FormData();
-      fd.append("file", formData.passportFile);
-
-      const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/id", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: fd,
-      });
-
-      const result = await res.json();
-      passportUrl = result.data.url;
-    }
-
-    if (formData.businessLogo) {
-      const fd = new FormData();
-      fd.append("file", formData.businessLogo);
-
-      const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/id", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: fd,
-      });
-
-      const result = await res.json();
-      logoUrl = result.data.url;
-    }
-
-    const payload = {
-      business: {
-        name: formData.businessName,
-        category: formData.category,
-        registered: formData.registered === "True",
-        logo: logoUrl,
-        certificate: certificateUrl,
-        description: formData.description,
-        yearsOfExperience: Number(formData.experience),
-        address: formData.address,
-        countryOfOperation: [formData.country],
-        operatingStates: formData.states,
-      },
-      verification: {
-        type: formData.idType,
-        number: formData.idNumber,
-        image: idUrl,
-      },
-      subscriptionId: formData.subscriptionPlan,
-    };
-
-    console.log("FINAL PAYLOAD:", payload);
-
-    const vendorRes = await fetch("https://eevents-srvx.onrender.com/v1/vendors", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json" ,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const result = await vendorRes.json();
-    console.log(result);
-    if (result.status==="success"){
-      await InitPayment({entityId:formData.subscriptionPlan, paymentType:"SUBSCRIPTION", paymentOption:"FULL", token:token})
-    }
+    try {
     
+      e.preventDefault();
+      const token = localStorage.getItem("access_token");
+
+      if (!token) {
+        openModal(<SignIn />);
+        return;
+      }
+
+      let certificateUrl = "";
+      let idUrl = "";
+      let passportUrl = "";
+      let logoUrl = "";
+
+      if (formData.certificate) {
+        const fd = new FormData();
+        fd.append("file", formData.certificate);
+
+        const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/certificate", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: fd,
+        });
+
+        const result = await res.json();
+        certificateUrl = result.data.url;
+      }
+
+      if (formData.idFile) {
+        const fd = new FormData();
+        fd.append("file", formData.idFile);
+
+        const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/id", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: fd,
+        });
+
+        const result = await res.json();
+        idUrl = result.data.url;
+      }
+
+      if (formData.passportFile) {
+        const fd = new FormData();
+        fd.append("file", formData.passportFile);
+
+        const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/id", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: fd,
+        });
+
+        const result = await res.json();
+        passportUrl = result.data.url;
+      }
+
+      if (formData.businessLogo) {
+        const fd = new FormData();
+        fd.append("file", formData.businessLogo);
+
+        const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/id", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: fd,
+        });
+
+        const result = await res.json();
+        logoUrl = result.data.url;
+      }
+
+      const payload = {
+        business: {
+          name: formData.businessName,
+          category: formData.category,
+          registered: formData.registered === "True",
+          logo: logoUrl,
+          certificate: certificateUrl,
+          description: formData.description,
+          yearsOfExperience: Number(formData.experience),
+          address: formData.address,
+          countryOfOperation: [formData.country],
+          operatingStates: formData.states,
+        },
+        verification: {
+          type: formData.idType,
+          number: formData.idNumber,
+          image: idUrl,
+        },
+        subscriptionId: formData.subscriptionPlan,
+      };
+
+      console.log("FINAL PAYLOAD:", payload);
+
+      const vendorRes = await fetch("https://eevents-srvx.onrender.com/v1/vendors", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json" ,
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await vendorRes.json();
+      console.log(result);
+      if (result.status==="success"){
+        await InitPayment({entityId:formData.subscriptionPlan, paymentType:"SUBSCRIPTION", paymentOption:"FULL", token:token})
+      }
+    } catch (error) {
+      alert(error.message || "Something went wrong. Please try again.")
+  }
    
   };
 
@@ -247,9 +251,11 @@ const VendorRegistration = () => {
 
                         <div className={styles.buttonsPack}>
                             {currentStep > 1 && ( <button type="button" className={styles.submitBtn} onClick={handleBack}> Back </button> )}
-                                <button type="button" className={styles.submitBtn} onClick={currentStep === 3 ? handleSubmit: handleNext }>
-                            {currentStep === 3 ? 'Proceed to payment' : 'Proceed'}
-                            </button>
+                        {/* <button type="button" className={styles.submitBtn} onClick={currentStep === 3 ? handleSubmit: handleNext }>
+                              {currentStep === 3 ? 'Proceed to payment' : 'Proceed'}
+                            </button> */}
+                            {currentStep <= 3 && ( <button type="button" className={styles.submitBtn} onClick={handleNext}> Proceed </button> )}
+                            {currentStep === 3 && ( <button type="button" className={styles.submitBtn} onClick={handleSubmit}> Proceed to payment </button> )}
                         </div>
                     </div>
                 </section>
