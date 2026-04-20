@@ -11,6 +11,7 @@ import VerificationStep from './steps/verificationStep';
 import SubscriptionStep from './steps/SubscriptionStep';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import { useAuth } from '@/app/contexts/AuthContext';
+import InitPayment from '@/app/(utils)/initializePayment/page';
 
 const stepsConfig = [
 /*   { id: 1, label: 'Account', title: 'Create new vendor account (1/4)' }, */
@@ -204,7 +205,7 @@ const VendorRegistration = () => {
 
     console.log("FINAL PAYLOAD:", payload);
 
-    const res = await fetch("https://eevents-srvx.onrender.com/v1/vendors", {
+    const vendorRes = await fetch("https://eevents-srvx.onrender.com/v1/vendors", {
       method: "POST",
       headers: {
         "Content-Type": "application/json" ,
@@ -213,8 +214,12 @@ const VendorRegistration = () => {
       body: JSON.stringify(payload),
     });
 
-    const result = await res.json();
+    const result = await vendorRes.json();
     console.log(result);
+    if (result.status==="success"){
+      await InitPayment({entityId:formData.subscriptionPlan, paymentType:"SUBSCRIPTION", paymentOption:"FULL", token:token})
+    }
+    
    
   };
 

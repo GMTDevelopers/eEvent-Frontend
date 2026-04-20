@@ -38,6 +38,15 @@ const BusinessStep = ({ formData, updateFormData, errors }) => {
                     <option value="" hidden disabled>Business category</option>
                     <option value="">Select category</option>
                     <option value="Catering">Catering</option>
+                    <option value="Catering">Rentals</option>
+                    <option value="Catering">Master of ceremony(Mc)</option>
+                    <option value="Catering">Dj</option>
+                    <option value="Catering">Muscian</option>
+                    <option value="Catering">Halls & Venues</option>
+                    <option value="Catering">Photography</option>
+                    <option value="Catering">Decoration</option>
+                    <option value="Catering">Security</option>
+                    <option value="Catering">Entertainment</option>
                 </select>
                 {errors.category && <p className={styles.error}>{errors.category}</p>}
             </div>
