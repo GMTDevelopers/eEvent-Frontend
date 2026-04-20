@@ -13,6 +13,7 @@ import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import { useAuth } from '@/app/contexts/AuthContext';
 import InitPayment from '@/app/(utils)/initializePayment/page';
 import SignIn from '@/app/navbar/(signIn)/signIn';
+import Loading from '@/app/(components)/loading/loading';
 
 const stepsConfig = [
 /*   { id: 1, label: 'Account', title: 'Create new vendor account (1/4)' }, */
@@ -30,6 +31,7 @@ const VendorRegistration = () => {
   const [passportUrl, setPassportUrl] = useState('');
   const [idUrl, setIdUrl] = useState('');
   const [logoUrl, setLogoUrl] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const updateFormData = (newData) => {
     setFormData((prev) => ({ ...prev, ...newData }));
@@ -114,6 +116,7 @@ const VendorRegistration = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem("access_token");
 
@@ -222,7 +225,9 @@ const VendorRegistration = () => {
       }
     } catch (error) {
       console.log(error.message || "Something went wrong. Please try again.")
-  }
+    } finally {
+      setLoading(false);
+    }
    
   };
 
@@ -247,7 +252,11 @@ const VendorRegistration = () => {
                             {currentStep === 2 && <VerificationStep formData={formData} updateFormData={updateFormData} errors={errors} />}
                             {currentStep === 3 && <SubscriptionStep formData={formData} updateFormData={updateFormData} errors={errors} />}
                         </div>
-
+                        {loading && (
+                          <div>
+                            <Loading />
+                          </div>
+                        )}
                         <div className={styles.buttonsPack}>
                             {currentStep > 1 && ( <button type="button" className={styles.submitBtn} onClick={handleBack}> Back </button> )}
                         {/* <button type="button" className={styles.submitBtn} onClick={currentStep === 3 ? handleSubmit: handleNext }>
