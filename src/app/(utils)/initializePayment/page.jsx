@@ -2,12 +2,12 @@
 const InitPayment = async ({paymentType,entityId,paymentOption,token}) => {
     
     try {
-/*         if (!entityId) {
+        if (!entityId) {
             throw new Error("entityId is required");
         }
         if (!token) {
             throw new Error("Authentication token is required");
-        } */
+        }
         // === STEP 1: Initialize Payment ===
         const initializeRes = await fetch("https://eevents-srvx.onrender.com/v1/payments/initialize", {
             method: "POST",
