@@ -1,4 +1,6 @@
+'use client'
 const InitPayment = async ({paymentType,entityId,paymentOption,token}) => {
+    
     try {
 /*         if (!entityId) {
             throw new Error("entityId is required");
