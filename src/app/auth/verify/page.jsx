@@ -16,7 +16,7 @@ const VerifyEmail = () => {
         setLoading(true);
         const verifyMail = async () => {
             try {
-                setVendorLoading(true);
+                setLoading(true);
                 const response = await fetch(`https://eevents-srvx.onrender.com/v1/auth/verify?token=${verifyToken.toString()}`, {
                 });
 
