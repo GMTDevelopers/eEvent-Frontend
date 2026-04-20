@@ -12,6 +12,7 @@ import SubscriptionStep from './steps/SubscriptionStep';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import { useAuth } from '@/app/contexts/AuthContext';
 import InitPayment from '@/app/(utils)/initializePayment/page';
+import SignIn from '@/app/navbar/(signIn)/signIn';
 
 const stepsConfig = [
 /*   { id: 1, label: 'Account', title: 'Create new vendor account (1/4)' }, */
@@ -220,7 +221,7 @@ const VendorRegistration = () => {
         await InitPayment({entityId:formData.subscriptionPlan, paymentType:"SUBSCRIPTION", paymentOption:"FULL", token:token})
       }
     } catch (error) {
-      alert(error.message || "Something went wrong. Please try again.")
+      console.log(error.message || "Something went wrong. Please try again.")
   }
    
   };
