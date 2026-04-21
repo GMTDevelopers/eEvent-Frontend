@@ -11,10 +11,12 @@ import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import { useAuth } from '@/app/contexts/AuthContext';
 import { ChevronLeft } from 'lucide-react';
 import InitPayment from '@/app/(utils)/initializePayment/page';
+import ButtonLoader from '@/app/(components)/loading/buttonLoader';
 
 const BookVendor = () => {
     const [prod, setProd] = useState([]);  
     const [loading, setLoading] = useState(true)
+    const [bloading, setbLoading] = useState(true)
 
     const [isAgreed, setIsAgreed] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
@@ -32,6 +34,8 @@ const BookVendor = () => {
     const [addServicePrice, setAddServicePrice] = useState(0);
     const [addServiceQty, setAddServiceQty] = useState(0);
     const [total, setTotal] = useState(0);
+
+    const [error, setError] = useState("");
 
     const params = useParams();
     const id = params.id;
@@ -75,7 +79,7 @@ const BookVendor = () => {
     };
 
     async function handleSubmit(formData) {
-        // Build additionalServices properly (only include if user actually selected one)
+        setbLoading(true)
         let additionalServices = [];
 
         const addServiceName = formData.get('additionalService')?.trim();
@@ -106,7 +110,6 @@ const BookVendor = () => {
             specialInstructions: formData.get('specialInstructions') || "",
             contactPersonName: formData.get('contactPersonName') || "",
             contactPersonPhone: formData.get('ContactPersonPhone') || "",
-            // AltContactPersonPhone: formData.get('AltContactPersonPhone') || "",  // uncomment if needed
             totalCost: total
         };
 
@@ -137,63 +140,23 @@ const BookVendor = () => {
                 result 
             });
 
-            if (!bookingRes.ok) {
-                throw {
-                    status: bookingRes.status,
-                    message: result.message || result.error || "Booking failed",
-                    details: result.data ?? result
-                };
-            }
-
             sessionStorage.removeItem("pendingBookingForm");
             console.log("Booking successful:", result);
 
             if(result.status==="success" && result.data){
                 await InitPayment({entityId:result.data.bookingId, paymentType:"BOOKING", paymentOption:"FULL", token:token})
-                /* try {
-                    // === STEP 1: Initialize Payment ===
-                    const initializeRes = await fetch("https://eevents-srvx.onrender.com/v1/payments/initialize", {
-                        method: "POST",
-                        headers: { 
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                            paymentType: "BOOKING",
-                            entityId: result.data.bookingId,
-                            paymentOption: "FULL",
-                            gateway: "paystack"
-                        }),
-                    });
-
-                    const initResult = await initializeRes.json();
-
-                    if (!initializeRes.ok) {
-                        console.log(initResult)
-                        throw new Error(initResult.message || "Failed to initialize payment");
-                        
-                    }
-                    console.log("payment init", initResult )
-                    // Paystack returns { status: true, data: { url, access_code, reference } }
-                    if (initResult.data?.url) {
-                        // Redirect user to Paystack checkout
-                        window.location.href = initResult.data.url;
-                    } else {
-                        throw new Error("No authorization URL received");
-                    }
-
-                } catch (err) {
-                    console.error("Payment initialization error:", err);
-                    alert(err.message || "Something went wrong. Please try again.");
-                } */
             }
             // router.push('/success') or router.back() etc.
-            return result;
+            setbLoading(false)
+           /*  return result; */
 
         } catch (err) {
             console.error("Booking error:", err);
-            throw err;
+            setbLoading(false)
+            throw new Error(setError(err.message)) 
+           
         }
+        setbLoading(false)
     }
 
     if (loading) return <Loading text="Fetching service..." />
@@ -278,27 +241,15 @@ const BookVendor = () => {
 
                         <select onChange={(e) => {const price = Number(e.target.selectedOptions[0].dataset.price || 0);setServicePrice(price);}} id="serviceType" name="serviceType">
                             <option value="" selected hidden disabled>Select service type</option>
-                                (<option value={prod.serviceName} data-price={prod.servicePrice} >
-                                    {prod.serviceName} (₦{prod.servicePrice})
-                                </option>)
-                                { prod?.serviceVariants?.map((type) => (
-                                        <option key={type.name} value={type.name} data-price={type.price} >
-                                            {type.name} (₦{type.price})
-                                        </option>
-                                    )) 
-                                }
-                            {/* {prod?.serviceVariants === null ?
-                                (<option value={prod.serviceName} data-price={prod.servicePrice} >
-                                    {prod.serviceName} (₦{prod.servicePrice})
-                                </option>)
-                            :
-                               prod?.serviceVariants?.map((type) => (
-                                    <option key={type.title} value={type.title} data-price={type.cost} >
-                                        {type.title} (₦{type.cost})
+                            (<option value={prod.serviceName} data-price={prod.servicePrice} >
+                                {prod.serviceName} (₦{prod.servicePrice})
+                            </option>)
+                            { prod?.serviceVariants?.map((type) => (
+                                    <option key={type.name} value={type.name} data-price={type.price} >
+                                        {type.name} (₦{type.price})
                                     </option>
                                 )) 
-                            } */}
-                           
+                            }                           
                         </select>
 
                         <input required type="number" min={1} name='unitsNeeded' placeholder='Units needed ( default is 1 unit )' onChange={(e) => setServiceQty(Number(e.target.value || 1))} />
@@ -320,19 +271,6 @@ const BookVendor = () => {
                                     </option>
                                 ))}
                         </select>
-               
-               {/*          <select onChange={(e) => {const price = Number(e.target.selectedOptions[0].dataset.price || 0); setAddServicePrice(price);}} name="additionalService">
-                            <option value="" selected hidden disabled>Select additional service</option>
-                            {prod?.additionalService?.map((add) => (
-                                <option
-                                    key={add.name}
-                                    value={add.name}
-                                    data-price={add.price}
-                                >
-                                    {add.name} (₦{add.price})
-                                </option>
-                            ))}
-                        </select> */}
 
                         {/* QUANTITY INPUT */}
                         <input type="number" disabled={!addServicePrice} min={0} name="addQuantity" placeholder="Additional Service Units needed" onChange={(e) => setAddServiceQty(Number(e.target.value || 0))} />
@@ -355,15 +293,15 @@ const BookVendor = () => {
                             <p style={{color:"#636363", letterSpacing:'0.25rem'}}>TOTAL COST</p>
                             <h2>₦ {total.toLocaleString("en-NG", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h2>
                         </div>
+                        <p>{error}</p>
 
                         <div className={bStyles.termsCondition}>
                             <input type="checkbox" name='agree' checked={isAgreed} onChange={(e) => setIsAgreed(e.target.checked)}/>
-                            <p style={{color:"#636363"}}>By proceeding, I agree to eEvents <Link href="/" style={{color:"#82027D"}}>Terms and Conditions</Link> </p>
+                            <p style={{color:"#636363"}}>By proceeding, I agree to eEvents <Link href="/terms-of-use" style={{color:"#82027D"}}>Terms and Conditions</Link> </p>
                         </div>
 
-                        <button type="submit" disabled={!isAgreed}
-                            className={`${isAgreed ? bStyles.submitBtn : bStyles.disabledBtn }`} >
-                            {isAgreed ? 'Proceed to payment' : 'Accept Terms to Continue'}
+                        <button type="submit" disabled={!isAgreed} className={`${isAgreed ? bStyles.submitBtn : bStyles.disabledBtn }`} >
+                            {bloading ? <ButtonLoader /> : isAgreed ? 'Proceed to payment' : 'Accept Terms to Continue'}
                         </button>
                     </form>
                 </section>
