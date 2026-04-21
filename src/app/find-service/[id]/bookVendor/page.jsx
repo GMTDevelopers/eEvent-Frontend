@@ -16,7 +16,7 @@ import ButtonLoader from '@/app/(components)/loading/buttonLoader';
 const BookVendor = () => {
     const [prod, setProd] = useState([]);  
     const [loading, setLoading] = useState(true)
-    const [bloading, setbLoading] = useState(true)
+    const [bloading, setbLoading] = useState(null)
 
     const [isAgreed, setIsAgreed] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
