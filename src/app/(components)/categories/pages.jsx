@@ -23,15 +23,8 @@ import styles from './categories.module.css';
             "height":102
         },
         {
-            "id": 4,
-            "name": "Dj",
-            "thumb": "/images/categories/dj.png",
-            "width": 159,
-            "height": 102
-        },
-        {
             "id": 5,
-            "name": "Muscian",
+            "name": "Dj",
             "thumb": "/images/categories/entertainment.webp",
             "width": 160,
             "height": 144

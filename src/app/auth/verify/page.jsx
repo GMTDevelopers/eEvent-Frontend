@@ -29,7 +29,7 @@ const VerifyEmail = () => {
                         localStorage.setItem("access_token", res?.data.accessToken);
                         localStorage.setItem("refresh_token", res?.data.refreshToken);
                         fetchUserProfile(res?.data.accessToken);
-                        openModal(<ActionComplete />)
+                 
                         setTimeout(() => {
                             router.push("/vendor/signUp")
                         }, 1500)

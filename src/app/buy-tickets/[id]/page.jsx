@@ -24,7 +24,7 @@ const TicketDetails = () => {
         .then((data) => {
             setTicket(data.data);
             setLoading(false);
-            console.log("Ticket not found", data);
+            console.log("Ticket", data);
         })
         .catch((error) => console.error("Error fetching data:", error));
     }, [id]);

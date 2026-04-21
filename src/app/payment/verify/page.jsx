@@ -100,7 +100,8 @@ export default function PaymentCallback() {
                 <>
                     <ActionComplete />
                     <p>{message}</p>
-                    <p>Your booking is now confirmed.</p>
+                    <br /><br />
+                    <p>payment confirmed.</p>
                 </>
             ) : (
                 <>

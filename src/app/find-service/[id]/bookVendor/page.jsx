@@ -10,6 +10,7 @@ import SignIn from '@/app/navbar/(signIn)/signIn';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import { useAuth } from '@/app/contexts/AuthContext';
 import { ChevronLeft } from 'lucide-react';
+import InitPayment from '@/app/(utils)/initializePayment/page';
 
 const BookVendor = () => {
     const [prod, setProd] = useState([]);  
@@ -23,11 +24,8 @@ const BookVendor = () => {
 
     const [eventType, setEventType] = useState("");
     const [eventDuration, setEventDuration] = useState("");
-    const [selectServiceType, setSelectServiceType] = useState("");
     const [phone, setPhone] = useState("");
     const [altPhone, setAltPhone] = useState("");
-
-    const {logedInUser} = useAuth()
     
     const [servicePrice, setServicePrice] = useState(0);
     const [serviceQty, setServiceQty] = useState(1);
@@ -151,7 +149,8 @@ const BookVendor = () => {
             console.log("Booking successful:", result);
 
             if(result.status==="success" && result.data){
-                try {
+                await InitPayment({entityId:result.data.bookingId, paymentType:"BOOKING", paymentOption:"FULL", token:token})
+                /* try {
                     // === STEP 1: Initialize Payment ===
                     const initializeRes = await fetch("https://eevents-srvx.onrender.com/v1/payments/initialize", {
                         method: "POST",
@@ -186,7 +185,7 @@ const BookVendor = () => {
                 } catch (err) {
                     console.error("Payment initialization error:", err);
                     alert(err.message || "Something went wrong. Please try again.");
-                }
+                } */
             }
             // router.push('/success') or router.back() etc.
             return result;

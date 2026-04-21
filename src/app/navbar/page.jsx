@@ -20,7 +20,7 @@ const Navbar = () => {
     return ( 
         <>
             <div className={Styles.navbar}>
-                <Image className={Styles.navbarLogo} alt='nav logo' src="/images/logo.webp" width={114} height={29} />
+                <Image className={Styles.navbarLogo} onClick={()=>{router.push('/')}} alt='nav logo' src="/images/logo.webp" width={114} height={29} />
                 <div className={`${Styles.navLinks} ${menuOpen ? '' : Styles.showMenu}`}>
                     <ul>
                         <Link href='/'><li onClick={() => setActiveTab('Home')} className={activeTab === "Home" ? Styles.active : ''}>Home</li></Link> 
