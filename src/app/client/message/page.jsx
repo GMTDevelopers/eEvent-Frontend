@@ -1,10 +1,35 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './message.module.css';
 import { SendHorizontal } from 'lucide-react';
+import SignIn from '@/app/navbar/(signIn)/signIn';
+import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 const Message = () => {
-
     const [message, setMessage] = useState("");
+    const { openModal } = useModal();
+    const [Data, setData] = useState([])
+    const [loading, setLoading] = useState(null)
+
+    useEffect(() => {
+        setLoading(true)
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            openModal(<SignIn />)
+            return;
+        }
+        fetch(`https://eevents-srvx.onrender.com/v1/messages/conversations/client`,{
+            headers:{
+                authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log("messages", data);   // See what was fetched 
+            setData(data.data);
+            setLoading(false)       // Update state with the fetched data limit search to 6
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();

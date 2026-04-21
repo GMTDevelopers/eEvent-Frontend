@@ -2,6 +2,11 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1%;
+    scrollbar-width: 0.1px;     
+    -ms-overflow-style: none;  
 }
 .categoriesCard{
     width: 169px;
@@ -28,12 +33,12 @@
 
 
 @media (max-width: 1280px) {
-    .categories{
+/*     .categories{
         overflow-x: auto;
         gap: 1%;
-        scrollbar-width: none;       /* Firefox */
+        scrollbar-width: none;    
         -ms-overflow-style: none; 
-    }
+    } */
     .cardImg{
         width: 140px;
         height: 140px;

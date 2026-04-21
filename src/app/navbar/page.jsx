@@ -66,7 +66,7 @@ const Navbar = () => {
                 </div>
             )}
             {/* Verification Pending */}
-             { !userType && logedInUser?.data?.hasVendorAccount === false && (
+             { !userType && logedInUser?.data?.status === "PENDING" && (
                 <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
                     <p style={{color:"#E83E1C"}} className={Styles.welcome}>REGISTRATION INCOMPLETE</p>    
                     <div className={Styles.userNavMenu}>

@@ -17,12 +17,14 @@ const Bookings = () => {
     const [statsData, setStatsData] = useState([]);        // ← Full dataset
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(null);
+    const [bloading, setbLoading] = useState(null);
     const [totalPages, setTotalPages] = useState(0);
     const TAKE = 10;
 
   // Load data once
     useEffect(() => {
         setLoading(true);
+        setbLoading(true)
         const token = localStorage.getItem("access_token");
         if (!token) {
             openModal(<SignIn />)
@@ -44,6 +46,7 @@ const Bookings = () => {
                 setAllData(data || []);
                 const { total, take } = data.data.meta || {};
                 setTotalPages(total/take || 0);
+                setbLoading(false)
             }) 
 
             .catch((error) => console.error("Error fetching data:", error));
@@ -66,6 +69,7 @@ const Bookings = () => {
         getStats()
         getBookings(currentPage)
         setLoading(false);
+        setbLoading(false)
 
     }, [currentPage]);
 
@@ -95,6 +99,11 @@ const Bookings = () => {
                 </div>
             </div>
             <div className="table">
+                   {bloading && (
+                        <div>
+                            <Loading />
+                        </div>
+                    )}
                 <BookingsTable bookings={visibleData}/> 
                 <Pagination
                     currentPage={currentPage} 

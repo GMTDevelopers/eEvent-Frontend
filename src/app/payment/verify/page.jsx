@@ -2,11 +2,15 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Loading from '@/app/(components)/loading/loading';   // reuse your loading component
+import SignIn from '@/app/navbar/(signIn)/signIn';
+import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
+import ActionComplete from '@/app/(components)/requestSent/actionComplete';
+import ActionError from '@/app/(components)/requestSent/actionError';
 
 export default function PaymentCallback() {
     const searchParams = useSearchParams();
     const router = useRouter();
-
+    const { openModal } = useModal();
     const [status, setStatus] = useState('loading');
     const [message, setMessage] = useState('');
 
@@ -27,11 +31,11 @@ export default function PaymentCallback() {
     const verifyPayment = async (reference) => {
         try {
             const token = localStorage.getItem("access_token");
+      
             if (!token) {
-                setStatus('failed');
-                setMessage("You are not logged in.");
+                openModal(<SignIn />)
                 return;
-            }
+            }   
 
             const res = await fetch(`https://eevents-srvx.onrender.com/v1/payments/verify/${reference}?gateway=paystack`, {                    // ← Use POST as per your API docs
                 headers: {
@@ -49,7 +53,7 @@ export default function PaymentCallback() {
                 // Optional: redirect to success page after 2-3 seconds
                 setTimeout(() => {
                     router.back();   // or /dashboard, /my-bookings etc.
-                }, 7500);
+                }, 3500);
             } else {
                 setStatus('failed');
                 setMessage(result.message || "Payment verification failed.");
@@ -63,11 +67,11 @@ export default function PaymentCallback() {
     const getPayDet = async (reference) => {
         try {
             const token = localStorage.getItem("access_token");
+           
             if (!token) {
-                setStatus('failed');
-                setMessage("You are not logged in.");
+                openModal(<SignIn />)
                 return;
-            }
+            }   
 
             const res = await fetch(`https://eevents-srvx.onrender.com/v1/payments/transactions/${reference}`, {                    // ← Use POST as per your API docs
                 headers: {
@@ -81,7 +85,7 @@ export default function PaymentCallback() {
 
         } catch (err) {
             console.error(err);
-            setStatus('failed');
+            /* setStatus('failed'); */
             setMessage("could not get payment details.");
         }
     };
@@ -94,15 +98,15 @@ export default function PaymentCallback() {
         <div style={{ textAlign: 'center', padding: '80px 20px', maxWidth: '600px', margin: '0 auto' }}>
             {status === 'success' ? (
                 <>
-                    <h2 style={{ color: 'green' }}>✅ Payment Successful!</h2>
+                    <ActionComplete />
                     <p>{message}</p>
                     <p>Your booking is now confirmed.</p>
                 </>
             ) : (
                 <>
-                    <h2 style={{ color: 'red' }}>❌ Payment Verification Failed</h2>
+                    <ActionError />
                     <p>{message}</p>
-                    <button onClick={() => router.push('/find-service')}>Try Again</button>
+                    <button onClick={() => router.push('/find-service')}>Go back</button>
                 </>
             )}
         </div>

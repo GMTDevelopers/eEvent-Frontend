@@ -17,38 +17,59 @@ import styles from './categories.module.css';
         },
         {
             "id": 3,
-            "name": "Entertainment",
+            "name": "Mc",
+            "thumb": "/images/categories/mc.png",
+            "width": 139,
+            "height":102
+        },
+        {
+            "id": 4,
+            "name": "Dj",
+            "thumb": "/images/categories/dj.png",
+            "width": 159,
+            "height": 102
+        },
+        {
+            "id": 5,
+            "name": "Muscian",
             "thumb": "/images/categories/entertainment.webp",
             "width": 160,
             "height": 144
         },
         {
-            "id": 4,
+            "id": 6,
             "name": "Halls & Venues",
             "thumb": "/images/categories/venues.webp",
             "width": 159,
             "height": 96
         },
         {
-            "id": 5,
+            "id": 7,
             "name": "Photography",
             "thumb": "/images/categories/photography.webp",
             "width": 152,
             "height": 115
         },
         {
-            "id": 6,
+            "id": 8,
             "name": "Decorations",
             "thumb": "/images/categories/decorations.png",
             "width": 170,
             "height": 139
         },
         {
-            "id": 7,
+            "id": 9,
             "name": "Drinks & Wines",
             "thumb": "/images/categories/drinks.webp",
             "width": 145,
             "height": 103
+        },
+        {
+            "id": 10,
+            "name": "Musician",
+            "thumb": "/images/categories/musician.png",
+            "width": 145,
+            "height": 97
         }
     ]
 const Categories = () => {

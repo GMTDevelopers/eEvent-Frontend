@@ -3,20 +3,18 @@
 import styles from '../signUp.module.css'
 import formStyles from '@/app/navbar/(signIn)/signIn.module.css'
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import AccountStep from './steps/accountStep';
+import { useState } from 'react';
 import ProgressIndicator from '@/app/(components)/progressIndicator/page';
 import BusinessStep from './steps/businessStep';
 import VerificationStep from './steps/verificationStep';
 import SubscriptionStep from './steps/SubscriptionStep';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
-import { useAuth } from '@/app/contexts/AuthContext';
 import InitPayment from '@/app/(utils)/initializePayment/page';
 import SignIn from '@/app/navbar/(signIn)/signIn';
 import Loading from '@/app/(components)/loading/loading';
+import ButtonLoader from '@/app/(components)/loading/buttonLoader';
 
 const stepsConfig = [
-/*   { id: 1, label: 'Account', title: 'Create new vendor account (1/4)' }, */
   { id: 1, label: 'Business', title: 'Create new vendor account - business (1/3)' },
   { id: 2, label: 'Verification', title: 'Create new vendor account - verification (2/3)' },
   { id: 3, label: 'Subscription', title: 'Create new vendor account - subscription (3/3)' },
@@ -24,13 +22,8 @@ const stepsConfig = [
 
 
 const VendorRegistration = () => {
-  const {logedInUser} = useAuth()
   const { openModal } = useModal();
   const [currentStep, setCurrentStep] = useState(1);
-  const [certificateUrl, setCertificateUrl] = useState('');
-  const [passportUrl, setPassportUrl] = useState('');
-  const [idUrl, setIdUrl] = useState('');
-  const [logoUrl, setLogoUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
   const updateFormData = (newData) => {
@@ -51,7 +44,7 @@ const VendorRegistration = () => {
     idNumber: '',
     idFile: null,
     businessFile: null,
-    passportFile: null,
+/*     passportFile: null, */
     subscriptionPlan: '',
   });
   const [errors, setErrors] = useState({});
@@ -80,7 +73,7 @@ const VendorRegistration = () => {
       if (!formData.idNumber.trim()) stepErrors.idNumber = 'ID number is required';
       if (!formData.idFile) stepErrors.idFile = 'ID document upload is required';
       if (!formData.businessLogo) stepErrors.businessFile = 'Business/license document upload is required';
-      if (!formData.passportFile) stepErrors.passportFile = 'Passport/photo upload is required';
+    /*   if (!formData.passportFile) stepErrors.passportFile = 'Passport/photo upload is required'; */
     } else if (currentStep === 3) {
       // Subscription Step – usually just plan selection
       if (!formData.subscriptionPlan) stepErrors.subscriptionPlan = 'Please select a subscription plan';
@@ -127,7 +120,7 @@ const VendorRegistration = () => {
 
       let certificateUrl = "";
       let idUrl = "";
-      let passportUrl = "";
+/*       let passportUrl = ""; */
       let logoUrl = "";
 
       if (formData.certificate) {
@@ -158,7 +151,7 @@ const VendorRegistration = () => {
         idUrl = result.data.url;
       }
 
-      if (formData.passportFile) {
+      /* if (formData.passportFile) {
         const fd = new FormData();
         fd.append("file", formData.passportFile);
 
@@ -170,7 +163,7 @@ const VendorRegistration = () => {
 
         const result = await res.json();
         passportUrl = result.data.url;
-      }
+      } */
 
       if (formData.businessLogo) {
         const fd = new FormData();
@@ -246,24 +239,21 @@ const VendorRegistration = () => {
                 <section className={`${styles.mainSection} main`}>
                     <div>
                         <ProgressIndicator currentStep={currentStep} steps={stepsConfig} />
+                    
                         <div className={formStyles.signInForm}>
-                            {/* {currentStep === 0 && <AccountStep formData={formData} updateFormData={updateFormData} errors={errors} />} */}
-                             {currentStep === 1 && <BusinessStep formData={formData} updateFormData={updateFormData} errors={errors} />}
-                            {currentStep === 2 && <VerificationStep formData={formData} updateFormData={updateFormData} errors={errors} />}
-                            {currentStep === 3 && <SubscriptionStep formData={formData} updateFormData={updateFormData} errors={errors} />}
+                          {/* {currentStep === 0 && <AccountStep formData={formData} updateFormData={updateFormData} errors={errors} />} */}
+                          {currentStep === 1 && <BusinessStep formData={formData} updateFormData={updateFormData} errors={errors} />}
+                          {currentStep === 2 && <VerificationStep formData={formData} updateFormData={updateFormData} errors={errors} />}
+                          {currentStep === 3 && <SubscriptionStep formData={formData} updateFormData={updateFormData} errors={errors} />}
                         </div>
-                        {loading && (
-                          <div>
-                            <Loading />
-                          </div>
-                        )}
+                      
                         <div className={styles.buttonsPack}>
                             {currentStep > 1 && ( <button type="button" className={styles.submitBtn} onClick={handleBack}> Back </button> )}
                         {/* <button type="button" className={styles.submitBtn} onClick={currentStep === 3 ? handleSubmit: handleNext }>
                               {currentStep === 3 ? 'Proceed to payment' : 'Proceed'}
                             </button> */}
                             {currentStep <= 2 && ( <button type="button" className={styles.submitBtn} onClick={handleNext}> Proceed </button> )}
-                            {currentStep === 3 && ( <button type="button" className={styles.submitBtn} onClick={handleSubmit}> Proceed to payment </button> )}
+                            {currentStep === 3 && ( <button type="button" className={styles.submitBtn} onClick={handleSubmit}> {loading ? <ButtonLoader /> : "Proceed to payment" }</button> )}
                         </div>
                     </div>
                 </section>
