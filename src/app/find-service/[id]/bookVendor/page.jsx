@@ -261,13 +261,13 @@ const BookVendor = () => {
                                 setAddServicePrice(price);
                             }} name="additionalService">
                                 <option value="" selected hidden disabled>Select additional service (optional)</option>
-                                {prod?.additionalService?.map((add) => (
+                                {prod?.additionalService?.services.map((add) => (
                                     <option
-                                        key={add.name}
-                                        value={add.name}
-                                        data-price={add.price}
+                                        key={add.title}
+                                        value={add.title}
+                                        data-price={add.unitPrice}
                                     >
-                                        {add.name} (₦{add.price})
+                                        {add.title} (₦{add.unitPrice})
                                     </option>
                                 ))}
                         </select>

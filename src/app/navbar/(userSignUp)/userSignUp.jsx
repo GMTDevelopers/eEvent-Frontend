@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import styles from '../(signIn)/signIn.module.css'
+import bStyles from './userSignUp.module.css'
 import Image from 'next/image';
 import SignIn from '../(signIn)/signIn';
 import Confirmation from '../(confirmation)/confirmation';
@@ -14,6 +15,12 @@ const UserSignUp = () => {
     const {signUp} = useAuth();
     const [loading, setLoading] = useState(false)
     const [formError, setFormError] = useState('')
+    const [passportPhoto, setPassportPhoto] = useState('/images/defaultDP.jpg' )
+
+    const handlePhotoChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) setPassportPhoto(file);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -58,6 +65,15 @@ const UserSignUp = () => {
                 </div>
             </div>
             <form className={styles.signInForm} onSubmit={handleSubmit}>
+                <div className={bStyles.photoPack}>
+                    <div className={bStyles.photoItem}>
+                        <img src={passportPhoto instanceof File ? URL.createObjectURL(passportPhoto) : passportPhoto} alt="profile" />
+                        <label className={bStyles.uploadBtn}>
+                            profile photo
+                            <input type="file" accept="image/*" onChange={handlePhotoChange} style={{ display: 'none' }} />
+                        </label>
+                    </div>
+                </div>
                 <input placeholder="User Name" name='username' type="text" />
                 <input placeholder="Surname" name='lastName' type="text" />
                 <input placeholder="First name" name='firstName' type="text" />

@@ -58,7 +58,7 @@
   margin-top: 20px;
   display: flex;
   gap: 16px;
-  text-align: center;
+ /*  text-align: center; */
   width: 100%;
 }
 .featuresListTxt div{
@@ -94,7 +94,7 @@
   margin-bottom: 8px;
 }
 .serviceDesc{
-  width: 60%;
+  /* width: 60%; */
 }
 
 

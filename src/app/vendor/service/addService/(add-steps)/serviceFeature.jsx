@@ -3,7 +3,7 @@ import { Minus, Plus } from 'lucide-react';
 import styles from './steps.module.css'
 
 const ServiceStep = ({ formData, updateFormData, errors }) => {
-    console.log(formData)
+    console.log(errors)
     const addServiceFeature = () => {
         updateFormData({
             servieFeature: [
@@ -45,7 +45,8 @@ const ServiceStep = ({ formData, updateFormData, errors }) => {
                     </div>
                 ))}
 
-               {/*  {errors && <p>{errors}</p>} */}
+               { errors && <p style={{color:'#E50909'}}>{errors?.servieFeature}</p>}
+                <br />
 
                 <div className={`btnCapsule ${styles.addServiceBtn}`} onClick={addServiceFeature}> <Plus />   Add service feature </div>
 

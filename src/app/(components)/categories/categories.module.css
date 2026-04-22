@@ -5,7 +5,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     gap: 1%;
-    scrollbar-width: 0.1px;     
+    scrollbar-width: none;     
     -ms-overflow-style: none;  
 }
 .categoriesCard{

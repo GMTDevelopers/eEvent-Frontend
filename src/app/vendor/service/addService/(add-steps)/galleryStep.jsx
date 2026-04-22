@@ -153,7 +153,10 @@ const GalleryStep = ({ formData, updateFormData, errors }) => {
                 <p style={{fontWeight:700}}>UPLOAD IMAGES AND VIDEOS</p>
                 <p >PLEASE NOTE: High-quality images attract more clients and increase your chances of getting booked. Your service photos create the first impression of your work, so ensure you upload clear, well-lit, and professional-looking pictures that truly represent your service. Avoid blurry, dark, or watermarked images, as they can affect how clients perceive your brand. Vendors with quality visuals receive up to three times more views and bookings on eEvents. Please note that a minimum of three (3) pictures is required to publish your service.</p>
             </div>
+            <p style={{color:'#E50909'}}>{errors?.media}</p>
+            <br />
             <div {...getFeaturedRoot()} className={styles.cover} style={{ background: featuredDrag ? '#e6f3ff' : '#CFCFCF', height: featuredFile ? 'auto' : '216px'}}>
+                
                 <input {...getFeaturedInput()} />
 
                 {featuredFile ? 
@@ -177,6 +180,7 @@ const GalleryStep = ({ formData, updateFormData, errors }) => {
                             <h2>+</h2>
                             <div>Upload Featured Image</div>
                             <small>(.jpg, .jpeg, .png)</small>
+                            <small>image size should not be bigger than 1mb</small>
                         </div>
                     )
                 }
@@ -210,11 +214,15 @@ const GalleryStep = ({ formData, updateFormData, errors }) => {
                         <h2>+</h2>
                         <div>Upload File</div>
                         <small>(.jpg .jpeg .png .mp4)</small>
+                         <small>image size should not be bigger than 1mb</small>
                     </div>
                     )}
                 </div>
             ))}</div>  
-    
+            <br />
+             <p style={{color:'#E50909'}}>{errors?.media}</p>
+            
+            
       
         </div>
     );

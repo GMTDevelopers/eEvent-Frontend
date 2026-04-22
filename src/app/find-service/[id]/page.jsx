@@ -74,13 +74,15 @@ const ProductCard = ({params}) => {
                             <br />
                             <div className="bookingPricing">
                                 <p className="bookingTitle">Available in these cities</p>
-                                {
-                                    prod.citiesAvailableIn.map((city)=>(
-                                        <div className="btnNoCapsule" style={{display:"grid", gridTemplateColumns:"1fr 1fr"}}>
-                                            <p>{city}</p>
-                                        </div>
-                                    ))
-                                }
+                                <div className='starsPack'>
+                                    {
+                                        prod.citiesAvailableIn.map((city)=>(
+                                            <div className="btnNoCapsule" style={{display:"grid", gridTemplateColumns:"1fr 1fr"}}>
+                                                <p>{city}</p>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
                             </div>
                         </aside>
                         <section className="mainSection">
@@ -89,7 +91,7 @@ const ProductCard = ({params}) => {
                                 <NaturalDescription text={prod.serviceDescription} />
                             </div>
                             <div className={styles.tabsSection}>
-                                <ProductTabs gallery={prod.serviceGallery} features={prod.serviceFeatures} addService={prod.additionalService} reviews={prod.serviceReviews.reviews} />
+                                <ProductTabs gallery={prod.serviceGallery} features={prod.serviceFeatures} addService={prod.additionalService.services} reviews={prod.serviceReviews.reviews} />
                             </div>
                         </section>
                     </div>

@@ -64,7 +64,7 @@ const ApproveVendor = ({id, vName, bName, date, status}) => {
                 </li>
                 <li className={Styles.detailItems}>
                     <p style={{color:"#636363"}}>Date registered</p>
-                    <p>₦{date} </p> 
+                    <p>{new Date(date).toDateString()} </p> 
                 </li>
                 <li className={Styles.detailItems}>
                     <p style={{color:"#636363"}}>Account status </p>

@@ -2,9 +2,10 @@
 import { Minus, Plus } from 'lucide-react';
 import styles from './steps.module.css';
 import xStyles from '@/app/vendor/service/addService/addService.module.css';
+import { useState } from 'react';
 
 const AdditionalService = ({ formData, updateFormData, errors }) => {
-
+    const [isAdd, setIsAdd] = useState(true)
     // Ensure additionalService object exists with default structure
     const additionalServiceData = formData.additionalService || {
         additionalService: true,
@@ -55,14 +56,15 @@ const AdditionalService = ({ formData, updateFormData, errors }) => {
 
     // Handle Yes/No select (boolean)
     const handleAdditionalServiceToggle = (e) => {
-        const isEnabled = e.target.value === "Yes";   // "Yes" → true, "No" → false
-
+        const isEnabled = e.target.value === "Yes";
+        const isNotEnabled = e.target.value === "No";    // "Yes" → true, "No" → false
         updateFormData({
             additionalService: {
                 additionalService: isEnabled,
                 services: additionalServiceData.services || []
             }
         });
+        
     };
 
     return (
@@ -77,7 +79,7 @@ const AdditionalService = ({ formData, updateFormData, errors }) => {
                     
                     {/* Yes / No Select */}
                     <select 
-                        value={additionalServiceData.additionalService ? "Yes" : "No"}
+                        // value={additionalServiceData.additionalService ? "Yes" : "No"}
                         onChange={handleAdditionalServiceToggle}
                         required
                     >
@@ -86,7 +88,7 @@ const AdditionalService = ({ formData, updateFormData, errors }) => {
                     </select>
 
                     {/* Dynamic Additional Services List */}
-                    {additionalServiceData.services.map((feature, index) => (
+                    {additionalServiceData.additionalService ? additionalServiceData.services.map((feature, index) => (
                         <div className={styles.stepsFormPack} key={index}>
                             <div className={styles.addServiceHeader}>
                                 <h4>ADDITIONAL SERVICE {index + 1}</h4>
@@ -96,7 +98,7 @@ const AdditionalService = ({ formData, updateFormData, errors }) => {
                                     </div>
                                 )}
                             </div>
-
+ 
                             <input 
                                 type="text" 
                                 placeholder="Service title" 
@@ -113,18 +115,18 @@ const AdditionalService = ({ formData, updateFormData, errors }) => {
                             <input 
                                 type="text" 
                                 placeholder="Unit price" 
-                                value={feature.unitPrice || ''} 
+                                value={feature.unitPrice?.toLocaleString() || ''} 
                                 onChange={(e) => handleChange(index, "unitPrice", e.target.value)} 
                             />
-                        </div>
-                    ))}
+                        </div> 
+                    )): <div> </div>}
 
-                    <div 
+                    {additionalServiceData.additionalService && <div 
                         className={`btnCapsule ${styles.addServiceBtn}`} 
                         onClick={addServiceFeature}
                     >
                         <Plus /> Add another service
-                    </div>
+                    </div>}
                 </div>
             </div>
 

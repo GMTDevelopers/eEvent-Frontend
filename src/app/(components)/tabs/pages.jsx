@@ -43,8 +43,9 @@ export default function ProductTabs({gallery, features, addService, reviews}) {
               <div key={i} className={styles.featuresListTxt}>
                 <Image className={styles.cardFeaturesCheck} src='/images/check.png' width={27} height={19} alt="check"/>
                 <div>
-                  <p className="txtHeader">{feature}</p>
-                  {feature.description && <p style={{color:"#636363"}}>{feature.description}</p>}
+                 {/*  <p className="txtHeader">{feature}</p> */}
+                  {feature.featureTitle && <p style={{color:"#222222", fontWeight:600}}>{feature.featureTitle}</p>}
+                  {feature.featureDescription && <p style={{color:"#636363"}}>{feature.featureDescription}</p>}
                 </div>
               </div>
             ) )}
@@ -59,8 +60,8 @@ export default function ProductTabs({gallery, features, addService, reviews}) {
             {addService.map((svc, i) => (
               <div key={i} className={styles.serviceCard}>
                 <div className={styles.serviceHeaderPack}>
-                  <p style={{fontWeight:700}} >{svc.name}</p>
-                  <p className='txtHeader'>₦ {svc.price}</p>
+                  <p style={{fontWeight:700}} >{svc.title}</p>
+                  <p className='txtHeader'>₦ {svc.unitPrice}</p>
                 </div>                
                 <p style={{color:"#636363"}} className={styles.serviceDesc}>{svc.description}</p>
               </div>

@@ -16,6 +16,8 @@ import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import SignIn from '@/app/navbar/(signIn)/signIn';
 import { useAuth } from '@/app/contexts/AuthContext';
 import ActionComplete from '@/app/(components)/requestSent/actionComplete';
+import ActionError from '@/app/(components)/requestSent/actionError';
+import ButtonLoader from '@/app/(components)/loading/buttonLoader';
 
 const stepsConfig = [
   { id: 1, label: 'Gallery', title: '' },
@@ -34,6 +36,8 @@ const AddServices = () => {
 
     const [vendorData, setVendorData] = useState([]);
     const [vendorLoading, setVendorLoading] = useState(true);
+
+    const [loading, setloading] = useState(null);
 
     // Clean and consistent central formData
     const [formData, setFormData] = useState({
@@ -111,7 +115,7 @@ const AddServices = () => {
             }
         } else if (currentStep === 2) {
             const hasEmptyFeature = formData.servieFeature.some(
-                f => !f.featureTitle.trim() || !f.featureDescription.trim()
+                f => f.featureTitle.trim()==="" || f.featureDescription.trim()===""
             );
             if (hasEmptyFeature) {
                 stepErrors.servieFeature = 'All service features must have title and description';
@@ -139,6 +143,7 @@ const AddServices = () => {
         const stepErrors = validateCurrentStep();
 
         if (Object.keys(stepErrors).length > 0) {
+            console.log("step errors", stepErrors)
             setErrors(stepErrors);
             return;
         }
@@ -176,7 +181,7 @@ const AddServices = () => {
     };
 
     const handleSubmit = async () => {
-        
+        setloading(true)
         const token = localStorage.getItem('access_token');
         if (!token) {
             openModal(<SignIn />);
@@ -207,12 +212,14 @@ const AddServices = () => {
             console.log("Service creation result:", result);
 
             if (response.ok) {
+                setloading(false)
                 openModal(<ActionComplete />)
                 setTimeout(() => {
                     router.push('/vendor/service')
                 }, 2500);
                 // You can redirect here if needed: router.push('/vendor/services');
             } else {
+                setloading(false)
                 openModal(<ActionError />)
                 setTimeout(() => {
                     closeModal()
@@ -223,6 +230,7 @@ const AddServices = () => {
             console.error("Submit error:", error);
             alert("An error occurred while creating the service");
         }
+        setloading(false)
     };
 
     return (
@@ -267,7 +275,9 @@ const AddServices = () => {
                                 <option value="" hidden disabled>Service category</option>
                                 <option value="Makeup Artist">Makeup Artist</option>
                                 <option value="Event Planner">Event Planner</option>
-                                <option value="Music & DJ">Music & DJ</option>
+                                <option value="Music">Music</option>
+                                <option value="DJ">DJ</option>
+                                <option value="MC">MC</option>
                                 <option value="Halls & venues">Halls & venues</option>
                                 <option value="Photography">Photography</option>
                                 <option value="Decorations">Decorations</option>
@@ -347,7 +357,7 @@ const AddServices = () => {
                                         className={formStyle.submitBtn} 
                                         onClick={handleNext}
                                     >
-                                        {currentStep === 4 ? 'Proceed to payment' : 'Next'}
+                                        {currentStep === 4 ? (loading ? <ButtonLoader /> : 'Create Service') : 'Next'}
                                     </button>
                                 </div>
                             </div>

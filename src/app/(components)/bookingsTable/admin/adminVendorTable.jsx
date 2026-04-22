@@ -49,7 +49,7 @@ export default function AdminVendorTable({ bookings = [] }) {
                 <td onClick={closeMenu}>{b?.businessName}</td>
                 <td onClick={closeMenu}>{new Date(b?.dateRegistered).toLocaleDateString()}</td>
                 <td onClick={closeMenu} className={styles.amount}>{b.totalRevenue}</td>
-                <td onClick={closeMenu}>{new Date(b?.lastBooking).toLocaleDateString()}</td>
+                <td onClick={closeMenu}>{b?.lastBooking==="N/A"? "-" : new Date(b?.lastBooking).toLocaleDateString()}</td>
                 <td onClick={closeMenu}>{b?.serviceListingsCount}</td>
                 <td onClick={closeMenu}>{b?.totalBookings}</td>
                 <td onClick={closeMenu}> 
