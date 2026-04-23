@@ -1,3 +1,4 @@
+'use clients';
 import Link from 'next/link';
 import styles from '../../navbar/(signIn)/signIn.module.css';
 import { useState } from 'react';
@@ -33,6 +34,9 @@ const ApproveListings = ({id}) => {
                 }
                 setSuccess(Data.message)
                 console.log(Data)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 700);
             } else (
                 setError("Please type AGREE exactly to confirm.")
             )

@@ -52,7 +52,7 @@ const AddServices = () => {
             }
         ],
         additionalService: {
-            additionalService:false,
+            additionalService:true,
             services:[{
                 title: '',
                 description: '',

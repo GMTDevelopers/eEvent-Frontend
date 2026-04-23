@@ -1,14 +1,18 @@
+'use client'
 import { useEffect, useState } from 'react';
 import styles from '../adminUpdateStatus/updatePayStatus.module.css';
 import Styles from '../vendorReschedule/reschedule.module.css';
 import { useRouter } from 'next/navigation';
+import ButtonLoader from '../loading/buttonLoader';
 
 const ApproveVendor = ({id, vName, bName, date, status}) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [loading, setLoading] = useState(null)
     const router = useRouter();
 
     const handleSubmit = async (e) => {
+        setLoading(true)
         console.log(id)
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -35,14 +39,21 @@ const ApproveVendor = ({id, vName, bName, date, status}) => {
                 }
                 setSuccess(Data.message)
                 console.log(Data)
+                setLoading(false)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 900);
             } else (
+                
                 setError("Please type APPROVE exactly to confirm.")
+                
             )
         }   catch(err){
+            setLoading(false)
             setError(err.message)
             console.log(err)
         }
-        
+        setLoading(false)
     };
 
     return ( 
@@ -77,7 +88,7 @@ const ApproveVendor = ({id, vName, bName, date, status}) => {
                 <input placeholder='Type [APPROVE]' type='text' name='typeAccept' />
                 
                 {success && <p style={{color:"#2d9f35"}}>{success}</p>}
-                <button type="submit"> Update status </button>
+                <button type="submit"> { loading ? <ButtonLoader /> : "Update status"} </button>
             </form>
             
         </div>
