@@ -1,0 +1,29 @@
+.adminAccountsContainer{
+    width: 90%;
+    margin: auto auto;
+}
+.adminAccounts{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.accountHeader, .accountPack {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;;
+    padding: 15px 20px 15px 20px;
+    border-radius: 12px;
+}
+.accountPack {
+
+    border: 1px solid #CFCFCF;
+}
+.accountPack ul{
+    list-style-type: none;
+    display: flex;
+    width: fit-content;
+    gap: 7px;
+}

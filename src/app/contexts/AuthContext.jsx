@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
   const [userType, setUserType] = useState(true) // true for CLIENT USERS and flase for VENDOR USERS
   const [loading, setLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
+  const [signUpError, setSignUpError] = useState();
   const isRefreshing = useRef(false);
   const router = useRouter();
   // Check if user was logged in before (on page load/refresh)
@@ -159,13 +160,13 @@ export function AuthProvider({ children }) {
   };
 
 
-  const signUp = async (username, password, phone, email, middleName, firstName, lastName, role) => {
+  const signUp = async (username, password, phone, email, middleName, profileImage, firstName, lastName, role) => {
 
     try {
       const signUpRes = await fetch("https://eevents-srvx.onrender.com/v1/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, phone, role, email, middleName, firstName, lastName}),
+        body: JSON.stringify({ username, password, phone, role, email, profileImage, middleName, firstName, lastName}),
       });
 
       const data = await signUpRes.json();      
@@ -189,12 +190,14 @@ export function AuthProvider({ children }) {
     } catch (err) {
     // the error thrown above is caught here and passed to the front-end
       console.log("this is the catch error",err)
-      throw{
+      setSignUpError(err)
+      console.log("this is the catch error", signUpError)
+      /* throw{
         status: err.status,
         code: err.code,
         message: err.message,
         details: err.data ?? null
-      };
+      }; */
     }
   };
 
@@ -227,7 +230,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ logedInUser, fetchUserProfile, admin, login, logout, loading, userType, signUp, refreshAccessToken }}>
+    <AuthContext.Provider value={{ logedInUser, signUpError, fetchUserProfile, admin, login, logout, loading, userType, signUp, refreshAccessToken }}>
       {loading ? <Loading /> : children }
     </AuthContext.Provider>
   );

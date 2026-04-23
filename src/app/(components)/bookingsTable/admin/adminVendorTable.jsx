@@ -32,11 +32,12 @@ export default function AdminVendorTable({ bookings = [] }) {
               <th>Vendor ID</th>
               <th>Vendor name</th>
               <th>Business name</th> 
-              <th>Date registered</th>
+            {/*   <th>Date registered</th> */}
               <th>Total revenue</th>
-              <th>Last Booking</th>
+              {/* <th>Last Booking</th> */}
               <th>Service listings</th>
               <th>Total bookings</th>
+              <th>Account status</th>      
               <th>Subscription status</th>      
               <th>Action</th>
             </tr>
@@ -47,11 +48,14 @@ export default function AdminVendorTable({ bookings = [] }) {
                 <td onClick={closeMenu}>{b?.vendorID}</td>
                 <td onClick={closeMenu}>{b?.vendorName}</td>
                 <td onClick={closeMenu}>{b?.businessName}</td>
-                <td onClick={closeMenu}>{new Date(b?.dateRegistered).toLocaleDateString()}</td>
-                <td onClick={closeMenu} className={styles.amount}>{b.totalRevenue}</td>
-                <td onClick={closeMenu}>{b?.lastBooking==="N/A"? "-" : new Date(b?.lastBooking).toLocaleDateString()}</td>
+                <td onClick={closeMenu} className={styles.amount}>{b.totalRevenue}</td>             
                 <td onClick={closeMenu}>{b?.serviceListingsCount}</td>
                 <td onClick={closeMenu}>{b?.totalBookings}</td>
+                <td onClick={closeMenu}> 
+                  <span className={`${styles.status} ${styles[b?.accountStatus.toLowerCase()]}`}>
+                    {b?.accountStatus.toLowerCase()}
+                  </span>
+                </td>
                 <td onClick={closeMenu}> 
                   <span className={`${styles.status} ${styles[b?.subscriptionStatus.toLowerCase()]}`}>
                     {b?.subscriptionStatus.toLowerCase()}

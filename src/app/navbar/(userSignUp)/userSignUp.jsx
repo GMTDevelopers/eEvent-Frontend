@@ -12,9 +12,10 @@ import { useState } from 'react';
 const UserSignUp = () => {
     const { openModal } = useModal();
     const { closeModal } = useModal();
-    const {signUp} = useAuth();
+    const {signUp, signUpError} = useAuth();
     const [loading, setLoading] = useState(false)
     const [formError, setFormError] = useState('')
+    const [formError2, setFormError2] = useState('')
     const [passportPhoto, setPassportPhoto] = useState('/images/defaultDP.jpg' )
 
     const handlePhotoChange = (e) => {
@@ -24,6 +25,10 @@ const UserSignUp = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        //logo formdata
+        const uploadLogo = new FormData();
+        uploadLogo.append("file", passportPhoto);
+        //signup formdata
         const formData = new FormData(e.target);
         const username = formData.get("username");
         const lastName = formData.get("lastName");
@@ -35,18 +40,30 @@ const UserSignUp = () => {
         const password = formData.get("password");
         setLoading(true)
         try{
-            const result = await signUp(username, password, phone, email, middleName, firstName, lastName, role); 
-            if (result.status==='success') {
-                openModal(<Confirmation />)
+            const res = await fetch("https://eevents-srvx.onrender.com/v1/upload/logo", {
+                method: "POST",
+                body: uploadLogo,
+            });
+
+            if (!res.ok) {
+                throw new Error("Upload failed");
             }
+            const data = await res.json();
+            if (res.ok && data.status === "success") {
+                console.log("exisit?", data.data.url )
+                const profileImage = data.data.url
+                console.log("exists", profileImage)
+                const result = await signUp(username, password, phone, email, middleName, profileImage, firstName, lastName, role); 
+                if (result.status==='success') {
+                    openModal(<Confirmation />)
+                } 
+                
+            }
+            
+            //  return data.data[0].url;  backend re
+            /* */
         } catch (err) {
             console.log("this is signup error", err)
-            if (err.status === 'error') {
-                setFormError(err.message);
-            }
-            if (err.status === 'fail') {
-                setFormError(err.details);
-            }
 
         }
         setLoading(false)
@@ -87,8 +104,18 @@ const UserSignUp = () => {
                 <input placeholder="Phone number" name='phone' type="tel" />
                 <input placeholder="Password" name='password' type="password" />                        
                 {/* <input placeholder="Confirm password" name='confirmPassword' type="password" /> */}
-                <p className='error'>{formError}</p>
+                {signUpError?.message && <p className='error'>{signUpError.message}</p>}
+                {signUpError?.details?.First && <p className='error'>first {signUpError?.details?.First[0]}, first {signUpError?.details?.First[1]}</p>}
+                {signUpError?.details?.Last && <p className='error'>last {signUpError?.details?.Last[0]}, last {signUpError?.details?.Last[1]}</p>}
+                {signUpError?.details?.Middle && <p className='error'>middle {signUpError?.details?.Middle[0]}</p>}
+                {signUpError?.details?.Profile &&<p className='error'>logo {signUpError?.details?.Profile[0]}</p>}
+                {signUpError?.details?.Password && <p className='error'>password {signUpError?.details?.Password[0]}</p>}
+                {signUpError?.details?.Email &&<p className='error'>email {signUpError?.details?.Email[0]}</p>}
+                {signUpError?.details?.Please &&<p className='error'>{signUpError?.details?.Please[0]}</p>}
+                {signUpError?.details?.Phone &&<p className='error'>{signUpError?.details?.Phone[0]}, {signUpError?.details?.Phone[1]}</p>}
                 <p className={styles.forgotPassword}>Forgot password?</p>
+                
+                
                 <button style={{ display: "flex", alignItems:"center", justifyContent:"center" }} disabled={loading} type="submit">
                     <span style={{ visibility: loading ? "hidden" : "visible" }}>
                         Create account

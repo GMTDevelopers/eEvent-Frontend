@@ -11,7 +11,6 @@ const TicketBooking = ({title, img, cost, name, ticketId, categoryId}) => {
     const [error, setError] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [quantity, setQuantity] = useState('1')
-    const [success, setSuccess] = useState()
     const [ticket, setTicket] = useState(name + " " + " " +  "--" + " " + " " + "₦" + cost)
     const { openModal } = useModal();
 
@@ -39,12 +38,11 @@ const TicketBooking = ({title, img, cost, name, ticketId, categoryId}) => {
                 const Data  = await res.json();
                 if (res.ok){
                     if (Data.status=="success"){
-                        await InitPayment({entityId:categoryId, paymentType:"TICKET_PURCHASE", paymentOption:"FULL", token:token})
+                        console.log(Data)
+                        await InitPayment({entityId:Data.data.id, paymentType:"TICKET_PURCHASE", paymentOption:"FULL", token:token})
                     }
                     
                 }
-                setSuccess(Data)
-                console.log(Data)
                 setLoading(false)
             }   catch(err){
                 if (err.code === 401){

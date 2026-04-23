@@ -5,6 +5,8 @@ import { useModal } from "@/app/(components)/ModalProvider/ModalProvider";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SignIn from "@/app/navbar/(signIn)/signIn";
+import styles from "./support.module.css"
+import { Plus } from "lucide-react";
 
 const supportCenter = () => {
     const { openModal } = useModal();
@@ -25,6 +27,9 @@ const supportCenter = () => {
         { key: 'Reviews', label: 'Reviews' },
         { key: 'Audit trail', label: 'Audit trail' },
     ];
+    const handleAddAcct = () => {
+
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -117,7 +122,28 @@ const supportCenter = () => {
         switch (activeTab) {
             case 'Admin accounts':
                 return (
-                    <p>Admin accounts</p>
+                    <div className={styles.adminAccountsContainer}>
+                        <div className={styles.adminAccounts}>
+                            <div className={styles.accountHeader}>
+                                <p className="txtHeader">ACCOUNT</p>
+                                <p className="txtHeader">ROLE</p>
+                                <p className="txtHeader">ACTION</p>
+                            </div>
+                           <div className={styles.accountPack}> 
+                                <p style={{color:"#636363"}}>jason@dnwsd.idwid</p>
+                                <p>Sub-admin</p>
+                                <ul>
+                                    <li style={{color:"#82027D"}}>edit</li>
+                                    <li style={{color:"#82027D"}}>disable</li>
+                                    <li style={{color:"#E50909"}}>delete</li>
+                                </ul>
+                            </div>                                                  
+                        </div>
+                        <button onClick={handleAddAcct} className={`${tabStyles.tab} ${tabStyles.active}`}>
+                           <Plus /> Add account
+                        </button> 
+
+                    </div>
                     
                 )
 /*             case 'Roles':
