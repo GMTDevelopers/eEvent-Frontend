@@ -21,6 +21,15 @@
 
     border: 1px solid #CFCFCF;
 }
+.accountPack p:first-child{
+width: 41%;
+    
+}
+.accountPack p:nth-child(2){
+width: 20%;
+
+    
+}
 .accountPack ul{
     list-style-type: none;
     display: flex;

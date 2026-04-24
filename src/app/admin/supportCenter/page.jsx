@@ -7,18 +7,19 @@ import { useRouter } from "next/navigation";
 import SignIn from "@/app/navbar/(signIn)/signIn";
 import styles from "./support.module.css"
 import { Plus } from "lucide-react";
+import AddAdmin from "@/app/(components)/addAdmin/addAdmin";
+import ButtonLoader from "@/app/(components)/loading/buttonLoader";
 
 const supportCenter = () => {
     const { openModal } = useModal();
-    const [stats, setStats] = useState()
+    const [accounts, setAccounts] = useState()
+    const [roles, setRoles] = useState()
     const router = useRouter();
-    
-    const [vendorData, setVendorData] = useState([]);
-    const [clientData, setClientData] = useState([]);
 
     const [loading, setLoading] = useState(null);
+    const [ctaLoading, setCtaLoading] = useState(null);
     const [error, setError] = useState()
-
+    const token = localStorage.getItem("access_token");
     //tabs
     const [activeTab, setActiveTab] = useState('Admin accounts');
     const tabs = [
@@ -28,17 +29,72 @@ const supportCenter = () => {
         { key: 'Audit trail', label: 'Audit trail' },
     ];
     const handleAddAcct = () => {
+        openModal(<AddAdmin />)
+    }
 
+    const handleDisable = (id) => {
+        setCtaLoading(true)
+        fetch(`https://eevents-srvx.onrender.com/v1/admin/accounts/${id}/disable`,{
+            method: "PATCH",
+            headers:{
+                authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) =>{ 
+            return res.json()
+        })
+        .then((data) => {            
+            console.log("disable admin", data)
+            if(data.status === "success"){
+                alert("Account disabled")
+                setCtaLoading(false)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000);
+            }
+        }) 
+        .catch((error) => console.error("Error fetching data:", error))
+        .finally( ()=> {
+                setCtaLoading(false)
+            }  
+        )
+    }
+    const handleDelete = (id) => {
+        setCtaLoading(true)
+        fetch(`https://eevents-srvx.onrender.com/v1/admin/accounts/${id}`,{
+            method: "DELETE",
+            headers:{
+                authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) =>{ 
+            return res.json()
+        })
+        .then((data) => {            
+            console.log("delete admin", data)
+            if(data.status === "success"){
+                setCtaLoading(false)
+                alert("Account disabled")
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000);
+            }
+        }) 
+        .catch((error) => console.error("Error fetching data:", error))
+        .finally( ()=> {
+            setCtaLoading(false)
+            }  
+        )
     }
 
     useEffect(() => {
         setLoading(true);
-        const token = localStorage.getItem("access_token");
+        
         if (!token) {
             openModal(<SignIn />)
             return;
         }
-        const getAccounts = () => {
+        const getRoles = () => {
             fetch(`https://eevents-srvx.onrender.com/v1/admin/roles`,{
                 headers:{
                     authorization: `Bearer ${token}`,
@@ -53,8 +109,32 @@ const supportCenter = () => {
                 return res.json()
             })
             .then((data) => {            
+                console.log("admin roles", data)
+                setRoles(data.data || []);
+            }) 
+            .catch((error) => console.error("Error fetching data:", error))
+            .finally( ()=> {
+                    setLoading(false);
+                }  
+            )
+        }
+        const getAccounts = () => {
+            fetch(`https://eevents-srvx.onrender.com/v1/admin/accounts`,{
+                headers:{
+                    authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) =>{ 
+                if (res.status===401) {
+                    localStorage.removeItem('token');
+                    openModal(<SignIn />)
+                    router.refresh();
+                }
+                return res.json()
+            })
+            .then((data) => {            
                 console.log("admin accounts", data)
-                setStats(data.data || []);
+                setAccounts(data.data || []);
             }) 
             .catch((error) => console.error("Error fetching data:", error))
             .finally( ()=> {
@@ -63,59 +143,10 @@ const supportCenter = () => {
             )
         }
 
-        /* const getVendor = () => {
-            fetch(`https://eevents-srvx.onrender.com/v1/admin/vendors`,{
-                headers:{
-                    authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) =>{ 
-                if (res.status===401) {
-                    localStorage.removeItem('token');
-                    openModal(<SignIn />)
-                    router.refresh();
-                }
-                return res.json()
-            })
-            .then((data) => {            
-                console.log("vendor data", data.data)
-                setVendorData(data.data || []);
-            }) 
 
-            .catch((error) => console.error("Error fetching data:", error))
-            .finally( ()=> {
-                    setLoading(false);
-                }  
-            )
-        }
-
-        const getClient = () => {
-            fetch(`https://eevents-srvx.onrender.com/v1/admin/clients`,{
-                headers:{
-                    authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) =>{ 
-                if (res.status===401) {
-                    localStorage.removeItem('token');
-                    openModal(<SignIn />)
-                    router.refresh();
-                }
-                return res.json()
-            })
-            .then((data) => {            
-                console.log("client data", data.data)
-                setClientData(data.data || []);
-            }) 
-            .catch((error) => console.error("Error fetching data:", error))
-            .finally( ()=> {
-                    setLoading(false);
-                }  
-            )
-        } */
         getAccounts()
-  /*       getVendor()
-        getClient() */
+        getRoles()
+
     }, [ ]);
 
     const renderContent = () => {
@@ -129,15 +160,20 @@ const supportCenter = () => {
                                 <p className="txtHeader">ROLE</p>
                                 <p className="txtHeader">ACTION</p>
                             </div>
-                           <div className={styles.accountPack}> 
-                                <p style={{color:"#636363"}}>jason@dnwsd.idwid</p>
-                                <p>Sub-admin</p>
-                                <ul>
-                                    <li style={{color:"#82027D"}}>edit</li>
-                                    <li style={{color:"#82027D"}}>disable</li>
-                                    <li style={{color:"#E50909"}}>delete</li>
-                                </ul>
-                            </div>                                                  
+                          { accounts?.map((acct)=>(
+                            <div className={styles.accountPack}> 
+                                <p style={{color:"#636363"}}>{acct.email}</p>
+                                <p>{acct.appRoles[0].name}</p>
+                                {
+                                    ctaLoading ? <ButtonLoader /> :                                
+                                    <ul>
+                                        <li style={{color:"#82027D"}}>edit</li>
+                                        <li onClick={handleDisable(acct.id)} style={{color:"#82027D"}}>disable</li>
+                                        <li onClick={handleDelete(acct.id)} style={{color:"#E50909"}}>delete</li>
+                                    </ul>
+                                }
+                            </div> ))}  
+
                         </div>
                         <button onClick={handleAddAcct} className={`${tabStyles.tab} ${tabStyles.active}`}>
                            <Plus /> Add account

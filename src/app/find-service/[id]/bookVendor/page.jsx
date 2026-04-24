@@ -30,6 +30,7 @@ const BookVendor = () => {
     const [altPhone, setAltPhone] = useState("");
     
     const [servicePrice, setServicePrice] = useState(0);
+    const [serviceName, setServiceName] = useState("");
     const [serviceQty, setServiceQty] = useState(1);
     const [addServicePrice, setAddServicePrice] = useState(0);
     const [addServiceQty, setAddServiceQty] = useState(0);
@@ -103,6 +104,7 @@ const BookVendor = () => {
             eventDuration: Number(formData.get('eventDuration') || 1),
             eventLocation: formData.get('eventLocation'),
             unitPrice: servicePrice,
+          /*   variantName: serviceName, */
             unitsNeeded: Number(formData.get('unitsNeeded') || 1),
             additionalServices: additionalServices,        // ← Now correctly handled
             preferredSetupDate: toBackendISO(formData.get('preferredSetupDate')),
@@ -133,7 +135,11 @@ const BookVendor = () => {
             });
 
             const result = await bookingRes.json().catch(() => ({}));
-
+            if(result.code === 401){
+               openModal(<SignIn />);
+               
+               return;
+            }
             console.log("API Response:", { 
                 status: bookingRes.status, 
                 ok: bookingRes.ok, 
@@ -239,7 +245,14 @@ const BookVendor = () => {
 
                         <input type="text" name='eventLocation' placeholder='Event location' required />
 
-                        <select onChange={(e) => {const price = Number(e.target.selectedOptions[0].dataset.price || 0);setServicePrice(price);}} id="serviceType" name="serviceType">
+                        <select onChange={(e) => {
+                            const price = Number(e.target.selectedOptions[0].dataset.price || 0);
+                            const name = e.target.value || "basic";
+                            setServicePrice(price);
+                            setServiceName(name);
+                            console.log(price, name);
+                            
+                            }} id="serviceType" name="serviceType">
                             <option value="" selected hidden disabled>Select service type</option>
                             (<option value={prod.serviceName} data-price={prod.servicePrice} >
                                 {prod.serviceName} (₦{prod.servicePrice})
