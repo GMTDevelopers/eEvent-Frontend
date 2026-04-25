@@ -109,10 +109,17 @@ const supportCenter = () => {
                 return res.json()
             })
             .then((data) => {            
+                 if (data.code === 403) {
+                    setError("user does not have the permission to view this data")
+                } 
                 console.log("admin roles", data)
                 setRoles(data.data || []);
             }) 
-            .catch((error) => console.error("Error fetching data:", error))
+            .catch((error) =>{
+            
+                console.error("Error fetching data:", error)
+                setError(error.message)
+            })
             .finally( ()=> {
                     setLoading(false);
                 }  
@@ -130,13 +137,20 @@ const supportCenter = () => {
                     openModal(<SignIn />)
                     router.refresh();
                 }
+              
                 return res.json()
             })
-            .then((data) => {            
+            .then((data) => {           
+                if (data.code === 403) {
+                    setError("user does not have the permission to view this data")
+                } 
                 console.log("admin accounts", data)
                 setAccounts(data.data || []);
             }) 
-            .catch((error) => console.error("Error fetching data:", error))
+            .catch((error) => {
+                console.error("Error fetching data:", error)
+                setError(error.message)
+            })
             .finally( ()=> {
                     setLoading(false);
                 }  
@@ -174,7 +188,9 @@ const supportCenter = () => {
                                 }
                             </div> ))}  
 
-                        </div>
+                        </div> <br />
+                        {error && <p style={{color:"#E50909"}}>{error}</p>}
+                        <br />
                         <button onClick={handleAddAcct} className={`${tabStyles.tab} ${tabStyles.active}`}>
                            <Plus /> Add account
                         </button> 

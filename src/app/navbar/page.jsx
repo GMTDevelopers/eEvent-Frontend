@@ -105,7 +105,7 @@ const Navbar = () => {
                 </div>
             )}
            { /* ADMIN USER */}
-            { admin && logedInUser?.data?.role.includes("ADMIN") && (
+            { admin && logedInUser?.data?.role?.includes("ADMIN") && (
                 
                 <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
                     <div className={Styles.userNavMenu}>

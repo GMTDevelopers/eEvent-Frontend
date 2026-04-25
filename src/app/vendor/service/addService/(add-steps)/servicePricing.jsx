@@ -72,11 +72,11 @@ const ServicePricing = ({ formData, updateFormData, errors }) => {
                                 onChange={(e) => handleChange(index, "service", e.target.value)} 
                             >
                                 <option value="" hidden disabled>Select service</option>
-                                {formData.servieFeature?.map((serviceItem, i) => (
-                                    <option key={i} value={serviceItem.featureTitle}>
-                                        {serviceItem.featureTitle}
-                                    </option>
-                                ))}
+                                
+                                <option value={formData.serviceTitle}>
+                                    {formData.serviceTitle}
+                                </option>
+                            
                             </select>
 
                             {/* Pricing Criteria - Changed to Radio */}
