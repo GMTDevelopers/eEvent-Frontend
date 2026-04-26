@@ -158,26 +158,26 @@ const BookingItem = /* async */ ({params}) => {
                                     <p> {isData.serviceOrdered.name +' (x'+isData.serviceOrdered.quantity+")" } </p>
                                 </li>
                                 <li className='vendorItem'>
-                                    <p>Unit Price: {isData.serviceOrdered.unitPrice} </p>
+                                    <p>Unit Price: ₦{isData.serviceOrdered.unitPrice.toLocaleString()} </p>
                                 </li>
                                 <li className='vendorItem'>
                                     <p>Total Cost:</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>₦{isData.serviceOrdered.totalCost}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>₦{isData.serviceOrdered.totalCost.toLocaleString()}</p>
                                 </li>
                                 <br />
                                 <br />
                                 <p style={{color:"#222222", fontWeight:700}}>Additional Services</p>
-                                {isData?.additionalServices?.map((add)=>(
-                                    <li key={add.name} className='vendorItem'>
-                                        <p>{add.name}</p>
-                                        <p style={{color:"#222222", fontWeight:700}}>₦{add.price}</p>
+                                {isData?.additionalServices?.services?.map((add)=>(
+                                    <li key={add.title} className='vendorItem'>
+                                        <p>{add.title}</p>
+                                        <p style={{color:"#222222", fontWeight:700}}>₦{add.unitPrice.toLocaleString()}</p>
                                     </li>
                                 ))}
                             </div>
                             <div className="descPack">
                                 <li className='vendorItem'>
                                     <p style={{color:"#222222", fontWeight:700}}>Total Cost:</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>₦{isData.totalCost}</p>
+                                    <p style={{color:"#222222", fontWeight:700}}>₦{isData.totalCost.toLocaleString()}</p>
                                 </li>
                             </div>
                         </section>

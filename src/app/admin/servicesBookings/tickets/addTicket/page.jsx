@@ -7,10 +7,11 @@ import { useState } from 'react';
 import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
 import ImgUpload from './imgUpload';
 import ButtonLoader from '@/app/(components)/loading/buttonLoader';
+import ActionComplete from '@/app/(components)/requestSent/actionComplete';
 
 const AddTicket = () => {
   const router = useRouter();
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   const [formData, setFormData] = useState({
     ticketTitle: '',
@@ -20,7 +21,7 @@ const AddTicket = () => {
     eventDate: '',
     eventTime: '',
     eventLocation: '',
-    images: [''],           // will be replaced with uploaded URLs
+    otherMedia: [''],
     pricing: [{ ticketCategory: '', price: '' }],
     numberOfAvailableTicket: [{ ticketCategory: '', quantity: '' }],
   });
@@ -84,17 +85,20 @@ const AddTicket = () => {
 
   // Upload single image to dummy service and return URL
   const uploadImage = async (file) => {
+    const token = localStorage.getItem('access_token');
     const form = new FormData();
-    form.append('image', file);
+    form.append('files', file);
 
-    const res = await fetch('https://api.imgbb.com/1/upload', {
-      method: 'POST',
+    const res = await fetch('https://eevents-srvx.onrender.com/v1/upload/media', {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
       body: form,
     });
 
     if (!res.ok) throw new Error('Image upload failed');
     const data = await res.json();
-    return data.data.url; // direct image URL
+    console.log("image url", data)
+    return data.data[0].url; // direct image URL
   };
 
   const handleSubmit = async (e) => {
@@ -140,31 +144,31 @@ const AddTicket = () => {
       }
 
       // 2. Prepare submission data (images as array of URLs)
-      const submissionData = new FormData();
+      const submissionData = {};
 
       // Add text fields
       Object.entries(formData).forEach(([key, value]) => {
-        if (key === 'images') return; // we'll add manually
+        if (key === 'otherMedia') return;
+
         if (value !== undefined && value !== null && value !== '') {
-          if (Array.isArray(value)) {
-            submissionData.append(key, JSON.stringify(value));
-          } else {
-            submissionData.append(key, value);
-          }
+          submissionData[key] = value;
         }
       });
+   
 
       // Add images as URLs (array)
-      submissionData.append('images', JSON.stringify(imageUrls));
+      submissionData.otherMedia = imageUrls;
 
-      console.log('Submitting with image URLs:', imageUrls);
+
+     console.log('Submitting with other image URLs:', imageUrls);
 
       const res = await fetch('https://eevents-srvx.onrender.com/v1/admin/tickets', {
         method: 'POST',
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: submissionData,
+        body: JSON.stringify(submissionData),
       });
 
       const result = await res.json();
@@ -177,9 +181,11 @@ const AddTicket = () => {
       }
 
       if (res.ok) {
-        alert('Ticket listing added successfully!');
-        // router.push('/somewhere'); // uncomment if needed
-        window.location.reload(); // or use router.refresh()
+        openModal(<ActionComplete />)
+        setTimeout(() => {
+          closeModal()
+          window.location.reload()
+        }, 2500);
       } else {
         alert(result.message || 'Failed to add ticket listing');
       }
@@ -192,12 +198,11 @@ const AddTicket = () => {
   };
 
   return (
-    <div>
-      <button onClick={() => router.back()} className={bStyles.backBtn}>
-        <ChevronLeft /> go back
-      </button>
+    <div className="mainSection main">
 
-      <h1>Add ticket listing</h1>
+      <button onClick={() => router.back()} className="section backBtn"> <ChevronLeft /> go back </button>
+
+     <h2>Add ticket listing</h2>
 
       <form onSubmit={handleSubmit} className={bStyles.bookVendorForm}>
         <input

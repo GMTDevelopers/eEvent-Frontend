@@ -69,11 +69,11 @@ const Navbar = () => {
              { !userType && logedInUser?.data?.status === "PENDING" && (
                 <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
                     <p style={{color:"#E83E1C"}} className={Styles.welcome}>REGISTRATION INCOMPLETE</p>    
-                    <div className={Styles.userNavMenu}>
+                    {/* <div className={Styles.userNavMenu}>
                         <ul>                
                            <li>Complete vendor registration</li>
                         </ul>
-                    </div>
+                    </div> */}
                 </div>
             )}
             {/* Verification Pending */}
@@ -81,7 +81,7 @@ const Navbar = () => {
                 <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
                     <p style={{color:"#E83E1C"}} className={Styles.welcome}>ACCOUNT PENDING</p>    
                     <div className={Styles.userNavMenu}>
-                        <ul>                
+                        <ul style={{justifyContent:"end"}}>                
                            <li>Awaiting Account Activation</li>
                         </ul>
                     </div>
@@ -105,7 +105,7 @@ const Navbar = () => {
                 </div>
             )}
            { /* ADMIN USER */}
-            { admin && logedInUser?.data?.role?.includes("ADMIN") && (
+            { admin && logedInUser?.data?.role?.includes("SUPER_ADMIN") && (
                 
                 <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
                     <div className={Styles.userNavMenu}>
@@ -120,6 +120,42 @@ const Navbar = () => {
                     </div>
                 </div>
             )}
+            { admin && logedInUser?.data?.appRoles[0]?.name === "MANAGER" && 
+                
+                <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
+                    <div className={Styles.userNavMenu}>
+                        <ul style={{justifyContent:"center"}}>
+                            <Link href='/admin/dashboard' > <li onClick={() => setActiveTab('Overview')} className={activeTab === "Overview" ? Styles.active : ''} > <SquareChartGantt className={Styles.icons}/> Overview</li></Link>
+                            <Link href='/admin/servicesBookings' > <li onClick={() => setActiveTab('Bookings')} className={activeTab === "Bookings" ? Styles.active : ''}><Check className={Styles.icons} />Services and Bookings</li></Link>
+                            <Link href='/admin/userManagement' > <li onClick={() => setActiveTab('userManagement')} className={activeTab === "userManagement" ? Styles.active : ''}><UserRoundCog className={Styles.icons} />User Management</li></Link>
+                        </ul>
+                    </div>
+                </div>
+            }
+            { admin && logedInUser?.data?.appRoles[0]?.name === "SUB_ADMIN" && 
+                
+                <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
+                    <div className={Styles.userNavMenu}>
+                        <ul style={{justifyContent:"center"}}>
+                            <Link href='/admin/dashboard' > <li onClick={() => setActiveTab('Overview')} className={activeTab === "Overview" ? Styles.active : ''} > <SquareChartGantt className={Styles.icons}/> Overview</li></Link>
+                            <Link href='/admin/servicesBookings' > <li onClick={() => setActiveTab('Bookings')} className={activeTab === "Bookings" ? Styles.active : ''}><Check className={Styles.icons} />Services and Bookings</li></Link>
+                        </ul>
+                    </div>
+                </div>
+            }
+            { admin && logedInUser?.data?.appRoles[0]?.name === "DIRECTOR" && 
+                
+                <div className={`${Styles.userNav} ${Styles.vendorNav}`}>
+                    <div className={Styles.userNavMenu}>
+                        <ul style={{justifyContent:"center"}}>
+                            <Link href='/admin/dashboard' > <li onClick={() => setActiveTab('Overview')} className={activeTab === "Overview" ? Styles.active : ''} > <SquareChartGantt className={Styles.icons}/> Overview</li></Link>
+                            <Link href='/admin/userManagement' > <li onClick={() => setActiveTab('userManagement')} className={activeTab === "userManagement" ? Styles.active : ''}><UserRoundCog className={Styles.icons} />User Management</li></Link>
+                            <Link href='/admin/payment' > <li onClick={() => setActiveTab('Payments')} className={activeTab === "Payments" ? Styles.active : ''}><Banknote className={Styles.icons} />Payments</li></Link>
+                            <Link href='/admin/messages' > <li onClick={() => setActiveTab('Messages')} className={activeTab === "Messages" ? Styles.active : ''}><MessageCircleMore className={Styles.icons} /> Messages</li></Link>
+                        </ul>
+                    </div>
+                </div>
+            }
         </>
         
     );

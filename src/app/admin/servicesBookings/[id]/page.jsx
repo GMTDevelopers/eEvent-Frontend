@@ -99,7 +99,6 @@ const BookingItem = /* async */ ({params}) => {
             .then((data) => {    
                 setVendorData(data.data)        
                 console.log("vendor data",data);
-                console.log(bookingData.vendorId);
             }) 
 
             .catch((error) => console.error("Error fetching data:", error))
@@ -260,21 +259,18 @@ const BookingItem = /* async */ ({params}) => {
                                 </li>
                                 <li className='vendorItem'>
                                     <p>Unit Price: ₦{bookingData?.serviceOrdered.unitPrice.toLocaleString()} </p>
-                                </li>
-                                <li className='vendorItem'>
-                                    <p>Total Cost:</p>
-                                    <p style={{color:"#222222", fontWeight:700}}>₦{bookingData?.serviceOrdered.subtotal.toLocaleString()}</p>
-                                </li>
-                                <br />
-                                <br />
+                                </li>                            
+                            </div> 
+
+                            <div className="descPack">
                                 <p style={{color:"#222222", fontWeight:700}}>Additional Services</p>
-                                {bookingData?.AdditionalServices?.map((add)=>(
-                                    <li className='vendorItem'>
-                                        <p>{add.serviceName}</p>
-                                        <p style={{color:"#222222", fontWeight:700}}>₦{add.serviceCost}</p>
+                                {bookingData?.additionalService?.map((add)=>(
+                                    <li key={add.name} className='vendorItem'>
+                                        <p>{add.name}</p>
+                                        <p style={{color:"#222222", fontWeight:700}}>₦{add?.price?.toLocaleString()}</p>
                                     </li>
                                 ))}
-                            </div> 
+                            </div>
 
                             <div className="descPack">
                                 <li className='vendorItem'>
@@ -282,15 +278,7 @@ const BookingItem = /* async */ ({params}) => {
                                     <p style={{color:"#222222", fontWeight:700}}>₦{bookingData?.serviceOrdered.totalCost.toLocaleString()}</p>
                                 </li>
                             </div>
-                            
-                        {/*     <div className={styles.action}>
-                                <p style={{color:"#E50909", fontWeight:600}} onClick={() => openModal(<ManageReschedule 
-                                eventId={bookingData?.bookingId} oldDate={bookingData?.initialEventDate} 
-                                newDate={bookingData?.lastProposedDate} totalAmount={bookingData?.serviceOrdered.totalCost} id={id} 
-                                resReason="a" rejReason={bookingData?.rescheduleRejectReason} cStatus={bookingData?.}
-                                />)}>Manage reschedule request</p>
-                                <p style={{color:"#2ED074", fontWeight:600}} onClick={() => openModal(<Accept />)}>Accept booking</p>
-                            </div>  */}
+
                             
                             {/*After the job has been accepted */}
                             <div className={styles.CTABtn}>

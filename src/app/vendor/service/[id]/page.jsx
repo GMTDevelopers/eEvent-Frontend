@@ -84,7 +84,7 @@ const ProductCard = ({params, searchParams}) => {
             { !loading &&
                 <div className='main'>
                     <header className="header">
-                        <img className="bannerImg" src={stats?.media} alt="Banner" />
+                        <img className="bannerImg" src={stats?.media[0]} alt="Banner" />
                     </header>
                     <div className="mainContent">
                         <aside className="aside">
@@ -128,10 +128,10 @@ const ProductCard = ({params, searchParams}) => {
 
                             <h2>{prod?.title}</h2>
                             <div className="descPack">
-                                <NaturalDescription text={prod.detailedDescription} />
+                                <NaturalDescription text={prod.description} />
                             </div>
                             <div className={styles.tabsSection}>
-                                <ProductTabs gallery={prod?.media} features={prod?.features} addService={prod?.additionalServices} reviews={prod?.reviews} />
+                                <ProductTabs gallery={prod?.media} features={prod?.features} addService={prod?.additionalServices?.services} reviews={prod?.reviews} />
                             </div>
                             <div className={styles.actionLinks}>
                                 <Link href={`/vendor/service/${id}/orderHistory?index=${index}`}><p style={{display:"flex", alignContent:"center"}}>View order history <ChevronRight /></p></Link>

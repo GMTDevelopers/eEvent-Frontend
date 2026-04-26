@@ -10,23 +10,29 @@ import { Plus } from "lucide-react";
 import AddAdmin from "@/app/(components)/addAdmin/addAdmin";
 import ButtonLoader from "@/app/(components)/loading/buttonLoader";
 import Loading from "@/app/(components)/loading/loading";
+import Pagination from "@/app/(components)/pagination/page";
+import AdminAudit from "@/app/(components)/bookingsTable/admin/adminAuditTrails";
 
 const supportCenter = () => {
     const { openModal } = useModal();
     const [accounts, setAccounts] = useState()
     const [roles, setRoles] = useState()
+    const [audit, setAudit] = useState()
     const router = useRouter();
 
     const [loading, setLoading] = useState(null);
     const [ctaLoading, setCtaLoading] = useState(null);
     const [error, setError] = useState()
     const token = localStorage.getItem("access_token");
+
+    const TAKE = 150;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+
     //tabs
     const [activeTab, setActiveTab] = useState('Admin accounts');
     const tabs = [
         { key: 'Admin accounts', label: 'Admin accounts' },
-        { key: 'Roles', label: 'Roles' },
-        { key: 'Reviews', label: 'Reviews' },
         { key: 'Audit trail', label: 'Audit trail' },
     ];
     const handleAddAcct = () => {
@@ -158,17 +164,84 @@ const supportCenter = () => {
             )
         }
 
-
         getAccounts()
         getRoles()
 
     }, [ ]);
 
+    useEffect(() => {
+        setLoading(true);
+        
+        if (!token) {
+            openModal(<SignIn />)
+            return;
+        }
+
+        const getAudit = () => {
+            
+            const skip = (currentPage - 1) * TAKE;
+            const query = new URLSearchParams({
+                /* category: categoryFilter, */
+                /* location: "", */
+                skip: 0,
+                take: TAKE,
+            });
+
+            fetch(`https://eevents-srvx.onrender.com/v1/admin/audit-logs?${query.toString()}`,{
+                headers:{
+                    authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) =>{ 
+                if (res.status===401) {
+                    localStorage.removeItem('token');
+                    openModal(<SignIn />)
+                    router.refresh();
+                }
+                return res.json()
+            })
+            .then((data) => {            
+                console.log("audit data", data.data)
+                setAudit(data.data || []);
+                const { total, take } = data.data.meta || {};
+                setTotalPages(total/take || 0);
+            }) 
+
+            .catch((error) => console.error("Error fetching data:", error))
+            .finally( ()=> {
+                    setLoading(false);
+                }  
+            )
+        }
+
+
+        getAudit()
+
+    }, [currentPage]);
+    
+
     const renderContent = () => {
         switch (activeTab) {
             case 'Admin accounts':
                 return (
-                    <div className={styles.adminAccountsContainer}>
+                    <div className={styles.adminAccountsContainer}> 
+                        <div className="descPack">
+                            <p style={{color:"#222222", fontWeight:700}}>ROLES EXPLANATION</p>
+                            
+                            <li className='vendorItem'>
+                                <p>Sub-admin </p>
+                                <p style={{color:"#222222", fontWeight:700}}> Overview | Services and Bookings</p>
+                            </li>                         
+                            <li className='vendorItem'>
+                                <p>Manager</p>
+                                <p style={{color:"#222222", fontWeight:700}}> Overview | Services and Bookings | User management</p>
+                            </li>                         
+                            <li className='vendorItem'>
+                                <p>Director</p>
+                                <p style={{color:"#222222", fontWeight:700}}>Overview | User management | Payments | Messages</p>
+                            </li>                                                
+                        </div>
+                        <br />
                         <div className={styles.adminAccounts}>
                             <div className={styles.accountHeader}>
                                 <p className="txtHeader">ACCOUNT</p>
@@ -180,7 +253,7 @@ const supportCenter = () => {
                                 <p style={{color:"#636363"}}>{acct.email}</p>
                                 <p>{acct?.appRoles[0]?.name}</p>
                                {
-                                    ctaLoading ? <Loading /> :                                
+                                    ctaLoading ? <ButtonLoader /> :                                
                                     <ul>
                                         <li style={{color:"#82027D"}}>edit</li>
                                         <li onClick={()=> handleDisable(acct.id)} style={{color:"#82027D"}}>disable</li>
@@ -211,13 +284,22 @@ const supportCenter = () => {
                     
                 ) : (
                     <AdminVendorTable bookings={[]} />
-                );
-            case 'Audit trail':
-                return clientData?.length != 0 ? ( 
-                    <AdminClientTable bookings={clientData} />
-                ): (
-                    <AdminClientTable bookings={[]} />
                 ); */
+            case 'Audit trail':
+                return audit?.length != 0 ? ( 
+                    <>
+                        <AdminAudit bookings={audit} />
+                            {activeTab === 'Audit trail' &&
+                            <Pagination currentPage={currentPage} 
+                                totalPages={totalPages}
+                                onPageChange={!loading ? setCurrentPage : () => {}}
+                            />    
+                        }
+                    </>
+                
+                ): (
+                    <AdminAudit bookings={[]} />
+                );
             default:
                 return null;
         }
@@ -239,13 +321,14 @@ const supportCenter = () => {
                             </button>
                         ))}
                     </div>                        
-                    <button onClick={() => router.push(`/admin/servicesBookings/tickets/addTicket`)} className={`${tabStyles.tab} ${tabStyles.active}`} >Add ticket listing</button>
                 </div>
             </div>
             <br />
-            <br /><br />
+            
+           
             <div className="table">
                 {renderContent()}
+             
             </div>
             
         </div>

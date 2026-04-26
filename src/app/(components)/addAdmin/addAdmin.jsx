@@ -4,6 +4,7 @@ import styles from '@/app/navbar/(signIn)/signIn.module.css'
 import ButtonLoader from '@/app/(components)/loading/buttonLoader';
 import { useState } from 'react';
 import Confirmation from '@/app/navbar/(confirmation)/confirmation';
+import ActionComplete from '../requestSent/actionComplete';
 
 const AddAdmin = () => {
     const { openModal } = useModal();
@@ -33,10 +34,11 @@ const AddAdmin = () => {
 
             const Data  = await res.json();
             if (Data.status==='success') {
-                openModal(<Confirmation />)
+
+                openModal(<ActionComplete />)
                 setTimeout(() => {
                     window.location.reload()
-                }, 1500);
+                }, 2500);
             }
             setLoading(false)
         } catch (err) {

@@ -197,7 +197,7 @@ const VendorServices = /* async */ () => {
                                 activeLoading ? <Loading />
                                 : recentAct.map((act,index)=>(
 
-                                act.status === "ACTIVE" && <VendorProductCard 
+                                act.status === "APPROVED" && <VendorProductCard 
                                         data={index}
                                         key={act.id}
                                         title={act.title}
