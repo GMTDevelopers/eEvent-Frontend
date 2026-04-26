@@ -12,6 +12,8 @@ import { useAuth } from '@/app/contexts/AuthContext';
 import { ChevronLeft } from 'lucide-react';
 import InitPayment from '@/app/(utils)/initializePayment/page';
 import ButtonLoader from '@/app/(components)/loading/buttonLoader';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const BookVendor = () => {
     const [prod, setProd] = useState([]);  
@@ -32,11 +34,19 @@ const BookVendor = () => {
     const [servicePrice, setServicePrice] = useState(0);
     const [serviceName, setServiceName] = useState("");
     const [serviceQty, setServiceQty] = useState(1);
-    const [addServicePrice, setAddServicePrice] = useState(0);
-    const [addServiceQty, setAddServiceQty] = useState(0);
+
+/*     const [addServicePrice, setAddServicePrice] = useState(0);
+    const [addServiceQty, setAddServiceQty] = useState(0); */
+    const [selectedAdditionalServices, setSelectedAdditionalServices] = useState([]);
+
     const [total, setTotal] = useState(0);
 
     const [error, setError] = useState("");
+
+    const [formDataState, setFormData] = useState({
+        eventDate: null,
+        eventTime: null
+    });
 
     const params = useParams();
     const id = params.id;
@@ -58,9 +68,13 @@ const BookVendor = () => {
 
     useEffect(() => {
         const serviceTotal = servicePrice * serviceQty;
-        const addServiceTotal = addServicePrice * addServiceQty;
+
+        const addServiceTotal = selectedAdditionalServices.reduce((acc, item) => {
+            return acc + (item.price * item.quantity);
+        }, 0);
+
         setTotal(serviceTotal + addServiceTotal);
-    }, [servicePrice, serviceQty, addServicePrice, addServiceQty]);
+    }, [servicePrice, serviceQty, selectedAdditionalServices]);
 
     useEffect(() => {
         const savedForm = sessionStorage.getItem("pendingBookingForm");
@@ -81,26 +95,20 @@ const BookVendor = () => {
 
     async function handleSubmit(formData) {
         setbLoading(true)
-        let additionalServices = [];
-
-        const addServiceName = formData.get('additionalService')?.trim();
-        const addQuantity = Number(formData.get('addQuantity') || 0);
-
-        if (addServiceName && addServiceName !== "" && addQuantity > 0) {
-            additionalServices = [{
-                name: addServiceName,
-                quantity: addQuantity
-                // You can add price here too if your backend expects it: price: addServicePrice
-            }];
-        }
+        const additionalServices = selectedAdditionalServices
+            .filter(item => item.quantity > 0)
+            .map(item => ({
+                name: item.name,
+                quantity: item.quantity
+            }));
 
         const data = {
             vendorId: prod.vendorId,
             serviceId: prod.serviceId,
             eventType: formData.get('eventType'),
             eventTitle: formData.get('eventTitle'),
-            eventDate: toBackendISO(formData.get('eventDate')),
-            eventTime: formData.get('eventTime'),
+            eventDate: toBackendISO(formDataState.eventDate),
+            eventTime: formDataState.eventTime ? new Date(formDataState.eventTime).toISOString() : null,
             eventDuration: Number(formData.get('eventDuration') || 1),
             eventLocation: formData.get('eventLocation'),
             unitPrice: servicePrice,
@@ -134,20 +142,15 @@ const BookVendor = () => {
                 body: JSON.stringify(data),
             });
 
-            const result = await bookingRes.json().catch(() => ({}));
+            const result = await bookingRes.json();
             if(result.code === 401){
                openModal(<SignIn />);
                
                return;
             }
-            console.log("API Response:", { 
-                status: bookingRes.status, 
-                ok: bookingRes.ok, 
-                result 
-            });
 
             sessionStorage.removeItem("pendingBookingForm");
-            console.log("Booking successful:", result);
+            console.log("Booking result:", result);
 
             if(result.status==="success" && result.data){
                 await InitPayment({entityId:result.data.bookingId, paymentType:"BOOKING", paymentOption:"FULL", token:token})
@@ -159,7 +162,7 @@ const BookVendor = () => {
         } catch (err) {
             console.error("Booking error:", err);
             setbLoading(false)
-            throw new Error(setError(err.message)) 
+            setError(err.message)
            
         }
         setbLoading(false)
@@ -227,8 +230,25 @@ const BookVendor = () => {
                         <input type="text" required name='eventTitle' placeholder='Event title (e.g. Tunde & Amaka Wedding Reception)' />
 
                         <div className={bStyles.formFlex}>
-                            <input type={isFocused ? "date" : "text"} onFocus={() => setIsFocused(true)} onBlur={(e) => !e.target.value && setIsFocused(false)} placeholder='Event Date' name="eventDate" required />
-                            <input type={isFocusedT ? "time" : "text"} onFocus={() => setIsFocusedT(true)} onBlur={(e) => !e.target.value && setIsFocusedT(false)} placeholder='Event Time' name='eventTime' required/>
+                            <DatePicker
+                                selected={formDataState?.eventDate || null}
+                                onChange={(date) => setFormData(prev => ({ ...prev, eventDate: date }))}
+                                placeholderText="Event Date"
+                                className={bStyles.input}   // ← keep your styling
+                                dateFormat="yyyy-MM-dd"
+                            />
+
+                            <DatePicker
+                                selected={formDataState?.eventTime || null}
+                                onChange={(date) => setFormData(prev => ({ ...prev, eventTime: date }))}
+                                showTimeSelect
+                                showTimeSelectOnly
+                                timeIntervals={15}
+                                timeCaption="Time"
+                                dateFormat="h:mm aa"
+                                placeholderText="Event Time"
+                                className={bStyles.input}
+                            />
                         </div>
 
                         <select value={eventDuration} onChange={(e) => setEventDuration(e.target.value)} required name="eventDuration">
@@ -265,14 +285,25 @@ const BookVendor = () => {
                             }                           
                         </select>
 
-                        <input required type="number" min={1} name='unitsNeeded' placeholder='Units needed ( default is 1 unit )' onChange={(e) => setServiceQty(Number(e.target.value || 1))} />
+                        <input /* required */ type="number" min={1} name='unitsNeeded' placeholder='Units needed ( default is 1 unit )' onChange={(e) => setServiceQty(Number(e.target.value || 1))} />
 
                         {/* ADDITIONAL SERVICE – NOW USING data-price (SAFE & SIMPLE) */}
                
                         <select onChange={(e) => {
-                                const price = Number(e.target.selectedOptions[0].dataset.price || 0);
-                                setAddServicePrice(price);
-                            }} name="additionalService">
+                            const name = e.target.value;
+                            const price = Number(e.target.selectedOptions[0].dataset.price || 0);
+
+                            if (!name) return;
+
+                            // prevent duplicates
+                            const exists = selectedAdditionalServices.find(s => s.name === name);
+                            if (exists) return;
+
+                            setSelectedAdditionalServices(prev => [
+                                ...prev,
+                                { name, price, quantity: 1 }
+                            ]);
+                        }}name="additionalService">
                                 <option value="" selected hidden disabled>Select additional service (optional)</option>
                                 {prod?.additionalService?.services.map((add) => (
                                     <option
@@ -286,11 +317,36 @@ const BookVendor = () => {
                         </select>
 
                         {/* QUANTITY INPUT */}
-                        <input type="number" disabled={!addServicePrice} min={0} name="addQuantity" placeholder="Additional Service Units needed" onChange={(e) => setAddServiceQty(Number(e.target.value || 0))} />
+                        {/* <input type="number" disabled={!addServicePrice} min={0} name="addQuantity" placeholder="Additional Service Units needed" onChange={(e) => setAddServiceQty(Number(e.target.value || 0))} /> */}
+                        {selectedAdditionalServices.map((service, index) => (
+                            <div key={index} className={`${bStyles.formFlex} ${bStyles.addServiceFlex}`}>
+                                <p>{service.name}</p>
+                                <input
+                                    type="number"
+                                    min={1}
+                                    value={service.quantity}
+                                    onChange={(e) => {
+                                        const qty = Number(e.target.value || 1);
+                                        const updated = [...selectedAdditionalServices];
+                                        updated[index].quantity = qty;
+                                        setSelectedAdditionalServices(updated);
+                                    }}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const updated = selectedAdditionalServices.filter((_, i) => i !== index);
+                                        setSelectedAdditionalServices(updated);
+                                    }}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        ))}
 
                         <div className={bStyles.formFlex}>
-                            <input type={isFocusedSD ? "date" : "text"} onFocus={() => setIsFocusedSD(true)} onBlur={(e) => !e.target.value && setIsFocusedSD(false)} placeholder='Preferred setup date' name="preferredSetupDate" required />
-                            <input type={isFocusedST ? "time" : "text"} onFocus={() => setIsFocusedST(true)} onBlur={(e) => !e.target.value && setIsFocusedST(false)} placeholder='Preferred setup time' name='preferredSetupTime' required/>
+                            <input type={isFocusedSD ? "date" : "text"} onFocus={() => setIsFocusedSD(true)} onBlur={(e) => !e.target.value && setIsFocusedSD(false)} placeholder='Preferred setup date' name="preferredSetupDate" />
+                            <input type={isFocusedST ? "time" : "text"} onFocus={() => setIsFocusedST(true)} onBlur={(e) => !e.target.value && setIsFocusedST(false)} placeholder='Preferred setup time' name='preferredSetupTime' />
                         </div>
 
                         <textarea name="specialInstructions" placeholder='Special Instructions'></textarea>

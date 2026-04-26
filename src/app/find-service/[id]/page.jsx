@@ -69,6 +69,7 @@ const ProductCard = ({params}) => {
                             <br />
                             <div className="bookingPricing">
                                 <p className="bookingTitle">BOOKING & PRICING</p>
+                                <p className="txtHeader">₦ {prod.servicePrice}</p>
                                 <div onClick={()=>{router.push(`/find-service/${id}/bookVendor`)}} className='bookVendor'>Book vendor</div>
                             </div>
                             <br />

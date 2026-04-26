@@ -166,14 +166,38 @@ const VendorServices = /* async */ () => {
                         </div>
                     </aside>
                     <section className={`${xStyles.vMainSection} mainSection`}>
-                        <h3>ACTIVE SERVICES ({recentAct?.length}) </h3>
+                        <h3>PENDING SERVICES {/* ({recentAct?.length}) */} </h3>
                         <div className={xStyles.activeService}>
                             {error && <p className="error">{error}</p>}
                             {
                                 activeLoading ? <Loading />
                                 : recentAct.map((act,index)=>(
 
-                                    <VendorProductCard 
+                                   act.status === "PENDING" && <VendorProductCard 
+                                        data={index}
+                                        key={act.id}
+                                        title={act.title}
+                                        description={act.description}
+                                        category={act.category}
+                                        ratings={act.rating}
+                                        price={act.startingPrice}
+                                        thumb={act.media[0]}
+                                        vendorName={act.vendorName}
+                                        prodId={act.serviceId}
+                                        vendorImg='https://www.freepik.com/free-vector/add-new-user_145857018.htm#fromView=keyword&page=1&position=26&uuid=25a85935-003c-4bf2-b927-4fa93db80cf3&query=User'
+                                    />
+                                ))
+                            }
+                        </div>
+                        <br />
+                        <h3>ACTIVE SERVICES {/* ({recentAct?.length}) */} </h3>
+                        <div className={xStyles.activeService}>
+                            {error && <p className="error">{error}</p>}
+                            {
+                                activeLoading ? <Loading />
+                                : recentAct.map((act,index)=>(
+
+                                act.status === "ACTIVE" && <VendorProductCard 
                                         data={index}
                                         key={act.id}
                                         title={act.title}

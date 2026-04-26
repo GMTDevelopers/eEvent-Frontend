@@ -66,6 +66,16 @@
     gap: 16px;
     align-items: center;
 }
+.addServiceFlex input{
+    width: 20%;
+}
+.addServiceFlex button{
+    padding: 0.5rem ;
+    background: #82027D;
+    border-radius:5px;
+    color: #fffdfd;
+    border: none;
+}
 .termsCondition{
     display: flex;
     gap: 16px;

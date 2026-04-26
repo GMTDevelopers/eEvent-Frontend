@@ -1,5 +1,4 @@
 'use client';
-
 import bStyles from '@/app/find-service/[id]/bookVendor/bookingVendor.module.css';
 import SignIn from '@/app/navbar/(signIn)/signIn';
 import { ChevronLeft, Minus, Plus } from 'lucide-react';
@@ -10,290 +9,319 @@ import ImgUpload from './imgUpload';
 import ButtonLoader from '@/app/(components)/loading/buttonLoader';
 
 const AddTicket = () => {
-    const router = useRouter();
-    const { openModal } = useModal();
+  const router = useRouter();
+  const { openModal } = useModal();
 
-    const [formData, setFormData] = useState({
-        ticketTitle: '',
-        eventType: '',
-        eventOrganizer: '',
-        eventDescription: '',
-        eventDate: '',
-        eventTime: '',
-        eventLocation: '',
-        availableTickets: '',
-        ticketType: [
-            { name: '', price: '', quantity: '' }
-        ]
+  const [formData, setFormData] = useState({
+    ticketTitle: '',
+    category: '',           // or eventType – using "category" to match your initial state
+    eventOrganizer: '',
+    eventDescription: '',
+    eventDate: '',
+    eventTime: '',
+    eventLocation: '',
+    images: [''],           // will be replaced with uploaded URLs
+    pricing: [{ ticketCategory: '', price: '' }],
+    numberOfAvailableTicket: [{ ticketCategory: '', quantity: '' }],
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [galleryFiles, setGalleryFiles] = useState({
+    featuredFile: null,
+    additionalFiles: [null, null, null],
+  });
+
+  // Update simple fields
+  const updateFormData = (newData) => {
+    setFormData((prev) => ({ ...prev, ...newData }));
+  };
+
+  // Update ticket category item
+  const updateTicketType = (index, field, value) => {
+    // Update both pricing and numberOfAvailableTicket arrays
+    setFormData((prev) => {
+      const newPricing = [...prev.pricing];
+      const newAvailable = [...prev.numberOfAvailableTicket];
+
+      if (field === 'ticketCategory') {
+        newPricing[index] = { ...newPricing[index], ticketCategory: value };
+        newAvailable[index] = { ...newAvailable[index], ticketCategory: value };
+      } else if (field === 'price') {
+        newPricing[index] = { ...newPricing[index], price: value };
+      } else if (field === 'quantity') {
+        newAvailable[index] = { ...newAvailable[index], quantity: value };
+      }
+
+      return {
+        ...prev,
+        pricing: newPricing,
+        numberOfAvailableTicket: newAvailable,
+      };
     });
-    const [isLoading, setIsLoading] = useState(false)
-    const [galleryFiles, setGalleryFiles] = useState({
-        featuredFile: null,
-        additionalFiles: [null, null, null]
+  };
+
+  // Add new ticket category
+  const addTicketCategory = () => {
+    setFormData((prev) => ({
+      ...prev,
+      pricing: [...prev.pricing, { ticketCategory: '', price: '' }],
+      numberOfAvailableTicket: [
+        ...prev.numberOfAvailableTicket,
+        { ticketCategory: '', quantity: '' },
+      ],
+    }));
+  };
+
+  // Remove ticket category
+  const removeTicketCategory = (index) => {
+    if (formData.pricing.length === 1) return;
+    setFormData((prev) => ({
+      ...prev,
+      pricing: prev.pricing.filter((_, i) => i !== index),
+      numberOfAvailableTicket: prev.numberOfAvailableTicket.filter((_, i) => i !== index),
+    }));
+  };
+
+  // Upload single image to dummy service and return URL
+  const uploadImage = async (file) => {
+    const form = new FormData();
+    form.append('image', file);
+
+    const res = await fetch('https://api.imgbb.com/1/upload', {
+      method: 'POST',
+      body: form,
     });
 
-    // Update normal fields
-    const updateFormData = (newData) => {
-        setFormData(prev => ({ ...prev, ...newData }));
-    };
+    if (!res.ok) throw new Error('Image upload failed');
+    const data = await res.json();
+    return data.data.url; // direct image URL
+  };
 
-    // Update specific ticket type item
-    const updateTicketType = (index, field, value) => {
-        const updatedTicketTypes = [...formData.ticketType];
-        updatedTicketTypes[index] = {
-            ...updatedTicketTypes[index],
-            [field]: value
-        };
-        setFormData(prev => ({
-            ...prev,
-            ticketType: updatedTicketTypes
-        }));
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-    // Add new ticket category
-    const addTicketCategory = () => {
-        setFormData(prev => ({
-            ...prev,
-            ticketType: [...prev.ticketType, { ticketCategory: '', categoryPrice: '' }]
-        }));
-    };
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      openModal(<SignIn />);
+      setIsLoading(false);
+      return;
+    }
 
-    // Remove ticket category
-    const removeTicketCategory = (index) => {
-        if (formData.ticketType.length === 1) return; // Keep at least one
+    // Basic validation
+    if (!galleryFiles.featuredFile?.file) {
+      alert('Please upload a featured image');
+      setIsLoading(false);
+      return;
+    }
+    const additionalCount = galleryFiles.additionalFiles.filter((item) => item !== null).length;
+    if (additionalCount < 3) {
+      alert('Please upload at least 3 additional images');
+      setIsLoading(false);
+      return;
+    }
 
-        const updatedTicketTypes = formData.ticketType.filter((_, i) => i !== index);
-        setFormData(prev => ({
-            ...prev,
-            ticketType: updatedTicketTypes
-        }));
-    };
+    try {
+      // 1. Upload all images and collect URLs
+      const imageUrls = [];
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true)
-        const token = localStorage.getItem("access_token");
-        if (!token) {
-            openModal(<SignIn />);
-            return;
+      // Featured
+      if (galleryFiles.featuredFile?.file) {
+        const url = await uploadImage(galleryFiles.featuredFile.file);
+        imageUrls.push(url);
+      }
+
+      // Additional
+      for (const item of galleryFiles.additionalFiles) {
+        if (item?.file) {
+          const url = await uploadImage(item.file);
+          imageUrls.push(url);
         }
+      }
 
-        // Basic validation for images
-        const additionalCount = galleryFiles.additionalFiles.filter(item => item !== null).length;
-        if (!galleryFiles.featuredFile?.file) {
-            alert("Please upload a featured image");
-            return;
+      // 2. Prepare submission data (images as array of URLs)
+      const submissionData = new FormData();
+
+      // Add text fields
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key === 'images') return; // we'll add manually
+        if (value !== undefined && value !== null && value !== '') {
+          if (Array.isArray(value)) {
+            submissionData.append(key, JSON.stringify(value));
+          } else {
+            submissionData.append(key, value);
+          }
         }
-        if (additionalCount < 3) {
-            alert("Please upload at least 3 additional images");
-            return;
-        }
+      });
 
-        const submissionData = new FormData();
+      // Add images as URLs (array)
+      submissionData.append('images', JSON.stringify(imageUrls));
 
-        // Add all text fields (except ticketType)
-        const { ticketType, ...textFields } = formData;
-        
-        Object.entries(textFields).forEach(([key, value]) => {
-            if (value !== undefined && value !== null && value !== '') {
-                submissionData.append(key, value);
-            }
-        });
+      console.log('Submitting with image URLs:', imageUrls);
 
-        // Add ticketType as JSON string (best way for array of objects in FormData)
-        submissionData.append('ticketType', JSON.stringify(ticketType));
+      const res = await fetch('https://eevents-srvx.onrender.com/v1/admin/tickets', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: submissionData,
+      });
 
-        // Add files
-        if (galleryFiles.featuredFile?.file) {
-            submissionData.append('featuredImage', galleryFiles.featuredFile.file);
-        }
+      const result = await res.json();
 
-        galleryFiles.additionalFiles.forEach((item) => {
-            if (item?.file) {
-                submissionData.append('additionalImages', item.file);
-            }
-        });
+      if (res.status === 401) {
+        localStorage.removeItem('access_token');
+        openModal(<SignIn />);
+        router.refresh();
+        return;
+      }
 
-        // Debug - Proper way to see FormData content
-        console.log(formData,galleryFiles);
+      if (res.ok) {
+        alert('Ticket listing added successfully!');
+        // router.push('/somewhere'); // uncomment if needed
+        window.location.reload(); // or use router.refresh()
+      } else {
+        alert(result.message || 'Failed to add ticket listing');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('An error occurred while submitting');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-        try {
-            const res = await fetch("https://eevents-srvx.onrender.com/v1/admin/tickets", {
-                method: "POST",
-                headers: { 
-                    Authorization: `Bearer ${token}`
-                },
-                body: submissionData,
-            });
+  return (
+    <div>
+      <button onClick={() => router.back()} className={bStyles.backBtn}>
+        <ChevronLeft /> go back
+      </button>
 
-            const result = await res.json();
+      <h1>Add ticket listing</h1>
 
-            if (res.status === 401) {
-                localStorage.removeItem('access_token');
-                openModal(<SignIn />);
-                router.refresh();
-                return;
-            }
+      <form onSubmit={handleSubmit} className={bStyles.bookVendorForm}>
+        <input
+          type="text"
+          value={formData.ticketTitle}
+          onChange={(e) => updateFormData({ ticketTitle: e.target.value })}
+          placeholder="Ticket title"
+          required
+        />
 
-            if (res.ok) {
-                console.log(result)
-                alert('Ticket listing added successfully!');
-                setIsLoading(false)
-                window.refresh()
-                // router.push('/somewhere');
-            } else {
-                alert(result.message || 'Failed to add ticket listing');
-                setIsLoading(false)
-            }
-        } catch (err) {
-            console.error(err);
-            alert('An error occurred while submitting');
-        }
-    };
+        <select
+          required
+          value={formData.category}
+          onChange={(e) => updateFormData({ category: e.target.value })}
+        >
+          <option value="" disabled hidden>
+            Event category
+          </option>
+          <option value="Music & Concerts">Music & Concerts</option>
+          <option value="Nightlife & Parties">Nightlife & Parties</option>
+          <option value="Festivals & Culture">Festivals & Culture</option>
+          <option value="Conferences">Conferences</option>
+          <option value="Workshops">Workshops</option>
+          <option value="Religious">Religious</option>
+          <option value="Arts & Exhibitions">Arts & Exhibitions</option>
+          <option value="Sports">Sports</option>
+          <option value="Charity">Charity</option>
+        </select>
 
-    return (
-        <section className="mainSection main">
-            <button onClick={() => router.back()} className={`section backBtn`}>
-                <ChevronLeft /> go back
-            </button>
+        <input
+          type="text"
+          value={formData.eventOrganizer}
+          onChange={(e) => updateFormData({ eventOrganizer: e.target.value })}
+          placeholder="Event organizer"
+          required
+        />
 
-            <section>
-                <h2>Add ticket listing</h2>
-                <form onSubmit={handleSubmit} className={bStyles.bookVendorForm}>
+        <textarea
+          value={formData.eventDescription}
+          onChange={(e) => updateFormData({ eventDescription: e.target.value })}
+          placeholder="Event description"
+        />
 
-                    <input 
-                        type="text" 
-                        value={formData.ticketTitle} 
-                        onChange={(e) => updateFormData({ ticketTitle: e.target.value })} 
-                        placeholder='Ticket title' 
-                        required 
-                    />
+        <div>
+          <input
+            type={formData.eventDate ? 'date' : 'text'}
+            onFocus={(e) => (e.target.type = 'date')}
+            onBlur={(e) => !e.target.value && (e.target.type = 'text')}
+            value={formData.eventDate}
+            onChange={(e) => updateFormData({ eventDate: e.target.value })}
+            placeholder="Event Date"
+            required
+          />
+          <input
+            type={formData.eventTime ? 'time' : 'text'}
+            onFocus={(e) => (e.target.type = 'time')}
+            onBlur={(e) => !e.target.value && (e.target.type = 'text')}
+            value={formData.eventTime}
+            onChange={(e) => updateFormData({ eventTime: e.target.value })}
+            placeholder="Event Time"
+            required
+          />
+        </div>
 
-                    <select 
-                        required 
-                        value={formData.eventType} 
-                        onChange={(e) => updateFormData({ eventType: e.target.value })}
-                    >
-                        <option value="" disabled hidden>Event category</option>
-                        <option value="Wedding">Wedding</option>
-                        <option value="Birthday">Birthday</option>
-                        <option value="Corporate Event">Corporate Event</option>
-                        <option value="Burial">Burial</option>
-                    </select>
+        <input
+          type="text"
+          value={formData.eventLocation}
+          onChange={(e) => updateFormData({ eventLocation: e.target.value })}
+          placeholder="Event location"
+          required
+        />
 
-                    <input 
-                        type="text" 
-                        value={formData.eventOrganizer} 
-                        onChange={(e) => updateFormData({ eventOrganizer: e.target.value })} 
-                        placeholder='Event organizer' 
-                        required 
-                    />
+        {/* Removed the old single "availableTickets" input since you now use per-category quantity */}
 
-                    <textarea 
-                        value={formData.eventDescription} 
-                        onChange={(e) => updateFormData({ eventDescription: e.target.value })} 
-                        placeholder='Event description'
-                    />
+        <ImgUpload galleryFiles={galleryFiles} setGalleryFiles={setGalleryFiles} />
 
-                    <div className={bStyles.formFlex}>
-                        <input 
-                            type={formData.eventDate ? "date" : "text"} 
-                            onFocus={(e) => e.target.type = 'date'} 
-                            onBlur={(e) => !e.target.value && (e.target.type = 'text')} 
-                            value={formData.eventDate} 
-                            onChange={(e) => updateFormData({ eventDate: e.target.value })} 
-                            placeholder='Event Date' 
-                            required 
-                        />
-                        <input 
-                            type={formData.eventTime ? "time" : "text"} 
-                            onFocus={(e) => e.target.type = 'time'} 
-                            onBlur={(e) => !e.target.value && (e.target.type = 'text')} 
-                            value={formData.eventTime} 
-                            onChange={(e) => updateFormData({ eventTime: e.target.value })} 
-                            placeholder='Event Time' 
-                            required 
-                        />
-                    </div>
+        <h3>PRICING & QUANTITY</h3>
 
-                    <input 
-                        type="text" 
-                        value={formData.eventLocation} 
-                        onChange={(e) => updateFormData({ eventLocation: e.target.value })} 
-                        placeholder='Event location' 
-                        required 
-                    />
+        {formData.pricing.map((ticket, index) => (
+          <div key={index} style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            {formData.pricing.length > 1 && (
+              <div className="icon" onClick={() => removeTicketCategory(index)}>
+                <Minus />
+              </div>
+            )}
 
-                    <input 
-                        type="number" 
-                        min={1} 
-                        value={formData.availableTickets} 
-                        onChange={(e) => updateFormData({ availableTickets: e.target.value })} 
-                        placeholder='No. of available tickets' 
-                        required 
-                    />
+            <input
+              type="text"
+              placeholder="Ticket category (e.g. VIP, Regular)"
+              value={ticket.ticketCategory}
+              onChange={(e) => updateTicketType(index, 'ticketCategory', e.target.value)}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Price"
+              value={ticket.price}
+              onChange={(e) => updateTicketType(index, 'price', e.target.value)}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Quantity"
+              value={formData.numberOfAvailableTicket[index]?.quantity || ''}
+              onChange={(e) => updateTicketType(index, 'quantity', e.target.value)}
+              required
+            />
+          </div>
+        ))}
 
-                    <ImgUpload galleryFiles={galleryFiles} setGalleryFiles={setGalleryFiles} />
+        <div
+          style={{ width: 'max-content' }}
+          className={`${bStyles.addServiceBtn} btnNoCapsule`} // fixed className
+          onClick={addTicketCategory}
+        >
+          <Plus /> Add another ticket category
+        </div>
 
-                    <br />
-                    <h4>PRICING</h4>
-
-                    {formData.ticketType.map((ticket, index) => (
-                        <div className={bStyles.stepsFormPack} key={index}>
-                            <div className={bStyles.addServiceHeader}>
-                                {formData.ticketType.length > 1 && (
-                                    <div 
-                                        className='icon' 
-                                        onClick={() => removeTicketCategory(index)}
-                                    >
-                                        <Minus className='icon' />
-                                    </div>
-                                )}
-                            </div>
-
-                            <input 
-                                type="text" 
-                                placeholder="Ticket category (e.g. VIP, Regular)" 
-                                value={ticket.name}
-                                onChange={(e) => updateTicketType(index, 'name', e.target.value)}
-                                required
-                            />
-
-                            <input 
-                                type="number" 
-                                placeholder="Price" 
-                                value={ticket.price}
-                                onChange={(e) => updateTicketType(index, 'price', e.target.value)}
-                                required
-                            />
-
-                            <input 
-                                type="number" 
-                                placeholder="quantity" 
-                                value={ticket.quantity}
-                                onChange={(e) => updateTicketType(index, 'quantity', e.target.value)}
-                                required
-                            />
-                        </div>
-                    ))}
-
-                    <br />
-                    <div 
-                        style={{ width: "max-content" }} 
-                        className={`btnNoCapsule ${bStyles.addServiceBtn}`} 
-                        onClick={addTicketCategory}
-                    >
-                        <Plus /> Add another ticket category
-                    </div>
-
-                    <br />
-                    <button type="submit" className={bStyles.submitBtn}>
-                        Add ticket listing {isLoading? <ButtonLoader /> : " "}
-                    </button>
-                </form>
-            </section>
-        </section>
-    );
+        <button type="submit" className={bStyles.submitBtn} disabled={isLoading}>
+          Add ticket listing {isLoading && <ButtonLoader />}
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default AddTicket;

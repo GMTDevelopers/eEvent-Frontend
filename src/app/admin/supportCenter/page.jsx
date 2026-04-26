@@ -9,6 +9,7 @@ import styles from "./support.module.css"
 import { Plus } from "lucide-react";
 import AddAdmin from "@/app/(components)/addAdmin/addAdmin";
 import ButtonLoader from "@/app/(components)/loading/buttonLoader";
+import Loading from "@/app/(components)/loading/loading";
 
 const supportCenter = () => {
     const { openModal } = useModal();
@@ -177,13 +178,13 @@ const supportCenter = () => {
                           { accounts?.map((acct)=>(
                             <div className={styles.accountPack}> 
                                 <p style={{color:"#636363"}}>{acct.email}</p>
-                                <p>{acct.appRoles[0].name}</p>
-                                {
-                                    ctaLoading ? <ButtonLoader /> :                                
+                                <p>{acct?.appRoles[0]?.name}</p>
+                               {
+                                    ctaLoading ? <Loading /> :                                
                                     <ul>
                                         <li style={{color:"#82027D"}}>edit</li>
-                                        <li onClick={handleDisable(acct.id)} style={{color:"#82027D"}}>disable</li>
-                                        <li onClick={handleDelete(acct.id)} style={{color:"#E50909"}}>delete</li>
+                                        <li onClick={()=> handleDisable(acct.id)} style={{color:"#82027D"}}>disable</li>
+                                        <li onClick={()=> handleDelete(acct.id)} style={{color:"#E50909"}}>delete</li>
                                     </ul>
                                 }
                             </div> ))}  

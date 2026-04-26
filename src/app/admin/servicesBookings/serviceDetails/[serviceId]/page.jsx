@@ -116,7 +116,7 @@ const ProductCard = ({params}) => {
                                 <NaturalDescription text={prod?.description} />
                             </div>
                             <div className={styles.tabsSection}>
-                                <ProductTabs gallery={prod?.media} features={prod?.features} addService={prod?.additionalService} reviews={prod?.reviews} />
+                                <ProductTabs gallery={prod?.media} features={prod?.features} addService={prod.additionalService.services} reviews={prod?.reviews} />
                             </div>
                             <div className={styles.actionLinks}>
                                 <div>
