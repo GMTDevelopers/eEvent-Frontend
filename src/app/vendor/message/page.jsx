@@ -1,106 +1,198 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './message.module.css';
 import { SendHorizontal } from 'lucide-react';
+import SignIn from '@/app/navbar/(signIn)/signIn';
+import { useModal } from '@/app/(components)/ModalProvider/ModalProvider';
+import { useAuth } from '@/app/contexts/AuthContext';
 const Message = () => {
-
+    const {logedInUser} = useAuth()
     const [message, setMessage] = useState("");
+    const { openModal } = useModal();
+    const [Data, setData] = useState([])
+    const [msgDetails, setMsgDetails] = useState()
+    const [loading, setLoading] = useState(null)
+    const [sender, setSender] = useState('')
+    const [bookId, setbookId] = useState('')
+        const [success, setSuccess] = useState('');
+    const [detLoading, setDetLoading] = useState(null)
+    const [active, setActive] = useState(false)
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        console.log("this is user id", logedInUser?.data?.id)
+        setLoading(true)
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            openModal(<SignIn />)
+            return;
+        }
+        fetch(`https://eevents-srvx.onrender.com/v1/messages/conversations/vendor`,{
+            headers:{
+                authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log("messages", data);   // See what was fetched 
+            setData(data.data);
+            setLoading(false)       // Update state with the fetched data limit search to 6
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }, []);
+
+    const handleChatMessages = (id) => {
+        setDetLoading(true);
+        setActive(true)
+        setbookId(id);
+
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            openModal(<SignIn />);
+            return;
+        }
+
+        setActive(true)
+
+        fetch(`https://eevents-srvx.onrender.com/v1/messages/${id}`, {
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            const messages = data.data;
+            console.log("message details", messages)
+            setMsgDetails(messages);
+
+            // ✅ SET SENDER HERE (IMPORTANT)
+            if (messages && messages.length > 0) {
+                const otherUser = messages.find(
+                    msg => msg.receiverId !== logedInUser.data.id
+                    
+                );
+
+                if (otherUser) {
+                    setSender(otherUser.receiverId);
+                    console.log("other user", otherUser)
+                }
+            }
+
+            setDetLoading(false);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    };
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!message.trim()) return;
 
-        console.log(message); // replace with your send logic
-        setMessage("");
+        const content = e.target.message.value;
+
+        if (!content.trim()) return;
+
+        const newMessage = {
+            id: Date.now(), // temporary ID
+            senderId: logedInUser.data.id,
+            receiverId: sender,
+            bookingId: bookId,
+            content,
+            createdAt: new Date().toISOString(),
+        };
+
+        // ✅ 1. Show instantly (optimistic update)
+        setMsgDetails((prev) => [...(prev || []), newMessage]);
+
+        // ✅ 2. Clear input
+        e.target.reset();
+
+        try {
+            const token = localStorage.getItem("access_token");
+
+            const res = await fetch(`https://eevents-srvx.onrender.com/v1/messages`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                receiverId: sender,
+                bookingId: bookId,
+                content,
+            }),
+            });
+
+            const Data = await res.json();
+
+            if (!res.ok) throw new Error(Data.message);
+
+            setSuccess(Data.message);
+
+            // (Optional) replace temp message with real one if backend returns it
+
+        } catch (err) {
+            console.error(err);
+
+            setMsgDetails((prev) =>
+            prev.slice(0, prev.length - 1)
+            );
+        }
     };
 
     return ( 
         <div className="mainContent">
             <aside className={` ${styles.messageAside} aside`}>
-                <p style={{fontWeight:700}}>MESSAGE HISTORY (2 unread)</p>
+                <p style={{fontWeight:700}}>MESSAGE HISTORY</p>
                 <div className={styles.chatHistory}>
-                    <div className={styles.chatPack}>
-                        <img src="/images/servicePage/serviceBG.png" alt="" />
-                        <div className={styles.userSnippet}>
-                            <div className={styles.userName}>
-                                <p style={{fontWeight:700}}>Luxe Party Supplies</p>
-                                <p>Jul 8</p>
+                    { Data && Data.map((list)=> (
+                        <div onClick={() => handleChatMessages(list.bookingId)} className={active ? `${styles.chatPack} ${styles.active}` : `${styles.chatPack} `}>
+                            <img src={list.clientProfileImage} alt="logo" />
+                            <div className={styles.userSnippet}>
+                                <div className={styles.userName}>
+                                    <p style={{fontWeight:700}}>{list.clientName}</p>
+                                    <p>{new Date(list?.lastMessageAt)?.toLocaleDateString()}</p>
+                                </div>
+                                <p className={styles.messageSnippet}>{list.lastMessage}</p>
                             </div>
-                            <p className={styles.messageSnippet}>Reminder: Supply delivery is scheduled for this week.</p>
                         </div>
-                    </div>
-                    <div className={styles.chatPack}>
-                        <img src="/images/servicePage/serviceBG.png" alt="" />
-                        <div className={styles.userSnippet}>
-                            <div className={styles.userName}>
-                                <p style={{fontWeight:700}}>Luxe Party Supplies</p>
-                                <p>Jul 8</p>
-                            </div>
-                            <p className={styles.messageSnippet}>Reminder: Supply delivery is scheduled for this week.</p>
-                        </div>
-                    </div>
-                    <div className={styles.chatPack}>
-                        <img src="/images/servicePage/serviceBG.png" alt="" />
-                        <div className={styles.userSnippet}>
-                            <div className={styles.userName}>
-                                <p style={{fontWeight:700}}>Luxe Party Supplies</p>
-                                <p>Jul 8</p>
-                            </div>
-                            <p className={styles.messageSnippet}>Reminder: Supply delivery is scheduled for this week.</p>
-                        </div>
-                    </div>
+                    ))}
                 </div>                    
             </aside>
             <section className={`mainSection ${styles.detailsContainer}`}>
-                <div className={styles.DetailsUserName}>
-                    <div style={{margin:"12px auto 22px auto"}} className={styles.chatPack}>
-                        <img src="/images/servicePage/serviceBG.png" alt="" />
-                        <div className={styles.userSnippet}>
-                            <p style={{fontWeight:700}}>Luxe Party Supplies</p>
-                            <p style={{color:"#636363"}} className={styles.messageSnippet}>Last active: Yesterday</p>
-                        </div>
-                    </div>
-                </div>
                 <div className={styles.messagesPack}>
-                    <div className={`${styles.messageItem} ${styles.right}`}>
-                        <p className={`${styles.message} ${styles.received}`}>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                        </p>
-                        <div style={{color:"#636363"}} className={styles.userName}>
-                            <p>Luxe Party Supplies</p>
-                            <p className={styles.messageSnippet}>09:26 PM</p>
-                        </div>
-                    </div>
-                    <div className={`${styles.messageItem} ${styles.left}`}>
-                        <p className={`${styles.message} ${styles.sent} `}>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.                            </p>
-                        <div style={{color:"#636363"}} className={styles.userName}>
-                            <p>Luxe Party Supplies</p>
-                            <p className={styles.messageSnippet}>09:26 PM</p>
-                        </div>
-                    </div>
-                    <div className={`${styles.messageItem} ${styles.right}`}>
-                        <p className={`${styles.message} ${styles.received}`}>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        </p>
-                        <div style={{color:"#636363"}} className={styles.userName}>
-                            <p>Luxe Party Supplies</p>
-                            <p className={styles.messageSnippet}>09:26 PM</p>
-                        </div>
-                    </div>
-                    <div className={`${styles.messageItem} ${styles.left}`}>
-                        <p className={`${styles.message} ${styles.sent} `}>
-                            Lorem Ipsum is simply dummy.
-                        </p>
-                        <div style={{color:"#636363"}} className={styles.userName}>
-                            <p>Luxe Party Supplies</p>
-                            <p className={styles.messageSnippet}>09:26 PM</p>
-                        </div>
-                    </div>
+                    {!msgDetails && <div className='descPack'>
+                            ....Select a user to see conversation
+                        </div>}
+                    {msgDetails && msgDetails.map((det) => (
+                        det.senderId === logedInUser?.data?.userId ? (
+                            //YOUR MESSAGE (RIGHT)
+                            <div key={det.id} className={`${styles.messageItem} ${styles.right}`}>
+                                <p className={`${styles.message} ${styles.received}`}>
+                                    {det.content}
+                                </p>
+                                <div className={styles.userName}>
+                                    <p className={styles.messageSnippet}>
+                                    {new Date(det.createdAt).toLocaleDateString()}
+                                    </p>
+                                </div>
+                            </div>
+                        ) : (
+                            // ✅ OTHER USER (LEFT)
+                            <div key={det.id} className={`${styles.messageItem} ${styles.left}`}>
+                                <p className={`${styles.message} ${styles.sent}`}>
+                                    {det.content}
+                                </p>
+                                <div className={styles.userName}>
+                                    <p className={styles.messageSnippet}>
+                                    {new Date(det.createdAt).toLocaleDateString()}
+                                    </p>
+                                </div>
+                            </div>
+                        )
+                    ))}
                 </div>
                 <form className={styles.wrapper} onSubmit={handleSubmit}>
-                    <input type="text" placeholder="Type a message..." value={message}  onChange={(e) => setMessage(e.target.value)} className={styles.input} />
-
+                    <textarea className={styles.input} placeholder='Type message here' name="message" value={message} onChange={(e) => setMessage(e.target.value)} />
+                    {success && <p style={{color:"#2d9f35"}}>{success}</p>}
                     <button type="submit" className={`${styles.sendButton} ${message.trim() ? styles.active : ""}`} >
                         <SendHorizontal />
                     </button>

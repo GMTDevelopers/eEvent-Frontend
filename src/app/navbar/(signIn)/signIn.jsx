@@ -6,8 +6,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import UserSignUp from '../(userSignUp)/userSignUp';
 import { useState } from 'react';
-import Loading from '@/app/(components)/loading/loading';
 import ButtonLoader from '@/app/(components)/loading/buttonLoader';
+import ForgetPassword from '@/app/(components)/forgetPass/page';
 const SignIn = () => {
     const { openModal } = useModal();
     const { closeModal } = useModal();
@@ -49,7 +49,7 @@ const SignIn = () => {
                 <input placeholder="email address" type='email' name='user'/>
                 {/* <input placeholder="user name" type='text' name='user'/> */}
                 <input type="password" placeholder="Password" name='password' />
-                <p className={styles.forgotPassword}>Forgot password?</p>
+                <p onClick={() => openModal(<ForgetPassword />)} className={styles.forgotPassword}>Forgot password?</p>
                 <p className="error">{error}</p>
                 <button style={{ display: "flex", alignItems:"center", justifyContent:"center" }} disabled={loading} type="submit">
                     <span style={{ visibility: loading ? "hidden" : "visible" }}>
